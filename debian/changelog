@@ -10,6 +10,7 @@ vulkan (1.1.77.0-1) UNRELEASED; urgency=medium
   * Drop layer & build cruft.
   * control: Drop python3-lxml, -distutils from build-depends.
   * control: Add vulkan-headers to build-depends.
+  * d/s/include-binaries: Removed, obsolete.
 
  -- Timo Aaltonen <tjaalton@debian.org>  Wed, 01 Aug 2018 12:20:09 +0300
 
