@@ -26,8 +26,8 @@ override_dh_auto_install:
 	mkdir -p debian/tmp/usr/include
 	cp -rp include/vulkan debian/tmp/usr/include
 
-override_dh_install:
-	dh_install --fail-missing
+override_dh_missing:
+	dh_missing --fail-missing
 
 gentarball: SOURCE=vulkan
 gentarball: UV=$(shell dpkg-parsechangelog|awk '/^Version:/ {print $$2}'|sed 's/-.*$$//')
