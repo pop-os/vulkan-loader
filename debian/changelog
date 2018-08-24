@@ -11,6 +11,7 @@ vulkan-loader (1.1.82.0-1) UNRELEASED; urgency=medium
   * control: Drop python3-lxml, -distutils from build-depends.
   * control: Add vulkan-headers to build-depends.
   * d/s/include-binaries: Removed, obsolete.
+  * control: Add vulkan-headers to -dev depends.
 
  -- Timo Aaltonen <tjaalton@debian.org>  Wed, 01 Aug 2018 12:20:09 +0300
 

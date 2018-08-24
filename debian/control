@@ -39,6 +39,7 @@ Section: libdevel
 Architecture: linux-any
 Depends:
  libvulkan1 (= ${binary:Version}),
+ vulkan-headers,
  ${misc:Depends},
 Breaks: vulkan-sdk-headers
 Replaces: vulkan-sdk-headers
