@@ -1,0 +1,3 @@
+usr/include/vulkan
+usr/lib/*/libvulkan.so
+usr/lib/*/pkgconfig/vulkan.pc

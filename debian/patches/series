@@ -1,0 +1,2 @@
+install-vulkan-intel-header.diff
+fix-pkgconfig.diff
