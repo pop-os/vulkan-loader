@@ -4,14 +4,8 @@
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/default.mk
 
-ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-	NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-	MAKE_FLAGS += $(if $(NUMJOBS),-j$(NUMJOBS))
-endif
-
-# main packaging script based on dh7 syntax
 %:
-	dh $@ --parallel --with quilt --builddirectory=build/
+	dh $@ --with quilt --builddirectory=build/
 
 override_dh_clean:
 	dh_clean
