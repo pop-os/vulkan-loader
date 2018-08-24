@@ -15,6 +15,7 @@ vulkan-loader (1.1.82.0-1) UNRELEASED; urgency=medium
   * dirs: Add /etc/vulkan/icd.d.
   * Use compat level 11.
   * rules: Use dh_missing.
+  * rules: Drop gentarball target.
 
  -- Timo Aaltonen <tjaalton@debian.org>  Wed, 01 Aug 2018 12:20:09 +0300
 
