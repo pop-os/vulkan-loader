@@ -6,7 +6,7 @@ vulkan-loader (1.1.82.0-1) UNRELEASED; urgency=medium
   * control, copyright, watch: Fix upstream repo name.
   * Drop vulkan-utils.
   * Purge patches that were for demos, layers or external repos.
-  * Remove d/get-external.sh and README.source, both obsolete.
+  * Remove d/get-external.sh, which is obsolete.
   * Drop layer & build cruft.
   * control: Drop python3-lxml, -distutils from build-depends.
   * d/s/include-binaries: Removed, obsolete.
@@ -15,6 +15,7 @@ vulkan-loader (1.1.82.0-1) UNRELEASED; urgency=medium
   * rules: Use dh_missing.
   * Import vulkan-headers and ship the files in libvulkan-dev.
   * control: Bump policy to 4.2.0, no changes.
+  * README.source: Updated for vulkan-loader.
 
  -- Timo Aaltonen <tjaalton@debian.org>  Wed, 01 Aug 2018 12:20:09 +0300
 
