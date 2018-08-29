@@ -9,13 +9,11 @@ vulkan-loader (1.1.82.0-1) UNRELEASED; urgency=medium
   * Remove d/get-external.sh and README.source, both obsolete.
   * Drop layer & build cruft.
   * control: Drop python3-lxml, -distutils from build-depends.
-  * control: Add vulkan-headers to build-depends.
   * d/s/include-binaries: Removed, obsolete.
-  * control: Add vulkan-headers to -dev depends.
   * dirs: Add /etc/vulkan/icd.d.
   * Use compat level 11.
   * rules: Use dh_missing.
-  * rules: Drop gentarball target.
+  * Import vulkan-headers and ship the files in libvulkan-dev.
 
  -- Timo Aaltonen <tjaalton@debian.org>  Wed, 01 Aug 2018 12:20:09 +0300
 
