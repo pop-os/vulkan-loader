@@ -1,4 +1,4 @@
-vulkan-loader (1.1.82.0-1) UNRELEASED; urgency=medium
+vulkan-loader (1.1.82.0-1) experimental; urgency=medium
 
   * New upstream release from the vulkan-loader repo.
   * Remove embedded glslang.
@@ -18,7 +18,7 @@ vulkan-loader (1.1.82.0-1) UNRELEASED; urgency=medium
   * README.source: Updated for vulkan-loader.
   * control: Fix VCS urls.
 
- -- Timo Aaltonen <tjaalton@debian.org>  Wed, 01 Aug 2018 12:20:09 +0300
+ -- Timo Aaltonen <tjaalton@debian.org>  Tue, 11 Sep 2018 17:18:05 +0300
 
 vulkan (1.1.73+dfsg-1) unstable; urgency=medium
 
