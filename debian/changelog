@@ -1,4 +1,4 @@
-vulkan-loader (1.1.97-1) UNRELEASED; urgency=medium
+vulkan-loader (1.1.97-1) experimental; urgency=medium
 
   [ Timo Aaltonen ]
   * New upstream release.
@@ -8,7 +8,7 @@ vulkan-loader (1.1.97-1) UNRELEASED; urgency=medium
   * README.source: Fixes to the workflow.
   * rules: Use dpkg library instead of dpkg-parsechangelog.
 
- -- Timo Aaltonen <tjaalton@debian.org>  Sun, 13 Jan 2019 16:24:54 +0200
+ -- Timo Aaltonen <tjaalton@debian.org>  Sun, 13 Jan 2019 16:50:01 +0200
 
 vulkan-loader (1.1.82.0-1) experimental; urgency=medium
 
