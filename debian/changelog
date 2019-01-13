@@ -3,6 +3,7 @@ vulkan-loader (1.1.97-1) UNRELEASED; urgency=medium
   * New upstream release.
   * sync_headers.sh, watch: Modified for upstream tag format change.
     Thanks, Jens Reyer!
+  * README.source: Fixes to the workflow, thanks Jens Reyer!
 
  -- Timo Aaltonen <tjaalton@debian.org>  Sun, 13 Jan 2019 16:24:54 +0200
 

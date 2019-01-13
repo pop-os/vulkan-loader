@@ -11,7 +11,7 @@ this:
 # git checkout upstream-unstable
 # git merge <new upstream tag>
 # git checkout debian-unstable
-# git merge upstream--unstable
+# git merge upstream-unstable
+# dch -v <new version>
 # debian/sync_headers.sh
-# dch
 # debian/rules gentarball
