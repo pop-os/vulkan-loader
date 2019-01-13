@@ -7,7 +7,7 @@ VERSION=`dpkg-parsechangelog -S Version|sed 's/-.*//'`
 git rm -rf vulkan-headers
 
 git clone $REPO vulkan-headers
-(cd vulkan-headers; git reset --hard sdk-$VERSION; cd ..)
+(cd vulkan-headers; git reset --hard v$VERSION; cd ..)
 rm -rf vulkan-headers/.git
 
 git add -f vulkan-headers
