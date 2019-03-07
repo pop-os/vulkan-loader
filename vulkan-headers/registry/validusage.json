@@ -1,9 +1,9 @@
 {
   "version info": {
     "schema version": 2,
-    "api version": "1.1.97",
-    "comment": "from git branch: master commit: a8c96cb464e849ffd88b5518cebcb4e1beb83e01",
-    "date": "2019-01-07 16:51:11Z"
+    "api version": "1.1.101",
+    "comment": "from git branch: master commit: 55220784e078fe3dad80e9520ca1d264f9b12b72",
+    "date": "2019-02-20 00:56:19Z"
   },
   "validation": {
     "vkGetInstanceProcAddr": {
@@ -42,7 +42,7 @@
       "core": [
         {
           "vuid": "VUID-vkCreateInstance-ppEnabledExtensionNames-01388",
-          "text": " All <a href=\"#extended-functionality-extensions-dependencies\">required extensions</a> for each extension in the <a href=\"#VkInstanceCreateInfo\">VkInstanceCreateInfo</a>::<code>ppEnabledExtensionNames</code> list <strong class=\"purple\">must</strong> also be present in that list."
+          "text": " All <a href=\"#extendingvulkan-extensions-extensiondependencies\">required extensions</a> for each extension in the <a href=\"#VkInstanceCreateInfo\">VkInstanceCreateInfo</a>::<code>ppEnabledExtensionNames</code> list <strong class=\"purple\">must</strong> also be present in that list."
         },
         {
           "vuid": "VUID-vkCreateInstance-pCreateInfo-parameter",
@@ -214,7 +214,7 @@
         },
         {
           "vuid": "VUID-VkPhysicalDeviceProperties2-pNext-pNext",
-          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT\">VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceConservativeRasterizationPropertiesEXT\">VkPhysicalDeviceConservativeRasterizationPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceDepthStencilResolvePropertiesKHR\">VkPhysicalDeviceDepthStencilResolvePropertiesKHR</a>, <a href=\"#VkPhysicalDeviceDescriptorIndexingPropertiesEXT\">VkPhysicalDeviceDescriptorIndexingPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceDiscardRectanglePropertiesEXT\">VkPhysicalDeviceDiscardRectanglePropertiesEXT</a>, <a href=\"#VkPhysicalDeviceDriverPropertiesKHR\">VkPhysicalDeviceDriverPropertiesKHR</a>, <a href=\"#VkPhysicalDeviceExternalMemoryHostPropertiesEXT\">VkPhysicalDeviceExternalMemoryHostPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceFloatControlsPropertiesKHR\">VkPhysicalDeviceFloatControlsPropertiesKHR</a>, <a href=\"#VkPhysicalDeviceFragmentDensityMapPropertiesEXT\">VkPhysicalDeviceFragmentDensityMapPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceIDProperties\">VkPhysicalDeviceIDProperties</a>, <a href=\"#VkPhysicalDeviceInlineUniformBlockPropertiesEXT\">VkPhysicalDeviceInlineUniformBlockPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceMaintenance3Properties\">VkPhysicalDeviceMaintenance3Properties</a>, <a href=\"#VkPhysicalDeviceMeshShaderPropertiesNV\">VkPhysicalDeviceMeshShaderPropertiesNV</a>, <a href=\"#VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX\">VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX</a>, <a href=\"#VkPhysicalDeviceMultiviewProperties\">VkPhysicalDeviceMultiviewProperties</a>, <a href=\"#VkPhysicalDevicePCIBusInfoPropertiesEXT\">VkPhysicalDevicePCIBusInfoPropertiesEXT</a>, <a href=\"#VkPhysicalDevicePointClippingProperties\">VkPhysicalDevicePointClippingProperties</a>, <a href=\"#VkPhysicalDeviceProtectedMemoryProperties\">VkPhysicalDeviceProtectedMemoryProperties</a>, <a href=\"#VkPhysicalDevicePushDescriptorPropertiesKHR\">VkPhysicalDevicePushDescriptorPropertiesKHR</a>, <a href=\"#VkPhysicalDeviceRayTracingPropertiesNV\">VkPhysicalDeviceRayTracingPropertiesNV</a>, <a href=\"#VkPhysicalDeviceSampleLocationsPropertiesEXT\">VkPhysicalDeviceSampleLocationsPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT\">VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceShaderCorePropertiesAMD\">VkPhysicalDeviceShaderCorePropertiesAMD</a>, <a href=\"#VkPhysicalDeviceShadingRateImagePropertiesNV\">VkPhysicalDeviceShadingRateImagePropertiesNV</a>, <a href=\"#VkPhysicalDeviceSubgroupProperties\">VkPhysicalDeviceSubgroupProperties</a>, <a href=\"#VkPhysicalDeviceTransformFeedbackPropertiesEXT\">VkPhysicalDeviceTransformFeedbackPropertiesEXT</a>, or <a href=\"#VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT\">VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT</a>"
+          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT\">VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceConservativeRasterizationPropertiesEXT\">VkPhysicalDeviceConservativeRasterizationPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceCooperativeMatrixPropertiesNV\">VkPhysicalDeviceCooperativeMatrixPropertiesNV</a>, <a href=\"#VkPhysicalDeviceDepthStencilResolvePropertiesKHR\">VkPhysicalDeviceDepthStencilResolvePropertiesKHR</a>, <a href=\"#VkPhysicalDeviceDescriptorIndexingPropertiesEXT\">VkPhysicalDeviceDescriptorIndexingPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceDiscardRectanglePropertiesEXT\">VkPhysicalDeviceDiscardRectanglePropertiesEXT</a>, <a href=\"#VkPhysicalDeviceDriverPropertiesKHR\">VkPhysicalDeviceDriverPropertiesKHR</a>, <a href=\"#VkPhysicalDeviceExternalMemoryHostPropertiesEXT\">VkPhysicalDeviceExternalMemoryHostPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceFloatControlsPropertiesKHR\">VkPhysicalDeviceFloatControlsPropertiesKHR</a>, <a href=\"#VkPhysicalDeviceFragmentDensityMapPropertiesEXT\">VkPhysicalDeviceFragmentDensityMapPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceIDProperties\">VkPhysicalDeviceIDProperties</a>, <a href=\"#VkPhysicalDeviceInlineUniformBlockPropertiesEXT\">VkPhysicalDeviceInlineUniformBlockPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceMaintenance3Properties\">VkPhysicalDeviceMaintenance3Properties</a>, <a href=\"#VkPhysicalDeviceMeshShaderPropertiesNV\">VkPhysicalDeviceMeshShaderPropertiesNV</a>, <a href=\"#VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX\">VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX</a>, <a href=\"#VkPhysicalDeviceMultiviewProperties\">VkPhysicalDeviceMultiviewProperties</a>, <a href=\"#VkPhysicalDevicePCIBusInfoPropertiesEXT\">VkPhysicalDevicePCIBusInfoPropertiesEXT</a>, <a href=\"#VkPhysicalDevicePointClippingProperties\">VkPhysicalDevicePointClippingProperties</a>, <a href=\"#VkPhysicalDeviceProtectedMemoryProperties\">VkPhysicalDeviceProtectedMemoryProperties</a>, <a href=\"#VkPhysicalDevicePushDescriptorPropertiesKHR\">VkPhysicalDevicePushDescriptorPropertiesKHR</a>, <a href=\"#VkPhysicalDeviceRayTracingPropertiesNV\">VkPhysicalDeviceRayTracingPropertiesNV</a>, <a href=\"#VkPhysicalDeviceSampleLocationsPropertiesEXT\">VkPhysicalDeviceSampleLocationsPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT\">VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT</a>, <a href=\"#VkPhysicalDeviceShaderCorePropertiesAMD\">VkPhysicalDeviceShaderCorePropertiesAMD</a>, <a href=\"#VkPhysicalDeviceShadingRateImagePropertiesNV\">VkPhysicalDeviceShadingRateImagePropertiesNV</a>, <a href=\"#VkPhysicalDeviceSubgroupProperties\">VkPhysicalDeviceSubgroupProperties</a>, <a href=\"#VkPhysicalDeviceTransformFeedbackPropertiesEXT\">VkPhysicalDeviceTransformFeedbackPropertiesEXT</a>, or <a href=\"#VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT\">VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT</a>"
         },
         {
           "vuid": "VUID-VkPhysicalDeviceProperties2-sType-unique",
@@ -330,7 +330,7 @@
       "core": [
         {
           "vuid": "VUID-vkCreateDevice-ppEnabledExtensionNames-01387",
-          "text": " All <a href=\"#extended-functionality-extensions-dependencies\">required extensions</a> for each extension in the <a href=\"#VkDeviceCreateInfo\">VkDeviceCreateInfo</a>::<code>ppEnabledExtensionNames</code> list <strong class=\"purple\">must</strong> also be present in that list."
+          "text": " All <a href=\"#extendingvulkan-extensions-extensiondependencies\">required extensions</a> for each extension in the <a href=\"#VkDeviceCreateInfo\">VkDeviceCreateInfo</a>::<code>ppEnabledExtensionNames</code> list <strong class=\"purple\">must</strong> also be present in that list."
         },
         {
           "vuid": "VUID-vkCreateDevice-physicalDevice-parameter",
@@ -362,7 +362,7 @@
         },
         {
           "vuid": "VUID-VkDeviceCreateInfo-pNext-pNext",
-          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkDeviceGroupDeviceCreateInfo\">VkDeviceGroupDeviceCreateInfo</a>, <a href=\"#VkDeviceMemoryOverallocationCreateInfoAMD\">VkDeviceMemoryOverallocationCreateInfoAMD</a>, <a href=\"#VkPhysicalDevice16BitStorageFeatures\">VkPhysicalDevice16BitStorageFeatures</a>, <a href=\"#VkPhysicalDevice8BitStorageFeaturesKHR\">VkPhysicalDevice8BitStorageFeaturesKHR</a>, <a href=\"#VkPhysicalDeviceASTCDecodeFeaturesEXT\">VkPhysicalDeviceASTCDecodeFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT\">VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceBufferAddressFeaturesEXT\">VkPhysicalDeviceBufferAddressFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceComputeShaderDerivativesFeaturesNV\">VkPhysicalDeviceComputeShaderDerivativesFeaturesNV</a>, <a href=\"#VkPhysicalDeviceConditionalRenderingFeaturesEXT\">VkPhysicalDeviceConditionalRenderingFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceCornerSampledImageFeaturesNV\">VkPhysicalDeviceCornerSampledImageFeaturesNV</a>, <a href=\"#VkPhysicalDeviceDescriptorIndexingFeaturesEXT\">VkPhysicalDeviceDescriptorIndexingFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceExclusiveScissorFeaturesNV\">VkPhysicalDeviceExclusiveScissorFeaturesNV</a>, <a href=\"#VkPhysicalDeviceFeatures2\">VkPhysicalDeviceFeatures2</a>, <a href=\"#VkPhysicalDeviceFloat16Int8FeaturesKHR\">VkPhysicalDeviceFloat16Int8FeaturesKHR</a>, <a href=\"#VkPhysicalDeviceFragmentDensityMapFeaturesEXT\">VkPhysicalDeviceFragmentDensityMapFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV\">VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV</a>, <a href=\"#VkPhysicalDeviceInlineUniformBlockFeaturesEXT\">VkPhysicalDeviceInlineUniformBlockFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceMemoryPriorityFeaturesEXT\">VkPhysicalDeviceMemoryPriorityFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceMeshShaderFeaturesNV\">VkPhysicalDeviceMeshShaderFeaturesNV</a>, <a href=\"#VkPhysicalDeviceMultiviewFeatures\">VkPhysicalDeviceMultiviewFeatures</a>, <a href=\"#VkPhysicalDeviceProtectedMemoryFeatures\">VkPhysicalDeviceProtectedMemoryFeatures</a>, <a href=\"#VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV\">VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV</a>, <a href=\"#VkPhysicalDeviceSamplerYcbcrConversionFeatures\">VkPhysicalDeviceSamplerYcbcrConversionFeatures</a>, <a href=\"#VkPhysicalDeviceScalarBlockLayoutFeaturesEXT\">VkPhysicalDeviceScalarBlockLayoutFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceShaderAtomicInt64FeaturesKHR\">VkPhysicalDeviceShaderAtomicInt64FeaturesKHR</a>, <a href=\"#VkPhysicalDeviceShaderDrawParameterFeatures\">VkPhysicalDeviceShaderDrawParameterFeatures</a>, <a href=\"#VkPhysicalDeviceShaderImageFootprintFeaturesNV\">VkPhysicalDeviceShaderImageFootprintFeaturesNV</a>, <a href=\"#VkPhysicalDeviceShadingRateImageFeaturesNV\">VkPhysicalDeviceShadingRateImageFeaturesNV</a>, <a href=\"#VkPhysicalDeviceTransformFeedbackFeaturesEXT\">VkPhysicalDeviceTransformFeedbackFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceVariablePointerFeatures\">VkPhysicalDeviceVariablePointerFeatures</a>, <a href=\"#VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT\">VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT</a>, or <a href=\"#VkPhysicalDeviceVulkanMemoryModelFeaturesKHR\">VkPhysicalDeviceVulkanMemoryModelFeaturesKHR</a>"
+          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkDeviceGroupDeviceCreateInfo\">VkDeviceGroupDeviceCreateInfo</a>, <a href=\"#VkDeviceMemoryOverallocationCreateInfoAMD\">VkDeviceMemoryOverallocationCreateInfoAMD</a>, <a href=\"#VkPhysicalDevice16BitStorageFeatures\">VkPhysicalDevice16BitStorageFeatures</a>, <a href=\"#VkPhysicalDevice8BitStorageFeaturesKHR\">VkPhysicalDevice8BitStorageFeaturesKHR</a>, <a href=\"#VkPhysicalDeviceASTCDecodeFeaturesEXT\">VkPhysicalDeviceASTCDecodeFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT\">VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceBufferAddressFeaturesEXT\">VkPhysicalDeviceBufferAddressFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceComputeShaderDerivativesFeaturesNV\">VkPhysicalDeviceComputeShaderDerivativesFeaturesNV</a>, <a href=\"#VkPhysicalDeviceConditionalRenderingFeaturesEXT\">VkPhysicalDeviceConditionalRenderingFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceCooperativeMatrixFeaturesNV\">VkPhysicalDeviceCooperativeMatrixFeaturesNV</a>, <a href=\"#VkPhysicalDeviceCornerSampledImageFeaturesNV\">VkPhysicalDeviceCornerSampledImageFeaturesNV</a>, <a href=\"#VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV\">VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV</a>, <a href=\"#VkPhysicalDeviceDepthClipEnableFeaturesEXT\">VkPhysicalDeviceDepthClipEnableFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceDescriptorIndexingFeaturesEXT\">VkPhysicalDeviceDescriptorIndexingFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceExclusiveScissorFeaturesNV\">VkPhysicalDeviceExclusiveScissorFeaturesNV</a>, <a href=\"#VkPhysicalDeviceFeatures2\">VkPhysicalDeviceFeatures2</a>, <a href=\"#VkPhysicalDeviceFloat16Int8FeaturesKHR\">VkPhysicalDeviceFloat16Int8FeaturesKHR</a>, <a href=\"#VkPhysicalDeviceFragmentDensityMapFeaturesEXT\">VkPhysicalDeviceFragmentDensityMapFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV\">VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV</a>, <a href=\"#VkPhysicalDeviceInlineUniformBlockFeaturesEXT\">VkPhysicalDeviceInlineUniformBlockFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceMemoryPriorityFeaturesEXT\">VkPhysicalDeviceMemoryPriorityFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceMeshShaderFeaturesNV\">VkPhysicalDeviceMeshShaderFeaturesNV</a>, <a href=\"#VkPhysicalDeviceMultiviewFeatures\">VkPhysicalDeviceMultiviewFeatures</a>, <a href=\"#VkPhysicalDeviceProtectedMemoryFeatures\">VkPhysicalDeviceProtectedMemoryFeatures</a>, <a href=\"#VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV\">VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV</a>, <a href=\"#VkPhysicalDeviceSamplerYcbcrConversionFeatures\">VkPhysicalDeviceSamplerYcbcrConversionFeatures</a>, <a href=\"#VkPhysicalDeviceScalarBlockLayoutFeaturesEXT\">VkPhysicalDeviceScalarBlockLayoutFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceShaderAtomicInt64FeaturesKHR\">VkPhysicalDeviceShaderAtomicInt64FeaturesKHR</a>, <a href=\"#VkPhysicalDeviceShaderDrawParameterFeatures\">VkPhysicalDeviceShaderDrawParameterFeatures</a>, <a href=\"#VkPhysicalDeviceShaderImageFootprintFeaturesNV\">VkPhysicalDeviceShaderImageFootprintFeaturesNV</a>, <a href=\"#VkPhysicalDeviceShadingRateImageFeaturesNV\">VkPhysicalDeviceShadingRateImageFeaturesNV</a>, <a href=\"#VkPhysicalDeviceTransformFeedbackFeaturesEXT\">VkPhysicalDeviceTransformFeedbackFeaturesEXT</a>, <a href=\"#VkPhysicalDeviceVariablePointerFeatures\">VkPhysicalDeviceVariablePointerFeatures</a>, <a href=\"#VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT\">VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT</a>, or <a href=\"#VkPhysicalDeviceVulkanMemoryModelFeaturesKHR\">VkPhysicalDeviceVulkanMemoryModelFeaturesKHR</a>"
         },
         {
           "vuid": "VUID-VkDeviceCreateInfo-sType-unique",
@@ -2583,14 +2583,6 @@
           "text": " If <code>vkCmdPipelineBarrier</code> is called within a render pass instance, <code>bufferMemoryBarrierCount</code> <strong class=\"purple\">must</strong> be <code>0</code>"
         },
         {
-          "vuid": "VUID-vkCmdPipelineBarrier-image-01179",
-          "text": " If <code>vkCmdPipelineBarrier</code> is called within a render pass instance, the <code>image</code> member of any element of <code>pImageMemoryBarriers</code> <strong class=\"purple\">must</strong> be equal to one of the elements of <code>pAttachments</code> that the current <code>framebuffer</code> was created with, that is also referred to by one of the elements of the <code>pColorAttachments</code>, <code>pResolveAttachments</code> or <code>pDepthStencilAttachment</code> members of the <code>VkSubpassDescription</code> instance"
-        },
-        {
-          "vuid": "VUID-vkCmdPipelineBarrier-oldLayout-01180",
-          "text": " If <code>vkCmdPipelineBarrier</code> is called within a render pass instance, the <code>oldLayout</code> and <code>newLayout</code> members of any element of <code>pImageMemoryBarriers</code> <strong class=\"purple\">must</strong> be equal to the <code>layout</code> member of an element of the <code>pColorAttachments</code>, <code>pResolveAttachments</code> or <code>pDepthStencilAttachment</code> members of the <code>VkSubpassDescription</code> instance"
-        },
-        {
           "vuid": "VUID-vkCmdPipelineBarrier-oldLayout-01181",
           "text": " If <code>vkCmdPipelineBarrier</code> is called within a render pass instance, the <code>oldLayout</code> and <code>newLayout</code> members of an element of <code>pImageMemoryBarriers</code> <strong class=\"purple\">must</strong> be equal"
         },
@@ -2653,6 +2645,26 @@
         {
           "vuid": "VUID-vkCmdPipelineBarrier-commandBuffer-cmdpool",
           "text": " The <code>VkCommandPool</code> that <code>commandBuffer</code> was allocated from <strong class=\"purple\">must</strong> support transfer, graphics, or compute operations"
+        }
+      ],
+      "(VK_KHR_depth_stencil_resolve)": [
+        {
+          "vuid": "VUID-vkCmdPipelineBarrier-image-02635",
+          "text": " If <code>vkCmdPipelineBarrier</code> is called within a render pass instance, the <code>image</code> member of any element of <code>pImageMemoryBarriers</code> <strong class=\"purple\">must</strong> be equal to one of the elements of <code>pAttachments</code> that the current <code>framebuffer</code> was created with, that is also referred to by one of the elements of the <code>pColorAttachments</code>, <code>pResolveAttachments</code> or <code>pDepthStencilAttachment</code> members of the <code>VkSubpassDescription</code> instance or by the <code>pDepthStencilResolveAttachment</code> member of the <code>VkSubpassDescriptionDepthStencilResolveKHR</code> structure that the current subpass was created with"
+        },
+        {
+          "vuid": "VUID-vkCmdPipelineBarrier-oldLayout-02636",
+          "text": " If <code>vkCmdPipelineBarrier</code> is called within a render pass instance, the <code>oldLayout</code> and <code>newLayout</code> members of any element of <code>pImageMemoryBarriers</code> <strong class=\"purple\">must</strong> be equal to the <code>layout</code> member of an element of the <code>pColorAttachments</code>, <code>pResolveAttachments</code> or <code>pDepthStencilAttachment</code> members of the <code>VkSubpassDescription</code> instance or by the <code>pDepthStencilResolveAttachment</code> member of the <code>VkSubpassDescriptionDepthStencilResolveKHR</code> structure that the current subpass was created with, that refers to the same <code>image</code>"
+        }
+      ],
+      "!(VK_KHR_depth_stencil_resolve)": [
+        {
+          "vuid": "VUID-vkCmdPipelineBarrier-image-02637",
+          "text": " If <code>vkCmdPipelineBarrier</code> is called within a render pass instance, the <code>image</code> member of any element of <code>pImageMemoryBarriers</code> <strong class=\"purple\">must</strong> be equal to one of the elements of <code>pAttachments</code> that the current <code>framebuffer</code> was created with, that is also referred to by one of the elements of the <code>pColorAttachments</code>, <code>pResolveAttachments</code> or <code>pDepthStencilAttachment</code> members of the <code>VkSubpassDescription</code> instance that the current subpass was created with"
+        },
+        {
+          "vuid": "VUID-vkCmdPipelineBarrier-oldLayout-02638",
+          "text": " If <code>vkCmdPipelineBarrier</code> is called within a render pass instance, the <code>oldLayout</code> and <code>newLayout</code> members of any element of <code>pImageMemoryBarriers</code> <strong class=\"purple\">must</strong> be equal to the <code>layout</code> member of an element of the <code>pColorAttachments</code>, <code>pResolveAttachments</code> or <code>pDepthStencilAttachment</code> members of the <code>VkSubpassDescription</code> instance that the current subpass was created with, that refers to the same <code>image</code>"
         }
       ],
       "(VK_VERSION_1_1,VK_KHR_multiview)": [
@@ -3284,23 +3296,39 @@
         },
         {
           "vuid": "VUID-VkSubpassDescription-pResolveAttachments-00847",
-          "text": " If <code>pResolveAttachments</code> is not <code>NULL</code>, for each resolve attachment that does not have the value <code>VK_ATTACHMENT_UNUSED</code>, the corresponding color attachment <strong class=\"purple\">must</strong> not have the value <code>VK_ATTACHMENT_UNUSED</code>"
+          "text": " If <code>pResolveAttachments</code> is not <code>NULL</code>, for each resolve attachment that is not <code>VK_ATTACHMENT_UNUSED</code>, the corresponding color attachment <strong class=\"purple\">must</strong> not be <code>VK_ATTACHMENT_UNUSED</code>"
         },
         {
           "vuid": "VUID-VkSubpassDescription-pResolveAttachments-00848",
-          "text": " If <code>pResolveAttachments</code> is not <code>NULL</code>, the sample count of each element of <code>pColorAttachments</code> <strong class=\"purple\">must</strong> be anything other than <code>VK_SAMPLE_COUNT_1_BIT</code>"
+          "text": " If <code>pResolveAttachments</code> is not <code>NULL</code>, for each resolve attachment that is not <code>VK_ATTACHMENT_UNUSED</code>, the corresponding color attachment <strong class=\"purple\">must</strong> not have a sample count of <code>VK_SAMPLE_COUNT_1_BIT</code>"
         },
         {
           "vuid": "VUID-VkSubpassDescription-pResolveAttachments-00849",
-          "text": " Each element of <code>pResolveAttachments</code> <strong class=\"purple\">must</strong> have a sample count of <code>VK_SAMPLE_COUNT_1_BIT</code>"
+          "text": " If <code>pResolveAttachments</code> is not <code>NULL</code>, each resolve attachment that is not <code>VK_ATTACHMENT_UNUSED</code> <strong class=\"purple\">must</strong> have a sample count of <code>VK_SAMPLE_COUNT_1_BIT</code>"
         },
         {
           "vuid": "VUID-VkSubpassDescription-pResolveAttachments-00850",
-          "text": " Each element of <code>pResolveAttachments</code> <strong class=\"purple\">must</strong> have the same <a href=\"#VkFormat\">VkFormat</a> as its corresponding color attachment"
+          "text": " If <code>pResolveAttachments</code> is not <code>NULL</code>, each resolve attachment that is not <code>VK_ATTACHMENT_UNUSED</code> <strong class=\"purple\">must</strong> have the same <a href=\"#VkFormat\">VkFormat</a> as its corresponding color attachment"
         },
         {
           "vuid": "VUID-VkSubpassDescription-pColorAttachments-01417",
           "text": " All attachments in <code>pColorAttachments</code> that are not <code>VK_ATTACHMENT_UNUSED</code> <strong class=\"purple\">must</strong> have the same sample count"
+        },
+        {
+          "vuid": "VUID-VkSubpassDescription-pInputAttachments-02647",
+          "text": " All attachments in <code>pInputAttachments</code> that are not <code>VK_ATTACHMENT_UNUSED</code> <strong class=\"purple\">must</strong> have formats whose features contain at least one of <code>VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT</code> or <code>VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT</code>."
+        },
+        {
+          "vuid": "VUID-VkSubpassDescription-pColorAttachments-02648",
+          "text": " All attachments in <code>pColorAttachments</code> that are not <code>VK_ATTACHMENT_UNUSED</code> <strong class=\"purple\">must</strong> have formats whose features contain <code>VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT</code>"
+        },
+        {
+          "vuid": "VUID-VkSubpassDescription-pResolveAttachments-02649",
+          "text": " All attachments in <code>pResolveAttachments</code> that are not <code>VK_ATTACHMENT_UNUSED</code> <strong class=\"purple\">must</strong> have formats whose features contain <code>VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT</code>"
+        },
+        {
+          "vuid": "VUID-VkSubpassDescription-pDepthStencilAttachment-02650",
+          "text": " If <code>pDepthStencilAttachment</code> is not <code>NULL</code> and the attachment is not <code>VK_ATTACHMENT_UNUSED</code> then it <strong class=\"purple\">must</strong> have a format whose features contain <code>VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT</code>"
         },
         {
           "vuid": "VUID-VkSubpassDescription-pDepthStencilAttachment-01418",
@@ -3364,7 +3392,7 @@
       "core": [
         {
           "vuid": "VUID-VkAttachmentReference-layout-00857",
-          "text": " <code>layout</code> <strong class=\"purple\">must</strong> not be <code>VK_IMAGE_LAYOUT_UNDEFINED</code> or <code>VK_IMAGE_LAYOUT_PREINITIALIZED</code>"
+          "text": " If <code>attachment</code> is not <code>VK_ATTACHMENT_UNUSED</code>, <code>layout</code> <strong class=\"purple\">must</strong> not be <code>VK_IMAGE_LAYOUT_UNDEFINED</code> or <code>VK_IMAGE_LAYOUT_PREINITIALIZED</code>"
         },
         {
           "vuid": "VUID-VkAttachmentReference-layout-parameter",
@@ -3672,11 +3700,11 @@
         },
         {
           "vuid": "VUID-VkSubpassDescription2KHR-pResolveAttachments-03066",
-          "text": " If <code>pResolveAttachments</code> is not <code>NULL</code>, the sample count of each element of <code>pColorAttachments</code> <strong class=\"purple\">must</strong> be anything other than <code>VK_SAMPLE_COUNT_1_BIT</code>"
+          "text": " If <code>pResolveAttachments</code> is not <code>NULL</code>, for each resolve attachment that is not <code>VK_ATTACHMENT_UNUSED</code>, the corresponding color attachment <strong class=\"purple\">must</strong> not have a sample count of <code>VK_SAMPLE_COUNT_1_BIT</code>"
         },
         {
           "vuid": "VUID-VkSubpassDescription2KHR-pResolveAttachments-03067",
-          "text": " Any given element of <code>pResolveAttachments</code> <strong class=\"purple\">must</strong> have a sample count of <code>VK_SAMPLE_COUNT_1_BIT</code>"
+          "text": " If <code>pResolveAttachments</code> is not <code>NULL</code>, each resolve attachment that is not <code>VK_ATTACHMENT_UNUSED</code> <strong class=\"purple\">must</strong> have a sample count of <code>VK_SAMPLE_COUNT_1_BIT</code>"
         },
         {
           "vuid": "VUID-VkSubpassDescription2KHR-pResolveAttachments-03068",
@@ -3772,11 +3800,15 @@
         },
         {
           "vuid": "VUID-VkSubpassDescriptionDepthStencilResolveKHR-pDepthStencilResolveAttachment-03179",
-          "text": " If <code>pDepthStencilResolveAttachment</code> is not <code>NULL</code>, the sample count of <code>pDepthStencilAttachment</code> <strong class=\"purple\">must</strong> be anything other than <code>VK_SAMPLE_COUNT_1_BIT</code>"
+          "text": " If <code>pDepthStencilResolveAttachment</code> is not <code>NULL</code> and does not have the value <code>VK_ATTACHMENT_UNUSED</code>, <code>pDepthStencilAttachment</code> <strong class=\"purple\">must</strong> not have a sample count of <code>VK_SAMPLE_COUNT_1_BIT</code>"
         },
         {
           "vuid": "VUID-VkSubpassDescriptionDepthStencilResolveKHR-pDepthStencilResolveAttachment-03180",
-          "text": " <code>pDepthStencilResolveAttachment</code> <strong class=\"purple\">must</strong> have a sample count of <code>VK_SAMPLE_COUNT_1_BIT</code>"
+          "text": " If <code>pDepthStencilResolveAttachment</code> is not <code>NULL</code> and does not have the value <code>VK_ATTACHMENT_UNUSED</code>, <code>pDepthStencilResolveAttachment</code> <strong class=\"purple\">must</strong> have a sample count of <code>VK_SAMPLE_COUNT_1_BIT</code>"
+        },
+        {
+          "vuid": "VUID-VkSubpassDescriptionDepthStencilResolveKHR-pDepthStencilResolveAttachment-02651",
+          "text": " If <code>pDepthStencilResolveAttachment</code> is not <code>NULL</code> and does not have the value <code>VK_ATTACHMENT_UNUSED</code> then it <strong class=\"purple\">must</strong> have a format whose features contain <code>VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT</code>"
         },
         {
           "vuid": "VUID-VkSubpassDescriptionDepthStencilResolveKHR-pDepthStencilResolveAttachment-03181",
@@ -3824,7 +3856,7 @@
       "(VK_KHR_create_renderpass2)": [
         {
           "vuid": "VUID-VkAttachmentReference2KHR-layout-03077",
-          "text": " <code>layout</code> <strong class=\"purple\">must</strong> not be <code>VK_IMAGE_LAYOUT_UNDEFINED</code> or <code>VK_IMAGE_LAYOUT_PREINITIALIZED</code>"
+          "text": " If <code>attachment</code> is not <code>VK_ATTACHMENT_UNUSED</code>, <code>layout</code> <strong class=\"purple\">must</strong> not be <code>VK_IMAGE_LAYOUT_UNDEFINED</code> or <code>VK_IMAGE_LAYOUT_PREINITIALIZED</code>"
         },
         {
           "vuid": "VUID-VkAttachmentReference2KHR-sType-sType",
@@ -4025,8 +4057,8 @@
           "text": " Each element of <code>pAttachments</code> that is used as a color attachment or resolve attachment by <code>renderPass</code> <strong class=\"purple\">must</strong> have been created with a <code>usage</code> value including <code>VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT</code>"
         },
         {
-          "vuid": "VUID-VkFramebufferCreateInfo-pAttachments-02603",
-          "text": " Each element of <code>pAttachments</code> that is used as a depth/stencil attachment or depth/stencil resolve attachment by <code>renderPass</code> <strong class=\"purple\">must</strong> have been created with a <code>usage</code> value including <code>VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT</code>"
+          "vuid": "VUID-VkFramebufferCreateInfo-pAttachments-02633",
+          "text": " Each element of <code>pAttachments</code> that is used as a depth/stencil attachment by <code>renderPass</code> <strong class=\"purple\">must</strong> have been created with a <code>usage</code> value including <code>VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT</code>"
         },
         {
           "vuid": "VUID-VkFramebufferCreateInfo-pAttachments-00879",
@@ -4095,6 +4127,12 @@
         {
           "vuid": "VUID-VkFramebufferCreateInfo-commonparent",
           "text": " Both of <code>renderPass</code>, and the elements of <code>pAttachments</code> that are valid handles <strong class=\"purple\">must</strong> have been created, allocated, or retrieved from the same <code>VkDevice</code>"
+        }
+      ],
+      "(VK_KHR_depth_stencil_resolve)": [
+        {
+          "vuid": "VUID-VkFramebufferCreateInfo-pAttachments-02634",
+          "text": " Each element of <code>pAttachments</code> that is used as a depth/stencil resolve attachment by <code>renderPass</code> <strong class=\"purple\">must</strong> have been created with a <code>usage</code> value including <code>VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT</code>"
         }
       ],
       "(VK_EXT_fragment_density_map)": [
@@ -4690,7 +4728,7 @@
         },
         {
           "vuid": "VUID-VkShaderModuleCreateInfo-pCode-01377",
-          "text": " <code>pCode</code> <strong class=\"purple\">must</strong> point to either valid SPIR-V code, formatted and packed as described by the <a href=\"#spirv-spec\">Khronos SPIR-V Specification</a> or valid GLSL code which <strong class=\"purple\">must</strong> be written to the GL_KHR_vulkan_glsl extension specification"
+          "text": " <code>pCode</code> <strong class=\"purple\">must</strong> point to either valid SPIR-V code, formatted and packed as described by the <a href=\"#spirv-spec\">Khronos SPIR-V Specification</a> or valid GLSL code which <strong class=\"purple\">must</strong> be written to the <code>GL_KHR_vulkan_glsl</code> extension specification"
         },
         {
           "vuid": "VUID-VkShaderModuleCreateInfo-pCode-01378",
@@ -4698,7 +4736,7 @@
         },
         {
           "vuid": "VUID-VkShaderModuleCreateInfo-pCode-01379",
-          "text": " If <code>pCode</code> points to GLSL code, it <strong class=\"purple\">must</strong> be valid GLSL code written to the GL_KHR_vulkan_glsl GLSL extension specification"
+          "text": " If <code>pCode</code> points to GLSL code, it <strong class=\"purple\">must</strong> be valid GLSL code written to the <code>GL_KHR_vulkan_glsl</code> GLSL extension specification"
         }
       ]
     },
@@ -4739,6 +4777,54 @@
         {
           "vuid": "VUID-vkDestroyShaderModule-shaderModule-parent",
           "text": " If <code>shaderModule</code> is a valid handle, it <strong class=\"purple\">must</strong> have been created, allocated, or retrieved from <code>device</code>"
+        }
+      ]
+    },
+    "vkGetPhysicalDeviceCooperativeMatrixPropertiesNV": {
+      "(VK_NV_cooperative_matrix)": [
+        {
+          "vuid": "VUID-vkGetPhysicalDeviceCooperativeMatrixPropertiesNV-physicalDevice-parameter",
+          "text": " <code>physicalDevice</code> <strong class=\"purple\">must</strong> be a valid <code>VkPhysicalDevice</code> handle"
+        },
+        {
+          "vuid": "VUID-vkGetPhysicalDeviceCooperativeMatrixPropertiesNV-pPropertyCount-parameter",
+          "text": " <code>pPropertyCount</code> <strong class=\"purple\">must</strong> be a valid pointer to a <code>uint32_t</code> value"
+        },
+        {
+          "vuid": "VUID-vkGetPhysicalDeviceCooperativeMatrixPropertiesNV-pProperties-parameter",
+          "text": " If the value referenced by <code>pPropertyCount</code> is not <code>0</code>, and <code>pProperties</code> is not <code>NULL</code>, <code>pProperties</code> <strong class=\"purple\">must</strong> be a valid pointer to an array of <code>pPropertyCount</code> <code>VkCooperativeMatrixPropertiesNV</code> structures"
+        }
+      ]
+    },
+    "VkCooperativeMatrixPropertiesNV": {
+      "(VK_NV_cooperative_matrix)": [
+        {
+          "vuid": "VUID-VkCooperativeMatrixPropertiesNV-sType-sType",
+          "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_COOPERATIVE_MATRIX_PROPERTIES_NV</code>"
+        },
+        {
+          "vuid": "VUID-VkCooperativeMatrixPropertiesNV-pNext-pNext",
+          "text": " <code>pNext</code> <strong class=\"purple\">must</strong> be <code>NULL</code>"
+        },
+        {
+          "vuid": "VUID-VkCooperativeMatrixPropertiesNV-AType-parameter",
+          "text": " <code>AType</code> <strong class=\"purple\">must</strong> be a valid <a href=\"#VkComponentTypeNV\">VkComponentTypeNV</a> value"
+        },
+        {
+          "vuid": "VUID-VkCooperativeMatrixPropertiesNV-BType-parameter",
+          "text": " <code>BType</code> <strong class=\"purple\">must</strong> be a valid <a href=\"#VkComponentTypeNV\">VkComponentTypeNV</a> value"
+        },
+        {
+          "vuid": "VUID-VkCooperativeMatrixPropertiesNV-CType-parameter",
+          "text": " <code>CType</code> <strong class=\"purple\">must</strong> be a valid <a href=\"#VkComponentTypeNV\">VkComponentTypeNV</a> value"
+        },
+        {
+          "vuid": "VUID-VkCooperativeMatrixPropertiesNV-DType-parameter",
+          "text": " <code>DType</code> <strong class=\"purple\">must</strong> be a valid <a href=\"#VkComponentTypeNV\">VkComponentTypeNV</a> value"
+        },
+        {
+          "vuid": "VUID-VkCooperativeMatrixPropertiesNV-scope-parameter",
+          "text": " <code>scope</code> <strong class=\"purple\">must</strong> be a valid <a href=\"#VkScopeNV\">VkScopeNV</a> value"
         }
       ]
     },
@@ -5218,7 +5304,7 @@
         },
         {
           "vuid": "VUID-VkGraphicsPipelineCreateInfo-blendEnable-02023",
-          "text": " If rasterization is not disabled and the subpass uses color attachments, then for each color attachment in the subpass the <code>blendEnable</code> member of the corresponding element of the <code>pAttachment</code> member of <code>pColorBlendState</code> <strong class=\"purple\">must</strong> be <code>VK_FALSE</code> if the attached image&#8217;s <a href=\"#resources-image-format-features\">format features</a> does not contain the <code>VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT</code>."
+          "text": " If rasterization is not disabled and the subpass uses color attachments, then for each color attachment in the subpass the <code>blendEnable</code> member of the corresponding element of the <code>pAttachment</code> member of <code>pColorBlendState</code> <strong class=\"purple\">must</strong> be <code>VK_FALSE</code> if the attached image&#8217;s <a href=\"#resources-image-format-features\">format features</a> does not contain <code>VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT</code>."
         },
         {
           "vuid": "VUID-VkGraphicsPipelineCreateInfo-attachmentCount-00746",
@@ -6194,7 +6280,7 @@
         },
         {
           "vuid": "VUID-VkMemoryAllocateInfo-pNext-02386",
-          "text": " If the parameters define an import operation, the external handle is an Android hardware buffer, and the <code>pNext</code> chain includes an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> with <code>image</code> that is not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, the Android hardware buffer&#8217;s <code>AHardwareBuffer</code>::<code>usage</code> <strong class=\"purple\">must</strong> include at least one of <code>AHARDWAREBUFFER_USAGE_GPU_COLOR_OUTPUT</code> or <code>AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE</code>."
+          "text": " If the parameters define an import operation, the external handle is an Android hardware buffer, and the <code>pNext</code> chain includes an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> with <code>image</code> that is not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, the Android hardware buffer&#8217;s <a href=\"#AHardwareBuffer\">AHardwareBuffer</a>::<code>usage</code> <strong class=\"purple\">must</strong> include at least one of <code>AHARDWAREBUFFER_USAGE_GPU_COLOR_OUTPUT</code> or <code>AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE</code>."
         },
         {
           "vuid": "VUID-VkMemoryAllocateInfo-pNext-02387",
@@ -6206,11 +6292,11 @@
         },
         {
           "vuid": "VUID-VkMemoryAllocateInfo-pNext-02389",
-          "text": " If the parameters define an import operation, the external handle is an Android hardware buffer, and the <code>pNext</code> chain includes an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> with <code>image</code> that is not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, and the Android hardware buffer&#8217;s <code>AHardwareBuffer</code>::<code>usage</code> includes <code>AHARDWAREBUFFER_USAGE_GPU_MIPMAP_COMPLETE</code>, the <code>image</code> <strong class=\"purple\">must</strong> have a complete mipmap chain."
+          "text": " If the parameters define an import operation, the external handle is an Android hardware buffer, and the <code>pNext</code> chain includes an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> with <code>image</code> that is not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, and the Android hardware buffer&#8217;s <a href=\"#AHardwareBuffer\">AHardwareBuffer</a>::<code>usage</code> includes <code>AHARDWAREBUFFER_USAGE_GPU_MIPMAP_COMPLETE</code>, the <code>image</code> <strong class=\"purple\">must</strong> have a complete mipmap chain."
         },
         {
           "vuid": "VUID-VkMemoryAllocateInfo-pNext-02586",
-          "text": " If the parameters define an import operation, the external handle is an Android hardware buffer, and the <code>pNext</code> chain includes an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> with <code>image</code> that is not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, and the Android hardware buffer&#8217;s <code>AHardwareBuffer</code>::<code>usage</code> does not include <code>AHARDWAREBUFFER_USAGE_GPU_MIPMAP_COMPLETE</code>, the <code>image</code> <strong class=\"purple\">must</strong> have exactly one mipmap level."
+          "text": " If the parameters define an import operation, the external handle is an Android hardware buffer, and the <code>pNext</code> chain includes an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> with <code>image</code> that is not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, and the Android hardware buffer&#8217;s <a href=\"#AHardwareBuffer\">AHardwareBuffer</a>::<code>usage</code> does not include <code>AHARDWAREBUFFER_USAGE_GPU_MIPMAP_COMPLETE</code>, the <code>image</code> <strong class=\"purple\">must</strong> have exactly one mipmap level."
         },
         {
           "vuid": "VUID-VkMemoryAllocateInfo-pNext-02390",
@@ -7118,7 +7204,7 @@
         },
         {
           "vuid": "VUID-vkGetDeviceGroupPeerMemoryFeatures-localDeviceIndex-00694",
-          "text": " <code>localDeviceIndex</code> <strong class=\"purple\">must</strong> not equal remoteDeviceIndex"
+          "text": " <code>localDeviceIndex</code> <strong class=\"purple\">must</strong> not equal <code>remoteDeviceIndex</code>"
         },
         {
           "vuid": "VUID-vkGetDeviceGroupPeerMemoryFeatures-device-parameter",
@@ -7826,7 +7912,7 @@
         },
         {
           "vuid": "VUID-VkImageCreateInfo-imageCreateFormatFeatures-02260",
-          "text": " If pame:format is a <em>multi-planar</em> format, and if <code>imageCreateFormatFeatures</code> (as defined in <a href=\"#resources-image-creation-limits\">Image Creation Limits</a>) does not contain <code>VK_FORMAT_FEATURE_DISJOINT_BIT</code>, then <code>flags</code> <strong class=\"purple\">must</strong> not contain <code>VK_IMAGE_CREATE_DISJOINT_BIT</code>."
+          "text": " If <code>format</code> is a <em>multi-planar</em> format, and if <code>imageCreateFormatFeatures</code> (as defined in <a href=\"#resources-image-creation-limits\">Image Creation Limits</a>) does not contain <code>VK_FORMAT_FEATURE_DISJOINT_BIT</code>, then <code>flags</code> <strong class=\"purple\">must</strong> not contain <code>VK_IMAGE_CREATE_DISJOINT_BIT</code>."
         },
         {
           "vuid": "VUID-VkImageCreateInfo-format-01577",
@@ -8271,6 +8357,10 @@
           "text": " If <code>usage</code> contains <code>VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT</code>, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT</code>."
         },
         {
+          "vuid": "VUID-VkImageViewCreateInfo-usage-02652",
+          "text": " If <code>usage</code> contains <code>VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT</code>, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain at least one of <code>VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT</code> or <code>VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT</code>."
+        },
+        {
           "vuid": "VUID-VkImageViewCreateInfo-subresourceRange-01478",
           "text": " <code>subresourceRange.baseMipLevel</code> <strong class=\"purple\">must</strong> be less than the <code>mipLevels</code> specified in <a href=\"#VkImageCreateInfo\">VkImageCreateInfo</a> when <code>image</code> was created"
         },
@@ -8556,7 +8646,7 @@
         },
         {
           "vuid": "VUID-VkImageViewASTCDecodeModeEXT-decodeMode-02231",
-          "text": " If the <a href=\"#features-features-astc-decodeModeSharedExponent\">decodeModeSharedExponent</a> feature is not enabled, <code>decodeMode</code> <strong class=\"purple\">must</strong> not be <code>VK_FORMAT_E5B9G9R9_UFLOAT_PACK32</code>"
+          "text": " If the <a href=\"#features-features-astc-decodeModeSharedExponent\"><code>decodeModeSharedExponent</code></a> feature is not enabled, <code>decodeMode</code> <strong class=\"purple\">must</strong> not be <code>VK_FORMAT_E5B9G9R9_UFLOAT_PACK32</code>"
         },
         {
           "vuid": "VUID-VkImageViewASTCDecodeModeEXT-decodeMode-02232",
@@ -9041,10 +9131,22 @@
         {
           "vuid": "VUID-vkBindImageMemory-image-01445",
           "text": " If <code>image</code> requires a dedicated allocation (as reported by <a href=\"#vkGetImageMemoryRequirements2\">vkGetImageMemoryRequirements2</a> in <a href=\"#VkMemoryDedicatedRequirements\">VkMemoryDedicatedRequirements</a>::requiresDedicatedAllocation for <code>image</code>), <code>memory</code> <strong class=\"purple\">must</strong> have been created with <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> equal to <code>image</code>"
-        },
+        }
+      ],
+      "(VK_VERSION_1_1,VK_KHR_dedicated_allocation)+!(VK_NV_dedicated_allocation_image_aliasing)": [
         {
           "vuid": "VUID-vkBindImageMemory-memory-01509",
           "text": " If the <code>VkMemoryAllocateInfo</code> provided when <code>memory</code> was allocated included an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> in its <code>pNext</code> chain, and <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> was not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, then <code>image</code> <strong class=\"purple\">must</strong> equal <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> and <code>memoryOffset</code> <strong class=\"purple\">must</strong> be zero."
+        }
+      ],
+      "(VK_VERSION_1_1,VK_KHR_dedicated_allocation)+(VK_NV_dedicated_allocation_image_aliasing)": [
+        {
+          "vuid": "VUID-vkBindImageMemory-memory-02628",
+          "text": " If the <a href=\"#features-features-dedicatedAllocationImageAliasing\">dedicated allocation image aliasing</a> feature is not enabled, and the <code>VkMemoryAllocateInfo</code> provided when <code>memory</code> was allocated included an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> in its <code>pNext</code> chain, and <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> was not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, then <code>image</code> <strong class=\"purple\">must</strong> equal <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> and <code>memoryOffset</code> <strong class=\"purple\">must</strong> be zero."
+        },
+        {
+          "vuid": "VUID-vkBindImageMemory-memory-02629",
+          "text": " If the <a href=\"#features-features-dedicatedAllocationImageAliasing\">dedicated allocation image aliasing</a> feature is enabled, and the <code>VkMemoryAllocateInfo</code> provided when <code>memory</code> was allocated included an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> in its <code>pNext</code> chain, and <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> was not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, then <code>memoryOffset</code> <strong class=\"purple\">must</strong> be zero, and <code>image</code> <strong class=\"purple\">must</strong> be either equal to <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> or an image that was created using the same parameters in <code>VkImageCreateInfo</code>, with the exception that <code>extent</code> and <code>arrayLayers</code> <strong class=\"purple\">may</strong> differ subject to the following restrictions: every dimension in the <code>extent</code> parameter of the image being bound <strong class=\"purple\">must</strong> be equal to or smaller than the original image for which the allocation was created; and the <code>arrayLayers</code> parameter of the image being bound <strong class=\"purple\">must</strong> be equal to or smaller than the original image for which the allocation was created."
         }
       ],
       "(VK_VERSION_1_1)": [
@@ -9169,10 +9271,22 @@
         {
           "vuid": "VUID-VkBindImageMemoryInfo-image-01622",
           "text": " If <code>image</code> requires a dedicated allocation (as reported by <a href=\"#vkGetImageMemoryRequirements2\">vkGetImageMemoryRequirements2</a> in <a href=\"#VkMemoryDedicatedRequirements\">VkMemoryDedicatedRequirements</a>::requiresDedicatedAllocation for <code>image</code>), <code>memory</code> <strong class=\"purple\">must</strong> have been created with <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> equal to <code>image</code> and <code>memoryOffset</code> <strong class=\"purple\">must</strong> be zero"
-        },
+        }
+      ],
+      "(VK_VERSION_1_1,VK_KHR_bind_memory2)+(VK_VERSION_1_1,VK_KHR_dedicated_allocation)+!(VK_NV_dedicated_allocation_image_aliasing)": [
         {
           "vuid": "VUID-VkBindImageMemoryInfo-memory-01903",
           "text": " If the <code>VkMemoryAllocateInfo</code> provided when <code>memory</code> was allocated included an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> in its <code>pNext</code> chain, and <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> was not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, then <code>image</code> <strong class=\"purple\">must</strong> equal <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> and <code>memoryOffset</code> <strong class=\"purple\">must</strong> be zero."
+        }
+      ],
+      "(VK_VERSION_1_1,VK_KHR_bind_memory2)+(VK_VERSION_1_1,VK_KHR_dedicated_allocation)+(VK_NV_dedicated_allocation_image_aliasing)": [
+        {
+          "vuid": "VUID-VkBindImageMemoryInfo-memory-02630",
+          "text": " If the <a href=\"#features-features-dedicatedAllocationImageAliasing\">dedicated allocation image aliasing</a> feature is not enabled, and the <code>VkMemoryAllocateInfo</code> provided when <code>memory</code> was allocated included an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> in its <code>pNext</code> chain, and <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> was not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, then <code>image</code> <strong class=\"purple\">must</strong> equal <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> and <code>memoryOffset</code> <strong class=\"purple\">must</strong> be zero."
+        },
+        {
+          "vuid": "VUID-VkBindImageMemoryInfo-memory-02631",
+          "text": " If the <a href=\"#features-features-dedicatedAllocationImageAliasing\">dedicated allocation image aliasing</a> feature is enabled, and the <code>VkMemoryAllocateInfo</code> provided when <code>memory</code> was allocated included an instance of <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a> in its <code>pNext</code> chain, and <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> was not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>, then <code>memoryOffset</code> <strong class=\"purple\">must</strong> be zero, and <code>image</code> <strong class=\"purple\">must</strong> be either equal to <a href=\"#VkMemoryDedicatedAllocateInfo\">VkMemoryDedicatedAllocateInfo</a>::<code>image</code> or an image that was created using the same parameters in <code>VkImageCreateInfo</code>, with the exception that <code>extent</code> and <code>arrayLayers</code> <strong class=\"purple\">may</strong> differ subject to the following restrictions: every dimension in the <code>extent</code> parameter of the image being bound <strong class=\"purple\">must</strong> be equal to or smaller than the original image for which the allocation was created; and the <code>arrayLayers</code> parameter of the image being bound <strong class=\"purple\">must</strong> be equal to or smaller than the original image for which the allocation was created."
         }
       ],
       "(VK_VERSION_1_1,VK_KHR_bind_memory2)+(VK_NV_dedicated_allocation)": [
@@ -9843,16 +9957,16 @@
           "text": " The sampler reduction mode <strong class=\"purple\">must</strong> be set to <code>VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT</code> if <a href=\"#samplers-YCbCr-conversion\">sampler Y&#8217;C<sub>B</sub>C<sub>R</sub> conversion</a> is enabled"
         }
       ],
-      "(VK_IMG_filter_cubic)": [
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-VkSamplerCreateInfo-magFilter-01081",
-          "text": " If either <code>magFilter</code> or <code>minFilter</code> is <code>VK_FILTER_CUBIC_IMG</code>, <code>anisotropyEnable</code> <strong class=\"purple\">must</strong> be <code>VK_FALSE</code>"
+          "text": " If either <code>magFilter</code> or <code>minFilter</code> is <code>VK_FILTER_CUBIC_EXT</code>, <code>anisotropyEnable</code> <strong class=\"purple\">must</strong> be <code>VK_FALSE</code>"
         }
       ],
-      "(VK_IMG_filter_cubic+VK_EXT_sampler_filter_minmax)": [
+      "(VK_IMG_filter_cubic+VK_EXT_sampler_filter_minmax)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-VkSamplerCreateInfo-magFilter-01422",
-          "text": " If either <code>magFilter</code> or <code>minFilter</code> is <code>VK_FILTER_CUBIC_IMG</code>, the <code>reductionMode</code> member of <a href=\"#VkSamplerReductionModeCreateInfoEXT\">VkSamplerReductionModeCreateInfoEXT</a> <strong class=\"purple\">must</strong> be <code>VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT</code>"
+          "text": " If either <code>magFilter</code> or <code>minFilter</code> is <code>VK_FILTER_CUBIC_EXT</code>, the <code>reductionMode</code> member of <a href=\"#VkSamplerReductionModeCreateInfoEXT\">VkSamplerReductionModeCreateInfoEXT</a> <strong class=\"purple\">must</strong> be <code>VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT</code>"
         }
       ],
       "(VK_EXT_sampler_filter_minmax)": [
@@ -10640,7 +10754,7 @@
         },
         {
           "vuid": "VUID-vkDestroyPipelineLayout-pipelineLayout-02004",
-          "text": " <code>pipelineLayout</code> <strong class=\"purple\">must</strong> not have been passed to any vkCmd* command for any command buffers that are still in the <a href=\"#commandbuffers-lifecycle\">recording state</a> when <code>vkDestroyPipelineLayout</code> is called"
+          "text": " <code>pipelineLayout</code> <strong class=\"purple\">must</strong> not have been passed to any <code>vkCmd*</code> command for any command buffers that are still in the <a href=\"#commandbuffers-lifecycle\">recording state</a> when <code>vkDestroyPipelineLayout</code> is called"
         },
         {
           "vuid": "VUID-vkDestroyPipelineLayout-device-parameter",
@@ -11056,7 +11170,7 @@
         },
         {
           "vuid": "VUID-VkWriteDescriptorSet-descriptorType-01403",
-          "text": " If <code>descriptorType</code> is <code>VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE</code> or <code>VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER</code>, the <code>imageLayout</code> member of each element of <code>pImageInfo</code> <strong class=\"purple\">must</strong> be <code>VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</code>, <code>VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL</code> or <code>VK_IMAGE_LAYOUT_GENERAL</code>"
+          "text": " If <code>descriptorType</code> is <code>VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE</code> or <code>VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER</code>, the <code>imageLayout</code> member of each element of <code>pImageInfo</code> <strong class=\"purple\">must</strong> be a member of the list given in <a href=\"#descriptorsets-sampledimage\">Sampled Image</a> or <a href=\"#descriptorsets-combinedimagesampler\">Combined Image Sampler</a>, corresponding to its type"
         },
         {
           "vuid": "VUID-VkWriteDescriptorSet-descriptorType-00338",
@@ -11223,6 +11337,10 @@
         {
           "vuid": "VUID-VkCopyDescriptorSet-dstArrayElement-00348",
           "text": " The sum of <code>dstArrayElement</code> and <code>descriptorCount</code> <strong class=\"purple\">must</strong> be less than or equal to the number of array elements in the descriptor set binding specified by <code>dstBinding</code>, and all applicable consecutive bindings, as described by <a href=\"#descriptorsets-updates-consecutive\">consecutive binding updates</a>"
+        },
+        {
+          "vuid": "VUID-VkCopyDescriptorSet-dstBinding-02632",
+          "text": " The type of <code>dstBinding</code> within <code>dstSet</code> <strong class=\"purple\">must</strong> be equal to the type of <code>srcBinding</code> within <code>srcSet</code>"
         },
         {
           "vuid": "VUID-VkCopyDescriptorSet-srcSet-00349",
@@ -11554,7 +11672,7 @@
       "(VK_KHR_push_descriptor)+(VK_VERSION_1_1,VK_KHR_descriptor_update_template)": [
         {
           "vuid": "VUID-vkCmdPushDescriptorSetWithTemplateKHR-commandBuffer-00366",
-          "text": " The pipelineBindPoint specified during the creation of the descriptor update template <strong class=\"purple\">must</strong> be supported by the <code>commandBuffer</code>&#8217;s parent <code>VkCommandPool</code>&#8217;s queue family"
+          "text": " The <code>pipelineBindPoint</code> specified during the creation of the descriptor update template <strong class=\"purple\">must</strong> be supported by the <code>commandBuffer</code>&#8217;s parent <code>VkCommandPool</code>&#8217;s queue family"
         },
         {
           "vuid": "VUID-vkCmdPushDescriptorSetWithTemplateKHR-pData-01686",
@@ -13815,14 +13933,14 @@
           "text": " <code>dstImageLayout</code> <strong class=\"purple\">must</strong> be <code>VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR</code>, <code>VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL</code> or <code>VK_IMAGE_LAYOUT_GENERAL</code>"
         }
       ],
-      "(VK_IMG_filter_cubic)": [
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdBlitImage-filter-02002",
-          "text": " If <code>filter</code> is <code>VK_FILTER_CUBIC_IMG</code>, then the <a href=\"#resources-image-format-features\">format features</a> of <code>srcImage</code> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>."
+          "text": " If <code>filter</code> is <code>VK_FILTER_CUBIC_EXT</code>, then the <a href=\"#resources-image-format-features\">format features</a> of <code>srcImage</code> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>."
         },
         {
           "vuid": "VUID-vkCmdBlitImage-filter-00237",
-          "text": " If <code>filter</code> is <code>VK_FILTER_CUBIC_IMG</code>, <code>srcImage</code> <strong class=\"purple\">must</strong> have a <a href=\"#VkImageType\">VkImageType</a> of <code>VK_IMAGE_TYPE_2D</code>"
+          "text": " If <code>filter</code> is <code>VK_FILTER_CUBIC_EXT</code>, <code>srcImage</code> <strong class=\"purple\">must</strong> have a <a href=\"#VkImageType\">VkImageType</a> of <code>VK_IMAGE_TYPE_2D</code>"
         }
       ],
       "(VK_VERSION_1_1)": [
@@ -14343,14 +14461,26 @@
           "text": " This command <strong class=\"purple\">must</strong> only be called inside of a render pass instance"
         }
       ],
-      "(VK_IMG_filter_cubic)": [
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDraw-None-02010",
-          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>."
-        },
+          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDraw-None-00452",
-          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-vkCmdDraw-filterCubic-02613",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubic</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
+        },
+        {
+          "vuid": "VUID-vkCmdDraw-filterCubicMinmax-02614",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> with a reduction mode of either VK_SAMPLER_REDUCTION_MODE_MIN_EXT or VK_SAMPLER_REDUCTION_MODE_MAX_EXT as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering together with minmax filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubicMinmax</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
         }
       ],
       "(VK_VERSION_1_1,VK_KHR_multiview)": [
@@ -14426,7 +14556,7 @@
         },
         {
           "vuid": "VUID-vkCmdDrawIndexed-indexSize-00463",
-          "text": " <span class=\"eq\">(<code>indexSize</code> * (<code>firstIndex</code> &#43; <code>indexCount</code>) &#43; <code>offset</code>)</span> <strong class=\"purple\">must</strong> be less than or equal to the size of the bound index buffer, with indexSize being based on the type specified by <code>indexType</code>, where the index buffer, <code>indexType</code>, and <code>offset</code> are specified via <code>vkCmdBindIndexBuffer</code>"
+          "text": " <span class=\"eq\">(<code>indexSize</code> * (<code>firstIndex</code> &#43; <code>indexCount</code>) &#43; <code>offset</code>)</span> <strong class=\"purple\">must</strong> be less than or equal to the size of the bound index buffer, with <code>indexSize</code> being based on the type specified by <code>indexType</code>, where the index buffer, <code>indexType</code>, and <code>offset</code> are specified via <code>vkCmdBindIndexBuffer</code>"
         },
         {
           "vuid": "VUID-vkCmdDrawIndexed-None-00464",
@@ -14477,14 +14607,26 @@
           "text": " This command <strong class=\"purple\">must</strong> only be called inside of a render pass instance"
         }
       ],
-      "(VK_IMG_filter_cubic)": [
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndexed-None-02012",
-          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>."
-        },
+          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndexed-None-00472",
-          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-vkCmdDrawIndexed-filterCubic-02615",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubic</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
+        },
+        {
+          "vuid": "VUID-vkCmdDrawIndexed-filterCubicMinmax-02616",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> with a reduction mode of either VK_SAMPLER_REDUCTION_MODE_MIN_EXT or VK_SAMPLER_REDUCTION_MODE_MAX_EXT as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering together with minmax filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubicMinmax</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
         }
       ],
       "(VK_VERSION_1_1,VK_KHR_multiview)": [
@@ -14647,14 +14789,26 @@
           "text": " Both of <code>buffer</code>, and <code>commandBuffer</code> <strong class=\"purple\">must</strong> have been created, allocated, or retrieved from the same <code>VkDevice</code>"
         }
       ],
-      "(VK_IMG_filter_cubic)": [
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndirect-None-02014",
-          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>."
-        },
+          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndirect-None-00498",
-          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-vkCmdDrawIndirect-filterCubic-02617",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubic</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
+        },
+        {
+          "vuid": "VUID-vkCmdDrawIndirect-filterCubicMinmax-02618",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> with a reduction mode of either VK_SAMPLER_REDUCTION_MODE_MIN_EXT or VK_SAMPLER_REDUCTION_MODE_MAX_EXT as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering together with minmax filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubicMinmax</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
         }
       ],
       "(VK_VERSION_1_1,VK_KHR_multiview)": [
@@ -14665,16 +14819,12 @@
       ],
       "(VK_VERSION_1_1)": [
         {
+          "vuid": "VUID-vkCmdDrawIndirect-commandBuffer-02640",
+          "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> not be a protected command buffer"
+        },
+        {
           "vuid": "VUID-vkCmdDrawIndirect-commandBuffer-01856",
           "text": " If <code>commandBuffer</code> is an unprotected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndirect-commandBuffer-01857",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be an unprotected image or unprotected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndirect-commandBuffer-01858",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage other than the framebuffer-space pipeline stages in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, the image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
         }
       ],
       "(VK_EXT_sample_locations)": [
@@ -14845,14 +14995,26 @@
           "text": " Each of <code>buffer</code>, <code>commandBuffer</code>, and <code>countBuffer</code> <strong class=\"purple\">must</strong> have been created, allocated, or retrieved from the same <code>VkDevice</code>"
         }
       ],
-      "(VK_KHR_draw_indirect_count)+(VK_IMG_filter_cubic)": [
+      "(VK_KHR_draw_indirect_count)+(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndirectCountKHR-None-02016",
-          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>."
-        },
+          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>"
+        }
+      ],
+      "(VK_KHR_draw_indirect_count)+(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndirectCountKHR-None-03170",
-          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+        }
+      ],
+      "(VK_KHR_draw_indirect_count)+(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-vkCmdDrawIndirectCountKHR-filterCubic-02619",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubic</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
+        },
+        {
+          "vuid": "VUID-vkCmdDrawIndirectCountKHR-filterCubicMinmax-02620",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> with a reduction mode of either VK_SAMPLER_REDUCTION_MODE_MIN_EXT or VK_SAMPLER_REDUCTION_MODE_MAX_EXT as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering together with minmax filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubicMinmax</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
         }
       ],
       "(VK_KHR_draw_indirect_count)+(VK_VERSION_1_1,VK_KHR_multiview)": [
@@ -14863,16 +15025,12 @@
       ],
       "(VK_KHR_draw_indirect_count)+(VK_VERSION_1_1)": [
         {
+          "vuid": "VUID-vkCmdDrawIndirectCountKHR-commandBuffer-02641",
+          "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> not be a protected command buffer"
+        },
+        {
           "vuid": "VUID-vkCmdDrawIndirectCountKHR-commandBuffer-03133",
           "text": " If <code>commandBuffer</code> is an unprotected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndirectCountKHR-commandBuffer-03134",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be an unprotected image or unprotected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndirectCountKHR-commandBuffer-03135",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage other than the framebuffer-space pipeline stages in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, the image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
         }
       ],
       "(VK_KHR_draw_indirect_count)+(VK_EXT_sample_locations)": [
@@ -15039,16 +15197,12 @@
       ],
       "(VK_AMD_draw_indirect_count)+(VK_VERSION_1_1)": [
         {
+          "vuid": "VUID-vkCmdDrawIndirectCountAMD-commandBuffer-02642",
+          "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> not be a protected command buffer"
+        },
+        {
           "vuid": "VUID-vkCmdDrawIndirectCountAMD-commandBuffer-01859",
           "text": " If <code>commandBuffer</code> is an unprotected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndirectCountAMD-commandBuffer-01860",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be an unprotected image or unprotected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndirectCountAMD-commandBuffer-01861",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage other than the framebuffer-space pipeline stages in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, the image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
         }
       ],
       "(VK_AMD_draw_indirect_count)+(VK_EXT_sample_locations)": [
@@ -15191,14 +15345,26 @@
           "text": " Both of <code>buffer</code>, and <code>commandBuffer</code> <strong class=\"purple\">must</strong> have been created, allocated, or retrieved from the same <code>VkDevice</code>"
         }
       ],
-      "(VK_IMG_filter_cubic)": [
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndexedIndirect-None-02019",
-          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>."
-        },
+          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndexedIndirect-None-00550",
-          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-vkCmdDrawIndexedIndirect-filterCubic-02621",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubic</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
+        },
+        {
+          "vuid": "VUID-vkCmdDrawIndexedIndirect-filterCubicMinmax-02622",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> with a reduction mode of either VK_SAMPLER_REDUCTION_MODE_MIN_EXT or VK_SAMPLER_REDUCTION_MODE_MAX_EXT as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering together with minmax filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubicMinmax</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
         }
       ],
       "(VK_VERSION_1_1,VK_KHR_multiview)": [
@@ -15209,16 +15375,12 @@
       ],
       "(VK_VERSION_1_1)": [
         {
+          "vuid": "VUID-vkCmdDrawIndexedIndirect-commandBuffer-02643",
+          "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> not be a protected command buffer"
+        },
+        {
           "vuid": "VUID-vkCmdDrawIndexedIndirect-commandBuffer-01862",
           "text": " If <code>commandBuffer</code> is an unprotected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndexedIndirect-commandBuffer-01863",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be an unprotected image or unprotected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndexedIndirect-commandBuffer-01864",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage other than the framebuffer-space pipeline stages in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, the image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
         }
       ],
       "(VK_EXT_sample_locations)": [
@@ -15393,14 +15555,26 @@
           "text": " Each of <code>buffer</code>, <code>commandBuffer</code>, and <code>countBuffer</code> <strong class=\"purple\">must</strong> have been created, allocated, or retrieved from the same <code>VkDevice</code>"
         }
       ],
-      "(VK_KHR_draw_indirect_count)+(VK_IMG_filter_cubic)": [
+      "(VK_KHR_draw_indirect_count)+(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndexedIndirectCountKHR-None-02021",
-          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>."
-        },
+          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>"
+        }
+      ],
+      "(VK_KHR_draw_indirect_count)+(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndexedIndirectCountKHR-None-03173",
-          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+        }
+      ],
+      "(VK_KHR_draw_indirect_count)+(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-vkCmdDrawIndexedIndirectCountKHR-filterCubic-02623",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubic</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
+        },
+        {
+          "vuid": "VUID-vkCmdDrawIndexedIndirectCountKHR-filterCubicMinmax-02624",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> with a reduction mode of either VK_SAMPLER_REDUCTION_MODE_MIN_EXT or VK_SAMPLER_REDUCTION_MODE_MAX_EXT as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering together with minmax filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubicMinmax</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
         }
       ],
       "(VK_KHR_draw_indirect_count)+(VK_VERSION_1_1,VK_KHR_multiview)": [
@@ -15411,16 +15585,12 @@
       ],
       "(VK_KHR_draw_indirect_count)+(VK_VERSION_1_1)": [
         {
+          "vuid": "VUID-vkCmdDrawIndexedIndirectCountKHR-commandBuffer-02644",
+          "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> not be a protected command buffer"
+        },
+        {
           "vuid": "VUID-vkCmdDrawIndexedIndirectCountKHR-commandBuffer-03165",
           "text": " If <code>commandBuffer</code> is an unprotected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndexedIndirectCountKHR-commandBuffer-03166",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be an unprotected image or unprotected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndexedIndirectCountKHR-commandBuffer-03167",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage other than the framebuffer-space pipeline stages in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, the image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
         }
       ],
       "(VK_KHR_draw_indirect_count)+(VK_EXT_sample_locations)": [
@@ -15587,16 +15757,12 @@
       ],
       "(VK_AMD_draw_indirect_count)+(VK_VERSION_1_1)": [
         {
+          "vuid": "VUID-vkCmdDrawIndexedIndirectCountAMD-commandBuffer-02645",
+          "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> not be a protected command buffer"
+        },
+        {
           "vuid": "VUID-vkCmdDrawIndexedIndirectCountAMD-commandBuffer-01865",
           "text": " If <code>commandBuffer</code> is an unprotected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndexedIndirectCountAMD-commandBuffer-01866",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be an unprotected image or unprotected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndexedIndirectCountAMD-commandBuffer-01867",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage other than the framebuffer-space pipeline stages in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, the image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
         }
       ],
       "(VK_AMD_draw_indirect_count)+(VK_EXT_sample_locations)": [
@@ -15624,7 +15790,7 @@
         },
         {
           "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-vertexStride-02289",
-          "text": " <code>vertexStride</code> must be less than or equal to <a href=\"#VkPhysicalDeviceLimits\">VkPhysicalDeviceLimits</a>::<code>maxTransformFeedbackBufferDataStride</code>"
+          "text": " <code>vertexStride</code> <strong class=\"purple\">must</strong> be greater than 0 and less than or equal to <a href=\"#VkPhysicalDeviceLimits\">VkPhysicalDeviceLimits</a>::<code>maxTransformFeedbackBufferDataStride</code>"
         },
         {
           "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-counterBuffer-02290",
@@ -15715,14 +15881,26 @@
           "text": " Both of <code>commandBuffer</code>, and <code>counterBuffer</code> <strong class=\"purple\">must</strong> have been created, allocated, or retrieved from the same <code>VkDevice</code>"
         }
       ],
-      "(VK_EXT_transform_feedback)+(VK_IMG_filter_cubic)": [
+      "(VK_EXT_transform_feedback)+(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-None-02306",
-          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>"
-        },
+          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>"
+        }
+      ],
+      "(VK_EXT_transform_feedback)+(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-None-02307",
-          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+        }
+      ],
+      "(VK_EXT_transform_feedback)+(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-filterCubic-02625",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubic</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
+        },
+        {
+          "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-filterCubicMinmax-02626",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> with a reduction mode of either VK_SAMPLER_REDUCTION_MODE_MIN_EXT or VK_SAMPLER_REDUCTION_MODE_MAX_EXT as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering together with minmax filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubicMinmax</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
         }
       ],
       "(VK_EXT_transform_feedback)+(VK_VERSION_1_1,VK_KHR_multiview)": [
@@ -15733,16 +15911,12 @@
       ],
       "(VK_EXT_transform_feedback)+(VK_VERSION_1_1)": [
         {
+          "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-commandBuffer-02646",
+          "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> not be a protected command buffer"
+        },
+        {
           "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-commandBuffer-02309",
           "text": " If <code>commandBuffer</code> is an unprotected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer"
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-commandBuffer-02310",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be an unprotected image or unprotected buffer"
-        },
-        {
-          "vuid": "VUID-vkCmdDrawIndirectByteCountEXT-commandBuffer-02311",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage other than the framebuffer-space pipeline stages in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code> reads from or writes to any image or buffer, the image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer"
         }
       ],
       "(VK_EXT_transform_feedback)+(VK_EXT_sample_locations)": [
@@ -16609,6 +16783,10 @@
           "text": " The sum of <code>firstCounterBuffer</code> and <code>counterBufferCount</code> <strong class=\"purple\">must</strong> be less than or equal to <code>VkPhysicalDeviceTransformFeedbackPropertiesEXT</code>::<code>maxTransformFeedbackBuffers</code>"
         },
         {
+          "vuid": "VUID-vkCmdBeginTransformFeedbackEXT-counterBufferCount-02607",
+          "text": " If <code>counterBufferCount</code> is not <code>0</code>, and <code>pCounterBuffers</code> is not <code>NULL</code>, <code>pCounterBuffers</code> <strong class=\"purple\">must</strong> be a valid pointer to an array of <code>counterBufferCount</code> <code>VkBuffer</code> handles that are either valid or <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>"
+        },
+        {
           "vuid": "VUID-vkCmdBeginTransformFeedbackEXT-pCounterBufferOffsets-02370",
           "text": " For each buffer handle in the array, if it is not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a> it <strong class=\"purple\">must</strong> reference a buffer large enough to hold 4 bytes at the corresponding offset from the <code>pCounterBufferOffsets</code> array"
         },
@@ -16623,10 +16801,6 @@
         {
           "vuid": "VUID-vkCmdBeginTransformFeedbackEXT-commandBuffer-parameter",
           "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> be a valid <code>VkCommandBuffer</code> handle"
-        },
-        {
-          "vuid": "VUID-vkCmdBeginTransformFeedbackEXT-pCounterBuffers-parameter",
-          "text": " If <code>counterBufferCount</code> is not <code>0</code>, and <code>pCounterBuffers</code> is not <code>NULL</code>, <code>pCounterBuffers</code> <strong class=\"purple\">must</strong> be a valid pointer to an array of <code>counterBufferCount</code> valid <code>VkBuffer</code> handles"
         },
         {
           "vuid": "VUID-vkCmdBeginTransformFeedbackEXT-pCounterBufferOffsets-parameter",
@@ -16675,6 +16849,10 @@
           "text": " The sum of <code>firstCounterBuffer</code> and <code>counterBufferCount</code> <strong class=\"purple\">must</strong> be less than or equal to <code>VkPhysicalDeviceTransformFeedbackPropertiesEXT</code>::<code>maxTransformFeedbackBuffers</code>"
         },
         {
+          "vuid": "VUID-vkCmdEndTransformFeedbackEXT-counterBufferCount-02608",
+          "text": " If <code>counterBufferCount</code> is not <code>0</code>, and <code>pCounterBuffers</code> is not <code>NULL</code>, <code>pCounterBuffers</code> <strong class=\"purple\">must</strong> be a valid pointer to an array of <code>counterBufferCount</code> <code>VkBuffer</code> handles that are either valid or <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a>"
+        },
+        {
           "vuid": "VUID-vkCmdEndTransformFeedbackEXT-pCounterBufferOffsets-02378",
           "text": " For each buffer handle in the array, if it is not <a href=\"#VK_NULL_HANDLE\">VK_NULL_HANDLE</a> it <strong class=\"purple\">must</strong> reference a buffer large enough to hold 4 bytes at the corresponding offset from the <code>pCounterBufferOffsets</code> array"
         },
@@ -16689,10 +16867,6 @@
         {
           "vuid": "VUID-vkCmdEndTransformFeedbackEXT-commandBuffer-parameter",
           "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> be a valid <code>VkCommandBuffer</code> handle"
-        },
-        {
-          "vuid": "VUID-vkCmdEndTransformFeedbackEXT-pCounterBuffers-parameter",
-          "text": " If <code>counterBufferCount</code> is not <code>0</code>, and <code>pCounterBuffers</code> is not <code>NULL</code>, <code>pCounterBuffers</code> <strong class=\"purple\">must</strong> be a valid pointer to an array of <code>counterBufferCount</code> valid <code>VkBuffer</code> handles"
         },
         {
           "vuid": "VUID-vkCmdEndTransformFeedbackEXT-pCounterBufferOffsets-parameter",
@@ -16986,7 +17160,7 @@
         },
         {
           "vuid": "VUID-VkPipelineRasterizationStateCreateInfo-pNext-pNext",
-          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkPipelineRasterizationConservativeStateCreateInfoEXT\">VkPipelineRasterizationConservativeStateCreateInfoEXT</a>, <a href=\"#VkPipelineRasterizationStateRasterizationOrderAMD\">VkPipelineRasterizationStateRasterizationOrderAMD</a>, or <a href=\"#VkPipelineRasterizationStateStreamCreateInfoEXT\">VkPipelineRasterizationStateStreamCreateInfoEXT</a>"
+          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkPipelineRasterizationConservativeStateCreateInfoEXT\">VkPipelineRasterizationConservativeStateCreateInfoEXT</a>, <a href=\"#VkPipelineRasterizationDepthClipStateCreateInfoEXT\">VkPipelineRasterizationDepthClipStateCreateInfoEXT</a>, <a href=\"#VkPipelineRasterizationStateRasterizationOrderAMD\">VkPipelineRasterizationStateRasterizationOrderAMD</a>, or <a href=\"#VkPipelineRasterizationStateStreamCreateInfoEXT\">VkPipelineRasterizationStateStreamCreateInfoEXT</a>"
         },
         {
           "vuid": "VUID-VkPipelineRasterizationStateCreateInfo-sType-unique",
@@ -17023,6 +17197,18 @@
         {
           "vuid": "VUID-VkPipelineRasterizationStateCreateInfo-polygonMode-01414",
           "text": " If the <code><a href=\"#VK_NV_fill_rectangle\">VK_NV_fill_rectangle</a></code> extension is not enabled, <code>polygonMode</code> <strong class=\"purple\">must</strong> not be <code>VK_POLYGON_MODE_FILL_RECTANGLE_NV</code>"
+        }
+      ]
+    },
+    "VkPipelineRasterizationDepthClipStateCreateInfoEXT": {
+      "(VK_EXT_depth_clip_enable)": [
+        {
+          "vuid": "VUID-VkPipelineRasterizationDepthClipStateCreateInfoEXT-sType-sType",
+          "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT</code>"
+        },
+        {
+          "vuid": "VUID-VkPipelineRasterizationDepthClipStateCreateInfoEXT-flags-zerobitmask",
+          "text": " <code>flags</code> <strong class=\"purple\">must</strong> be <code>0</code>"
         }
       ]
     },
@@ -17921,10 +18107,6 @@
         {
           "vuid": "VUID-VkPipelineCoverageModulationStateCreateInfoNV-coverageModulationMode-parameter",
           "text": " <code>coverageModulationMode</code> <strong class=\"purple\">must</strong> be a valid <a href=\"#VkCoverageModulationModeNV\">VkCoverageModulationModeNV</a> value"
-        },
-        {
-          "vuid": "VUID-VkPipelineCoverageModulationStateCreateInfoNV-coverageModulationTableCount-arraylength",
-          "text": " <code>coverageModulationTableCount</code> <strong class=\"purple\">must</strong> be greater than <code>0</code>"
         }
       ]
     },
@@ -18145,14 +18327,26 @@
           "text": " This command <strong class=\"purple\">must</strong> only be called outside of a render pass instance"
         }
       ],
-      "(VK_IMG_filter_cubic)": [
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDispatch-None-02006",
-          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>."
-        },
+          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>."
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDispatch-None-00400",
-          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-vkCmdDispatch-filterCubic-02609",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubic</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
+        },
+        {
+          "vuid": "VUID-vkCmdDispatch-filterCubicMinmax-02610",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> with a reduction mode of either VK_SAMPLER_REDUCTION_MODE_MIN_EXT or VK_SAMPLER_REDUCTION_MODE_MAX_EXT as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering together with minmax filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubicMinmax</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
         }
       ],
       "(VK_VERSION_1_1)": [
@@ -18259,28 +18453,36 @@
           "text": " Both of <code>buffer</code>, and <code>commandBuffer</code> <strong class=\"purple\">must</strong> have been created, allocated, or retrieved from the same <code>VkDevice</code>"
         }
       ],
-      "(VK_IMG_filter_cubic)": [
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDispatchIndirect-None-02008",
-          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG</code>."
-        },
+          "text": " If a <code>VkImageView</code> is sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command, then the image view&#8217;s <a href=\"#resources-image-view-format-features\">format features</a> <strong class=\"purple\">must</strong> contain <code>VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT</code>."
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+!(VK_EXT_filter_cubic)": [
         {
           "vuid": "VUID-vkCmdDispatchIndirect-None-00416",
-          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_IMG</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> not have a <a href=\"#VkImageViewType\">VkImageViewType</a> of <code>VK_IMAGE_VIEW_TYPE_3D</code>, <code>VK_IMAGE_VIEW_TYPE_CUBE</code>, or <code>VK_IMAGE_VIEW_TYPE_CUBE_ARRAY</code>"
+        }
+      ],
+      "(VK_IMG_filter_cubic,VK_EXT_filter_cubic)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-vkCmdDispatchIndirect-filterCubic-02611",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubic</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
+        },
+        {
+          "vuid": "VUID-vkCmdDispatchIndirect-filterCubicMinmax-02612",
+          "text": " Any <a href=\"#VkImageView\">VkImageView</a> being sampled with <code>VK_FILTER_CUBIC_EXT</code> with a reduction mode of either VK_SAMPLER_REDUCTION_MODE_MIN_EXT or VK_SAMPLER_REDUCTION_MODE_MAX_EXT as a result of this command <strong class=\"purple\">must</strong> have a <a href=\"#VkImageViewType\">VkImageViewType</a> and format that supports cubic filtering together with minmax filtering, as specified by <code>VkFilterCubicImageViewImageFormatPropertiesEXT</code>::<code>filterCubicMinmax</code> returned by <code>vkGetPhysicalDeviceImageFormatProperties2</code>"
         }
       ],
       "(VK_VERSION_1_1)": [
         {
+          "vuid": "VUID-vkCmdDispatchIndirect-commandBuffer-02639",
+          "text": " <code>commandBuffer</code> <strong class=\"purple\">must</strong> not be a protected command buffer"
+        },
+        {
           "vuid": "VUID-vkCmdDispatchIndirect-commandBuffer-01847",
           "text": " If <code>commandBuffer</code> is an unprotected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_COMPUTE</code> reads from or writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDispatchIndirect-commandBuffer-01848",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_COMPUTE</code> writes to any image or buffer, that image or buffer <strong class=\"purple\">must</strong> not be an unprotected image or unprotected buffer."
-        },
-        {
-          "vuid": "VUID-vkCmdDispatchIndirect-commandBuffer-01849",
-          "text": " If <code>commandBuffer</code> is a protected command buffer, and any pipeline stage other than the compute pipeline stage in the <code>VkPipeline</code> object bound to <code>VK_PIPELINE_BIND_POINT_COMPUTE</code> reads from any image or buffer, the image or buffer <strong class=\"purple\">must</strong> not be a protected image or protected buffer."
         }
       ],
       "(VK_NV_corner_sampled_image)": [
@@ -18978,11 +19180,11 @@
       "(VK_NVX_device_generated_commands)": [
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-objectTable-01331",
-          "text": " The provided <code>objectTable</code> <strong class=\"purple\">must</strong> include all objects referenced by the generation process."
+          "text": " The provided <code>objectTable</code> <strong class=\"purple\">must</strong> include all objects referenced by the generation process"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-indirectCommandsTokenCount-01332",
-          "text": " <code>indirectCommandsTokenCount</code> <strong class=\"purple\">must</strong> match the <code>indirectCommandsLayout</code>&#8217;s <code>tokenCount</code>."
+          "text": " <code>indirectCommandsTokenCount</code> <strong class=\"purple\">must</strong> match the <code>indirectCommandsLayout</code>&#8217;s <code>tokenCount</code>"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-tokenType-01333",
@@ -18990,35 +19192,35 @@
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-targetCommandBuffer-01334",
-          "text": " If <code>targetCommandBuffer</code> is provided, it <strong class=\"purple\">must</strong> have reserved command space."
+          "text": " If <code>targetCommandBuffer</code> is provided, it <strong class=\"purple\">must</strong> have reserved command space"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-targetCommandBuffer-01335",
-          "text": " If <code>targetCommandBuffer</code> is provided, the <code>objectTable</code> <strong class=\"purple\">must</strong> match the reservation&#8217;s objectTable and <strong class=\"purple\">must</strong> have had all referenced objects registered at reservation time."
+          "text": " If <code>targetCommandBuffer</code> is provided, the <code>objectTable</code> <strong class=\"purple\">must</strong> match the reservation&#8217;s <code>objectTable</code> and <strong class=\"purple\">must</strong> have had all referenced objects registered at reservation time"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-targetCommandBuffer-01336",
-          "text": " If <code>targetCommandBuffer</code> is provided, the <code>indirectCommandsLayout</code> <strong class=\"purple\">must</strong> match the reservation&#8217;s indirectCommandsLayout."
+          "text": " If <code>targetCommandBuffer</code> is provided, the <code>indirectCommandsLayout</code> <strong class=\"purple\">must</strong> match the reservation&#8217;s <code>indirectCommandsLayout</code>"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-targetCommandBuffer-01337",
-          "text": " If <code>targetCommandBuffer</code> is provided, the <code>maxSequencesCount</code> <strong class=\"purple\">must</strong> not exceed the reservation&#8217;s maxSequencesCount."
+          "text": " If <code>targetCommandBuffer</code> is provided, the <code>maxSequencesCount</code> <strong class=\"purple\">must</strong> not exceed the reservation&#8217;s <code>maxSequencesCount</code>"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-sequencesCountBuffer-01338",
-          "text": " If <code>sequencesCountBuffer</code> is used, its usage flag <strong class=\"purple\">must</strong> have <code>VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT</code> bit set."
+          "text": " If <code>sequencesCountBuffer</code> is used, its usage flag <strong class=\"purple\">must</strong> have the <code>VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT</code> bit set"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-sequencesCountBuffer-01339",
-          "text": " If <code>sequencesCountBuffer</code> is used, <code>sequencesCountOffset</code> <strong class=\"purple\">must</strong> be aligned to <code>VkDeviceGeneratedCommandsLimitsNVX</code>::<code>minSequenceCountBufferOffsetAlignment</code>."
+          "text": " If <code>sequencesCountBuffer</code> is used, <code>sequencesCountOffset</code> <strong class=\"purple\">must</strong> be aligned to <code>VkDeviceGeneratedCommandsLimitsNVX</code>::<code>minSequenceCountBufferOffsetAlignment</code>"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-sequencesIndexBuffer-01340",
-          "text": " If <code>sequencesIndexBuffer</code> is used, its usage flag <strong class=\"purple\">must</strong> have <code>VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT</code> bit set."
+          "text": " If <code>sequencesIndexBuffer</code> is used, its usage flag <strong class=\"purple\">must</strong> have the <code>VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT</code> bit set"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-sequencesIndexBuffer-01341",
-          "text": " If <code>sequencesIndexBuffer</code> is used, <code>sequencesIndexOffset</code> <strong class=\"purple\">must</strong> be aligned to <code>VkDeviceGeneratedCommandsLimitsNVX</code>::<code>minSequenceIndexBufferOffsetAlignment</code>."
+          "text": " If <code>sequencesIndexBuffer</code> is used, <code>sequencesIndexOffset</code> <strong class=\"purple\">must</strong> be aligned to <code>VkDeviceGeneratedCommandsLimitsNVX</code>::<code>minSequenceIndexBufferOffsetAlignment</code>"
         },
         {
           "vuid": "VUID-VkCmdProcessCommandsInfoNVX-sType-sType",
@@ -19522,7 +19724,7 @@
       "(VK_KHR_surface)+(VK_KHR_android_surface)": [
         {
           "vuid": "VUID-VkAndroidSurfaceCreateInfoKHR-window-01248",
-          "text": " <code>window</code> <strong class=\"purple\">must</strong> point to a valid Android <code>ANativeWindow</code>."
+          "text": " <code>window</code> <strong class=\"purple\">must</strong> point to a valid Android <a href=\"#ANativeWindow\">ANativeWindow</a>."
         },
         {
           "vuid": "VUID-VkAndroidSurfaceCreateInfoKHR-sType-sType",
@@ -21284,7 +21486,7 @@
       "(VK_KHR_surface)+(VK_KHR_swapchain)+(VK_KHR_incremental_present)": [
         {
           "vuid": "VUID-VkPresentRegionsKHR-swapchainCount-01260",
-          "text": " <code>swapchainCount</code> <strong class=\"purple\">must</strong> be the same value as <code>VkPresentInfoKHR</code>::<code>swapchainCount</code>, where <code>VkPresentInfoKHR</code> is in the pNext-chain of this <code>VkPresentRegionsKHR</code> structure."
+          "text": " <code>swapchainCount</code> <strong class=\"purple\">must</strong> be the same value as <code>VkPresentInfoKHR</code>::<code>swapchainCount</code>, where <code>VkPresentInfoKHR</code> is in the <code>pNext</code> chain of this <code>VkPresentRegionsKHR</code> structure"
         },
         {
           "vuid": "VUID-VkPresentRegionsKHR-sType-sType",
@@ -22094,6 +22296,14 @@
         }
       ]
     },
+    "VkPhysicalDeviceDepthClipEnableFeaturesEXT": {
+      "(VK_EXT_depth_clip_enable)": [
+        {
+          "vuid": "VUID-VkPhysicalDeviceDepthClipEnableFeaturesEXT-sType-sType",
+          "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT</code>"
+        }
+      ]
+    },
     "VkPhysicalDeviceMemoryPriorityFeaturesEXT": {
       "(VK_EXT_memory_priority)": [
         {
@@ -22107,6 +22317,22 @@
         {
           "vuid": "VUID-VkPhysicalDeviceBufferAddressFeaturesEXT-sType-sType",
           "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT</code>"
+        }
+      ]
+    },
+    "VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV": {
+      "(VK_NV_dedicated_allocation_image_aliasing)": [
+        {
+          "vuid": "VUID-VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV-sType-sType",
+          "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEDICATED_ALLOCATION_IMAGE_ALIASING_FEATURES_NV</code>"
+        }
+      ]
+    },
+    "VkPhysicalDeviceCooperativeMatrixFeaturesNV": {
+      "(VK_NV_cooperative_matrix)": [
+        {
+          "vuid": "VUID-VkPhysicalDeviceCooperativeMatrixFeaturesNV-sType-sType",
+          "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV</code>"
         }
       ]
     },
@@ -22302,6 +22528,14 @@
         }
       ]
     },
+    "VkPhysicalDeviceCooperativeMatrixPropertiesNV": {
+      "(VK_NV_cooperative_matrix)": [
+        {
+          "vuid": "VUID-VkPhysicalDeviceCooperativeMatrixPropertiesNV-sType-sType",
+          "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV</code>"
+        }
+      ]
+    },
     "vkGetPhysicalDeviceMultisamplePropertiesEXT": {
       "(VK_EXT_sample_locations)": [
         {
@@ -22379,10 +22613,6 @@
         {
           "vuid": "VUID-VkDrmFormatModifierPropertiesListEXT-sType-sType",
           "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT</code>"
-        },
-        {
-          "vuid": "VUID-VkDrmFormatModifierPropertiesListEXT-pDrmFormatModifierProperties-parameter",
-          "text": " If <code>drmFormatModifierCount</code> is not <code>0</code>, and <code>pDrmFormatModifierProperties</code> is not <code>NULL</code>, <code>pDrmFormatModifierProperties</code> <strong class=\"purple\">must</strong> be a valid pointer to an array of <code>drmFormatModifierCount</code> <code>VkDrmFormatModifierPropertiesEXT</code> structures"
         }
       ]
     },
@@ -22508,7 +22738,7 @@
         },
         {
           "vuid": "VUID-VkPhysicalDeviceImageFormatInfo2-pNext-pNext",
-          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkImageFormatListCreateInfoKHR\">VkImageFormatListCreateInfoKHR</a>, <a href=\"#VkImageStencilUsageCreateInfoEXT\">VkImageStencilUsageCreateInfoEXT</a>, <a href=\"#VkPhysicalDeviceExternalImageFormatInfo\">VkPhysicalDeviceExternalImageFormatInfo</a>, or <a href=\"#VkPhysicalDeviceImageDrmFormatModifierInfoEXT\">VkPhysicalDeviceImageDrmFormatModifierInfoEXT</a>"
+          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkImageFormatListCreateInfoKHR\">VkImageFormatListCreateInfoKHR</a>, <a href=\"#VkImageStencilUsageCreateInfoEXT\">VkImageStencilUsageCreateInfoEXT</a>, <a href=\"#VkPhysicalDeviceExternalImageFormatInfo\">VkPhysicalDeviceExternalImageFormatInfo</a>, <a href=\"#VkPhysicalDeviceImageDrmFormatModifierInfoEXT\">VkPhysicalDeviceImageDrmFormatModifierInfoEXT</a>, or <a href=\"#VkPhysicalDeviceImageViewImageFormatInfoEXT\">VkPhysicalDeviceImageViewImageFormatInfoEXT</a>"
         },
         {
           "vuid": "VUID-VkPhysicalDeviceImageFormatInfo2-sType-unique",
@@ -22548,7 +22778,7 @@
         },
         {
           "vuid": "VUID-VkImageFormatProperties2-pNext-pNext",
-          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkAndroidHardwareBufferUsageANDROID\">VkAndroidHardwareBufferUsageANDROID</a>, <a href=\"#VkExternalImageFormatProperties\">VkExternalImageFormatProperties</a>, <a href=\"#VkSamplerYcbcrConversionImageFormatProperties\">VkSamplerYcbcrConversionImageFormatProperties</a>, or <a href=\"#VkTextureLODGatherFormatPropertiesAMD\">VkTextureLODGatherFormatPropertiesAMD</a>"
+          "text": " Each <code>pNext</code> member of any structure (including this one) in the <code>pNext</code> chain <strong class=\"purple\">must</strong> be either <code>NULL</code> or a pointer to a valid instance of <a href=\"#VkAndroidHardwareBufferUsageANDROID\">VkAndroidHardwareBufferUsageANDROID</a>, <a href=\"#VkExternalImageFormatProperties\">VkExternalImageFormatProperties</a>, <a href=\"#VkFilterCubicImageViewImageFormatPropertiesEXT\">VkFilterCubicImageViewImageFormatPropertiesEXT</a>, <a href=\"#VkSamplerYcbcrConversionImageFormatProperties\">VkSamplerYcbcrConversionImageFormatProperties</a>, or <a href=\"#VkTextureLODGatherFormatPropertiesAMD\">VkTextureLODGatherFormatPropertiesAMD</a>"
         },
         {
           "vuid": "VUID-VkImageFormatProperties2-sType-unique",
@@ -22621,6 +22851,30 @@
         {
           "vuid": "VUID-VkAndroidHardwareBufferUsageANDROID-sType-sType",
           "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_USAGE_ANDROID</code>"
+        }
+      ]
+    },
+    "VkPhysicalDeviceImageViewImageFormatInfoEXT": {
+      "(VK_VERSION_1_1,VK_KHR_get_physical_device_properties2)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-VkPhysicalDeviceImageViewImageFormatInfoEXT-sType-sType",
+          "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_VIEW_IMAGE_FORMAT_INFO_EXT</code>"
+        },
+        {
+          "vuid": "VUID-VkPhysicalDeviceImageViewImageFormatInfoEXT-imageViewType-parameter",
+          "text": " <code>imageViewType</code> <strong class=\"purple\">must</strong> be a valid <a href=\"#VkImageViewType\">VkImageViewType</a> value"
+        }
+      ]
+    },
+    "VkFilterCubicImageViewImageFormatPropertiesEXT": {
+      "(VK_VERSION_1_1,VK_KHR_get_physical_device_properties2)+(VK_EXT_filter_cubic)": [
+        {
+          "vuid": "VUID-VkFilterCubicImageViewImageFormatPropertiesEXT-sType-sType",
+          "text": " <code>sType</code> <strong class=\"purple\">must</strong> be <code>VK_STRUCTURE_TYPE_FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT</code>"
+        },
+        {
+          "vuid": "VUID-VkFilterCubicImageViewImageFormatPropertiesEXT-pNext-02627",
+          "text": " If the <code>pNext</code> chain of the <a href=\"#VkImageFormatProperties2\">VkImageFormatProperties2</a> structure contains an instance of <a href=\"#VkFilterCubicImageViewImageFormatPropertiesEXT\">VkFilterCubicImageViewImageFormatPropertiesEXT</a>, the <code>pNext</code> chain of the <a href=\"#VkPhysicalDeviceImageFormatInfo2\">VkPhysicalDeviceImageFormatInfo2</a> structure <strong class=\"purple\">must</strong> contain an instance of <a href=\"#VkPhysicalDeviceImageViewImageFormatInfoEXT\">VkPhysicalDeviceImageViewImageFormatInfoEXT</a> with an <code>imageViewType</code> that is compatible with <code>imageType</code>."
         }
       ]
     },
