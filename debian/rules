@@ -6,7 +6,7 @@ include /usr/share/dpkg/default.mk
 include /usr/share/dpkg/pkg-info.mk
 
 %:
-	dh $@ --with quilt --builddirectory=build/
+	dh $@ --builddirectory=build/
 
 override_dh_clean:
 	dh_clean
