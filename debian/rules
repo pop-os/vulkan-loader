@@ -13,15 +13,21 @@ override_dh_clean:
 	rm -rf __pycache__ \
 		include \
 		scripts/__pycache__
+	rm -f external/googletest
 
 override_dh_auto_configure:
+	ln -s /usr/src/googletest external
+
 	dh_auto_configure -- \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
-	-DBUILD_TESTS=OFF \
 	-DBUILD_WSI_MIR_SUPPORT=OFF \
 	-DVulkanHeaders_INCLUDE_DIR=../vulkan-headers/include \
 	-DVulkanRegistry_DIR=../vulkan-headers/registry
+
+override_dh_auto_test:
+	(cd build; tests/run_all_tests.sh || \
+		echo "NOTE: 23 tests expected to fail without a vulkan driver")
 
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/tmp
