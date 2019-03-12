@@ -1,4 +1,4 @@
-vulkan-loader (1.1.101.0-2) UNRELEASED; urgency=medium
+vulkan-loader (1.1.101.0-2) unstable; urgency=medium
 
   * rules: Enable tests, but expect most of them to fail since there's
     no software driver yet.
@@ -6,7 +6,7 @@ vulkan-loader (1.1.101.0-2) UNRELEASED; urgency=medium
     format 3.0 pkg.
   * rules: Update the clean target.
 
- -- Timo Aaltonen <tjaalton@debian.org>  Tue, 12 Mar 2019 16:48:28 +0200
+ -- Timo Aaltonen <tjaalton@debian.org>  Tue, 12 Mar 2019 18:38:57 +0200
 
 vulkan-loader (1.1.101.0-1) unstable; urgency=medium
 
