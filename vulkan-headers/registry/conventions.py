@@ -17,8 +17,9 @@
 # Base class for working-group-specific style conventions,
 # used in generation.
 
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
+ABC = ABCMeta('ABC', (object,), {})
 
 class ConventionsBase(ABC):
     """WG-specific conventions."""
@@ -101,9 +102,8 @@ class ConventionsBase(ABC):
         """Return suffix of generated Asciidoctor files"""
         raise NotImplementedError
 
-    @property
     @abstractmethod
-    def api_name(self):
+    def api_name(self, spectype = None):
         """Return API name"""
         raise NotImplementedError
 
