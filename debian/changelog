@@ -1,5 +1,6 @@
-vulkan-loader (1.1.114.0-2) UNRELEASED; urgency=medium
+vulkan-loader (1.1.121.0-1) UNRELEASED; urgency=medium
 
+  * New upstream release.
   * control: Add vulkan-icd to libvulkan1 Recommends. (Closes: #935871)
 
  -- Timo Aaltonen <tjaalton@debian.org>  Thu, 29 Aug 2019 12:48:15 +0300
