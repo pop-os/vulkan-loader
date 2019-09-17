@@ -4,7 +4,7 @@ Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 Uploaders: Timo Aaltonen <tjaalton@debian.org>
 Build-Depends: debhelper (>= 11),
  cmake,
- googletest,
+ googletest <!nocheck>,
  libwayland-dev,
  libx11-dev,
  libxcb1-dev,

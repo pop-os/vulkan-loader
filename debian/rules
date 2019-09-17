@@ -17,7 +17,9 @@ override_dh_clean:
 	rm -f external/googletest
 
 override_dh_auto_configure:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	ln -s /usr/src/googletest external
+endif
 
 	dh_auto_configure -- \
 	-DCMAKE_BUILD_TYPE=Release \
@@ -27,8 +29,10 @@ override_dh_auto_configure:
 	-DVulkanRegistry_DIR=../vulkan-headers/registry
 
 override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	(cd build; tests/run_all_tests.sh || \
 		echo "NOTE: 23 tests expected to fail without a vulkan driver")
+endif
 
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/tmp
