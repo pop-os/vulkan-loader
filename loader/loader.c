@@ -66,11 +66,12 @@
 #include "murmurhash.h"
 
 #if defined(_WIN32)
-#include <Cfgmgr32.h>
+#include <cfgmgr32.h>
 #include <initguid.h>
-#include <Devpkey.h>
+#include <devpkey.h>
 #include <winternl.h>
 #include <d3dkmthk.h>
+#include <Dxgi1_6.h>
 
 typedef _Check_return_ NTSTATUS (APIENTRY *PFN_D3DKMTEnumAdapters2)(const D3DKMT_ENUMADAPTERS2*);
 typedef _Check_return_ NTSTATUS (APIENTRY *PFN_D3DKMTQueryAdapterInfo)(const D3DKMT_QUERYADAPTERINFO*);
@@ -242,6 +243,10 @@ void *loader_device_heap_realloc(const struct loader_device *device, void *pMemo
 // Environment variables
 #if defined(__linux__) || defined(__APPLE__)
 
+static inline bool IsHighIntegrity() {
+    return geteuid() != getuid() || getegid() != getgid();
+}
+
 static inline char *loader_getenv(const char *name, const struct loader_instance *inst) {
     // No allocation of memory necessary for Linux, but we should at least touch
     // the inst pointer to get rid of compiler warnings.
@@ -258,7 +263,7 @@ static inline char *loader_secure_getenv(const char *name, const struct loader_i
     // that can do damage.
     // This algorithm is derived from glibc code that sets an internal
     // variable (__libc_enable_secure) if the process is running under setuid or setgid.
-    return geteuid() != getuid() || getegid() != getgid() ? NULL : loader_getenv(name, inst);
+    return IsHighIntegrity() ? NULL : loader_getenv(name, inst);
 #else
 // Linux
 #ifdef HAVE_SECURE_GETENV
@@ -284,6 +289,28 @@ static inline void loader_free_getenv(char *val, const struct loader_instance *i
 }
 
 #elif defined(WIN32)
+
+static inline bool IsHighIntegrity() {
+    HANDLE process_token;
+    if (OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY | TOKEN_QUERY_SOURCE, &process_token)) {
+        // Maximum possible size of SID_AND_ATTRIBUTES is maximum size of a SID + size of attributes DWORD.
+        uint8_t mandatory_label_buffer[SECURITY_MAX_SID_SIZE + sizeof(DWORD)];
+        DWORD buffer_size;
+        if (GetTokenInformation(process_token, TokenIntegrityLevel, mandatory_label_buffer, sizeof(mandatory_label_buffer),
+            &buffer_size) != 0) {
+            const TOKEN_MANDATORY_LABEL *mandatory_label = (const TOKEN_MANDATORY_LABEL *)mandatory_label_buffer;
+            const DWORD sub_authority_count = *GetSidSubAuthorityCount(mandatory_label->Label.Sid);
+            const DWORD integrity_level = *GetSidSubAuthority(mandatory_label->Label.Sid, sub_authority_count - 1);
+
+            CloseHandle(process_token);
+            return integrity_level > SECURITY_MANDATORY_MEDIUM_RID;
+        }
+
+        CloseHandle(process_token);
+    }
+
+    return false;
+}
 
 static inline char *loader_getenv(const char *name, const struct loader_instance *inst) {
     char *retVal;
@@ -311,7 +338,10 @@ static inline char *loader_getenv(const char *name, const struct loader_instance
 }
 
 static inline char *loader_secure_getenv(const char *name, const struct loader_instance *inst) {
-    // No secure version for Windows as far as I know
+    if (IsHighIntegrity()) {
+        return NULL;
+    }
+
     return loader_getenv(name, inst);
 }
 
@@ -779,6 +809,49 @@ static char *loader_get_next_path(char *path);
 // When done using the returned string list, the caller should free the pointer.
 VkResult loaderGetRegistryFiles(const struct loader_instance *inst, char *location, bool use_secondary_hive, char **reg_data,
                                 PDWORD reg_data_size) {
+    // This list contains all of the allowed ICDs. This allows us to verify that a device is actually present from the vendor
+    // specified. This does disallow other vendors, but any new driver should use the device-specific registries anyway.
+    static const struct {
+        const char *filename;
+        int vendor_id;
+    } known_drivers[] = {
+#if defined(_WIN64)
+        {
+            .filename = "igvk64.json",
+            .vendor_id = 0x8086,
+        },
+        {
+            .filename = "nv-vk64.json",
+            .vendor_id = 0x10de,
+        },
+        {
+            .filename = "amd-vulkan64.json",
+            .vendor_id = 0x1002,
+        },
+        {
+            .filename = "amdvlk64.json",
+            .vendor_id = 0x1002,
+        },
+#else
+        {
+            .filename = "igvk32.json",
+            .vendor_id = 0x8086,
+        },
+        {
+            .filename = "nv-vk32.json",
+            .vendor_id = 0x10de,
+        },
+        {
+            .filename = "amd-vulkan32.json",
+            .vendor_id = 0x1002,
+        },
+        {
+            .filename = "amdvlk32.json",
+            .vendor_id = 0x1002,
+        },
+#endif
+    };
+
     LONG rtn_value;
     HKEY hive = DEFAULT_VK_REGISTRY_HIVE, key;
     DWORD access_flags;
@@ -791,10 +864,23 @@ VkResult loaderGetRegistryFiles(const struct loader_instance *inst, char *locati
     DWORD value_size = sizeof(value);
     VkResult result = VK_SUCCESS;
     bool found = false;
+    IDXGIFactory1 *dxgi_factory = NULL;
+    bool is_driver = !strcmp(location, VK_DRIVERS_INFO_REGISTRY_LOC);
 
     if (NULL == reg_data) {
         result = VK_ERROR_INITIALIZATION_FAILED;
         goto out;
+    }
+
+    if (is_driver) {
+        HRESULT hres = CreateDXGIFactory1(&IID_IDXGIFactory1, &dxgi_factory);
+        if (hres != S_OK) {
+            loader_log(
+                inst, VK_DEBUG_REPORT_WARNING_BIT_EXT, 0,
+                "loaderGetRegistryFiles: Failed to create dxgi factory for ICD registry verification. No ICDs will be added from "
+                "legacy registry locations");
+            goto out;
+        }
     }
 
     while (*loc) {
@@ -831,9 +917,59 @@ VkResult loaderGetRegistryFiles(const struct loader_instance *inst, char *locati
                         *reg_data = new_ptr;
                         *reg_data_size *= 2;
                     }
+
+                    // We've now found a json file. If this is an ICD, we still need to check if there is actually a device
+                    // that matches this ICD
                     loader_log(
                         inst, VK_DEBUG_REPORT_INFORMATION_BIT_EXT, 0, "Located json file \"%s\" from registry \"%s\\%s\"", name,
                         hive == DEFAULT_VK_REGISTRY_HIVE ? DEFAULT_VK_REGISTRY_HIVE_STR : SECONDARY_VK_REGISTRY_HIVE_STR, location);
+                    if (is_driver) {
+                        int i;
+                        for (i = 0; i < sizeof(known_drivers) / sizeof(known_drivers[0]); ++i) {
+                            if (!strcmp(name + strlen(name) - strlen(known_drivers[i].filename), known_drivers[i].filename)) {
+                                break;
+                            }
+                        }
+                        if (i == sizeof(known_drivers) / sizeof(known_drivers[0])) {
+                            loader_log(inst, VK_DEBUG_REPORT_INFORMATION_BIT_EXT, 0,
+                                       "Dropping driver %s as it was not recognized as a known driver", name);
+                            continue;
+                        }
+
+                        bool found_gpu = false;
+                        for (int j = 0;; ++j) {
+                            IDXGIAdapter1 *adapter;
+                            HRESULT hres = dxgi_factory->lpVtbl->EnumAdapters1(dxgi_factory, j, &adapter);
+                            if (hres == DXGI_ERROR_NOT_FOUND) {
+                                break;
+                            } else if (hres != S_OK) {
+                                loader_log(inst, VK_DEBUG_REPORT_WARNING_BIT_EXT, 0,
+                                           "Failed to enumerate DXGI adapters at index %d. As a result, drivers may be skipped", j);
+                                continue;
+                            }
+
+                            DXGI_ADAPTER_DESC1 description;
+                            hres = adapter->lpVtbl->GetDesc1(adapter, &description);
+                            if (hres != S_OK) {
+                                loader_log(
+                                    inst, VK_DEBUG_REPORT_INFORMATION_BIT_EXT, 0,
+                                    "Failed to get DXGI adapter information at index %d. As a result, drivers may be skipped", j);
+                                continue;
+                            }
+
+                            if (description.VendorId == known_drivers[i].vendor_id) {
+                                found_gpu = true;
+                                break;
+                            }
+                        }
+
+                        if (!found_gpu) {
+                            loader_log(inst, VK_DEBUG_REPORT_INFORMATION_BIT_EXT, 0,
+                                       "Dropping driver %s as no corresponduing DXGI adapter was found", name);
+                            continue;
+                        }
+                    }
+
                     if (strlen(*reg_data) == 0) {
                         // The list is emtpy. Add the first entry.
                         (void)snprintf(*reg_data, name_size + 1, "%s", name);
@@ -886,6 +1022,9 @@ VkResult loaderGetRegistryFiles(const struct loader_instance *inst, char *locati
     }
 
 out:
+    if (is_driver && dxgi_factory != NULL) {
+        dxgi_factory->lpVtbl->Release(dxgi_factory);
+    }
 
     return result;
 }
@@ -3702,8 +3841,10 @@ static VkResult ReadDataFilesInSearchPaths(const struct loader_instance *inst, e
             search_path_size += DetermineDataFilePathSize(EXTRASYSCONFDIR, rel_size);
 #endif
             if (is_directory_list) {
-                search_path_size += DetermineDataFilePathSize(xdgdatahome, rel_size);
-                search_path_size += DetermineDataFilePathSize(home_root, rel_size);
+                if (!IsHighIntegrity()) {
+                    search_path_size += DetermineDataFilePathSize(xdgdatahome, rel_size);
+                    search_path_size += DetermineDataFilePathSize(home_root, rel_size);
+                }
             }
 #endif
         }
@@ -3947,7 +4088,6 @@ static VkResult ReadDataFilesInRegistry(const struct loader_instance *inst, enum
                                         bool warn_if_not_present, char *registry_location, struct loader_data_files *out_files) {
     VkResult vk_result = VK_SUCCESS;
     bool is_icd = (data_file_type == LOADER_DATA_FILE_MANIFEST_ICD);
-    bool use_secondary_hive = data_file_type == LOADER_DATA_FILE_MANIFEST_LAYER;
     char *search_path = NULL;
 
     // These calls look at the PNP/Device section of the registry.
@@ -3972,6 +4112,7 @@ static VkResult ReadDataFilesInRegistry(const struct loader_instance *inst, enum
     }
 
     // This call looks into the Khronos non-device specific section of the registry.
+    bool use_secondary_hive = (data_file_type == LOADER_DATA_FILE_MANIFEST_LAYER) && (!IsHighIntegrity());
     VkResult reg_result = loaderGetRegistryFiles(inst, registry_location, use_secondary_hive, &search_path, &reg_size);
 
     if ((VK_SUCCESS != reg_result && VK_SUCCESS != regHKR_result) || NULL == search_path) {
@@ -6140,16 +6281,18 @@ VKAPI_ATTR VkResult VKAPI_CALL terminator_CreateInstance(const VkInstanceCreateI
 
         // Get the driver version from vkEnumerateInstanceVersion
         uint32_t icd_version = VK_API_VERSION_1_0;
-        PFN_vkEnumerateInstanceVersion icd_enumerate_instance_version = (PFN_vkEnumerateInstanceVersion)
-            icd_term->scanned_icd->GetInstanceProcAddr(NULL, "vkEnumerateInstanceVersion");
         VkResult icd_result = VK_SUCCESS;
-        if (icd_enumerate_instance_version != NULL) {
-            icd_result = icd_enumerate_instance_version(&icd_version);
-            if (icd_result != VK_SUCCESS) {
-                icd_version = VK_API_VERSION_1_0;
-                loader_log(ptr_instance, VK_DEBUG_REPORT_DEBUG_BIT_EXT, 0, "terminator_CreateInstance: ICD \"%s\" "
-                    "vkEnumerateInstanceVersion returned error. The ICD will be treated as a 1.0 ICD",
-                    icd_term->scanned_icd->lib_name);
+        if (icd_term->scanned_icd->api_version >= VK_API_VERSION_1_1) {
+            PFN_vkEnumerateInstanceVersion icd_enumerate_instance_version = (PFN_vkEnumerateInstanceVersion)
+                icd_term->scanned_icd->GetInstanceProcAddr(NULL, "vkEnumerateInstanceVersion");
+            if (icd_enumerate_instance_version != NULL) {
+                icd_result = icd_enumerate_instance_version(&icd_version);
+                if (icd_result != VK_SUCCESS) {
+                    icd_version = VK_API_VERSION_1_0;
+                    loader_log(ptr_instance, VK_DEBUG_REPORT_DEBUG_BIT_EXT, 0, "terminator_CreateInstance: ICD \"%s\" "
+                        "vkEnumerateInstanceVersion returned error. The ICD will be treated as a 1.0 ICD",
+                        icd_term->scanned_icd->lib_name);
+                }
             }
         }
 
@@ -7101,7 +7244,7 @@ VKAPI_ATTR VkResult VKAPI_CALL
 terminator_EnumerateInstanceVersion(const VkEnumerateInstanceVersionChain *chain, uint32_t* pApiVersion) {
     // NOTE: The Vulkan WG doesn't want us checking pApiVersion for NULL, but instead
     // prefers us crashing.
-    *pApiVersion = VK_MAKE_VERSION(loader_major_version, loader_minor_version, 0);
+    *pApiVersion = VK_MAKE_VERSION(loader_major_version, loader_minor_version, VK_HEADER_VERSION);
     return VK_SUCCESS;
 }
 
