@@ -1,4 +1,4 @@
-vulkan-loader (1.1.121.0-1) UNRELEASED; urgency=medium
+vulkan-loader (1.1.121.0-1) unstable; urgency=medium
 
   * New upstream release.
   * control: Add vulkan-icd to libvulkan1 Recommends. (Closes: #935871)
@@ -7,7 +7,7 @@ vulkan-loader (1.1.121.0-1) UNRELEASED; urgency=medium
   * Support DEB_BUILD_OPTIONS=nocheck to drop googletest. (Closes:
     #928696)
 
- -- Timo Aaltonen <tjaalton@debian.org>  Thu, 29 Aug 2019 12:48:15 +0300
+ -- Timo Aaltonen <tjaalton@debian.org>  Tue, 17 Sep 2019 10:35:32 +0300
 
 vulkan-loader (1.1.114.0-1) unstable; urgency=medium
 
