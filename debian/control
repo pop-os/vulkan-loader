@@ -24,7 +24,7 @@ Breaks: vulkan-loader,
  libvulkan-dev (<< 1.1.70+dfsg1-2),
 Replaces: vulkan-loader,
  libvulkan-dev (<< 1.1.70+dfsg1-2),
-Recommends: vulkan-icd
+Recommends: mesa-vulkan-drivers | vulkan-icd
 Multi-Arch: same
 Description: Vulkan loader library
  The Loader implements the main VK library. It handles layer management and
