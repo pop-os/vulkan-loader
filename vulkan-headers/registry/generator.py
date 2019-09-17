@@ -18,14 +18,20 @@ from __future__ import unicode_literals
 
 import io
 import os
-import re
 import pdb
+import re
 import sys
-from pathlib import Path
+try:
+    from pathlib import Path
+except ImportError:
+    from pathlib2 import Path
 
-def write( *args, **kwargs ):
-    file = kwargs.pop('file',sys.stdout)
-    end = kwargs.pop('end','\n')
+from spec_tools.util import getElemName, getElemType
+
+
+def write(*args, **kwargs):
+    file = kwargs.pop('file', sys.stdout)
+    end = kwargs.pop('end', '\n')
     file.write(' '.join(str(arg) for arg in args))
     file.write(end)
 
@@ -37,6 +43,17 @@ def noneStr(s):
         return s
     return ""
 
+# noneInt - returns string argument as an integer, or default if argument is
+# None.
+# Used in converting etree Elements into integers.
+#   s - string to convert
+#   default - default value
+def noneInt(s, default = 0):
+    if s:
+        return int(s)
+    else:
+        return default
+
 # enquote - returns string argument with surrounding quotes,
 #   for serialization into Python code.
 def enquote(s):
@@ -44,7 +61,7 @@ def enquote(s):
         return "'{}'".format(s)
     return None
 
-# Primary sort key for regSortFeatures.
+# 1st sort key for regSortFeatures.
 # Sorts by category of the feature name string:
 #   Core API features (those defined with a <feature> tag)
 #   ARB/KHR/OES (Khronos extensions)
@@ -60,29 +77,31 @@ def regSortCategoryKey(feature):
 
     return 2
 
-# Secondary sort key for regSortFeatures.
-# Sorts by extension name.
-def regSortNameKey(feature):
-    return feature.name
+# 2nd sort key for regSortFeatures.
+# Sorts by sortorder attribute
+def regSortOrderKey(feature):
+    return feature.sortorder
 
-# Second sort key for regSortFeatures.
+# 3rd sort key for regSortFeatures.
 # Sorts by feature version. <extension> elements all have version number "0"
 def regSortFeatureVersionKey(feature):
     return float(feature.versionNumber)
 
-# Tertiary sort key for regSortFeatures.
+# 4th sort key for regSortFeatures.
 # Sorts by extension number. <feature> elements all have extension number 0.
 def regSortExtensionNumberKey(feature):
     return int(feature.number)
 
 # regSortFeatures - default sort procedure for features.
-# Sorts by primary key of feature category ('feature' or 'extension')
+# Sorts by primary key of feature category ('feature', or extension tag)
+#   then by sort order within the category
 #   then by version number (for features)
 #   then by extension number (for extensions)
 def regSortFeatures(featureList):
-    featureList.sort(key = regSortExtensionNumberKey)
-    featureList.sort(key = regSortFeatureVersionKey)
-    featureList.sort(key = regSortCategoryKey)
+    featureList.sort(key=regSortExtensionNumberKey)
+    featureList.sort(key=regSortFeatureVersionKey)
+    featureList.sort(key=regSortOrderKey)
+    featureList.sort(key=regSortCategoryKey)
 
 # GeneratorOptions - base class for options used during header production
 # These options are target language independent, and used by
@@ -114,26 +133,27 @@ def regSortFeatures(featureList):
 #     deciding which interfaces to generate).
 #   sortProcedure - takes a list of FeatureInfo objects and sorts
 #     them in place to a preferred order in the generated output.
-#     Default is core API versions, ARB/KHR/OES extensions, all
-#     other extensions, alphabetically within each group.
+#     Default is core API versions, ARB/KHR/OES extensions, all other
+#     extensions, by core API version number or extension number in
+#     each group.
 # The regex patterns can be None or empty, in which case they match
 #   nothing.
 class GeneratorOptions:
     """Represents options during header production from an API registry"""
 
     def __init__(self,
-                 conventions = None,
-                 filename = None,
-                 directory = '.',
-                 apiname = None,
-                 profile = None,
-                 versions = '.*',
-                 emitversions = '.*',
-                 defaultExtensions = None,
-                 addExtensions = None,
-                 removeExtensions = None,
-                 emitExtensions = None,
-                 sortProcedure = regSortFeatures):
+                 conventions=None,
+                 filename=None,
+                 directory='.',
+                 apiname=None,
+                 profile=None,
+                 versions='.*',
+                 emitversions='.*',
+                 defaultExtensions=None,
+                 addExtensions=None,
+                 removeExtensions=None,
+                 emitExtensions=None,
+                 sortProcedure=regSortFeatures):
         self.conventions       = conventions
         self.filename          = filename
         self.directory         = directory
@@ -202,19 +222,19 @@ class OutputGenerator:
 
     # categoryToPath - map XML 'category' to include file directory name
     categoryToPath = {
-        'bitmask'      : 'flags',
-        'enum'         : 'enums',
-        'funcpointer'  : 'funcpointers',
-        'handle'       : 'handles',
-        'define'       : 'defines',
-        'basetype'     : 'basetypes',
+        'bitmask': 'flags',
+        'enum': 'enums',
+        'funcpointer': 'funcpointers',
+        'handle': 'handles',
+        'define': 'defines',
+        'basetype': 'basetypes',
     }
 
     # Constructor
     def __init__(self,
-                 errFile = sys.stderr,
-                 warnFile = sys.stderr,
-                 diagFile = sys.stdout):
+                 errFile=sys.stderr,
+                 warnFile=sys.stderr,
+                 diagFile=sys.stdout):
         self.outFile = None
         self.errFile = errFile
         self.warnFile = warnFile
@@ -224,7 +244,7 @@ class OutputGenerator:
         self.genOpts = None
         self.registry = None
         # Used for extension enum value generation
-        self.extBase      = 1000000000
+        self.extBase = 1000000000
         self.extBlockSize = 1000
         self.madeDirs = {}
 
@@ -292,21 +312,21 @@ class OutputGenerator:
             bitpos = int(value, 0)
             numVal = 1 << bitpos
             value = '0x%08x' % numVal
-            if( bitpos >= 32 ):
+            if bitpos >= 32:
                 value = value + 'ULL'
             self.logMsg('diag', 'Enum', name, '-> bitpos [', numVal, ',', value, ']')
             return [numVal, value]
         if 'offset' in elem.keys():
             # Obtain values in the mapping from the attributes
             enumNegative = False
-            offset = int(elem.get('offset'),0)
-            extnumber = int(elem.get('extnumber'),0)
+            offset = int(elem.get('offset'), 0)
+            extnumber = int(elem.get('extnumber'), 0)
             extends = elem.get('extends')
             if 'dir' in elem.keys():
                 enumNegative = True
             self.logMsg('diag', 'Enum', name, 'offset =', offset,
-                'extnumber =', extnumber, 'extends =', extends,
-                'enumNegative =', enumNegative)
+                        'extnumber =', extnumber, 'extends =', extends,
+                        'enumNegative =', enumNegative)
             # Now determine the actual enumerant value, as defined
             # in the "Layers and Extensions" appendix of the spec.
             numVal = self.extBase + (extnumber - 1) * self.extBlockSize + offset
@@ -343,7 +363,7 @@ class OutputGenerator:
                 # happens when defining the same enum conditionally in
                 # several extension blocks.
                 if (strVal2 == strVal or (numVal is not None and
-                    numVal == numVal2)):
+                                          numVal == numVal2)):
                     True
                     # self.logMsg('info', 'checkDuplicateEnums: Duplicate enum (' + name +
                     #             ') found with the same value:' + strVal)
@@ -361,14 +381,14 @@ class OutputGenerator:
 
                 try:
                     self.logMsg('warn', 'Two enums found with the same value: '
-                             + name + ' = ' + name2.get('name') + ' = ' + strVal)
+                                + name + ' = ' + name2.get('name') + ' = ' + strVal)
                 except:
                     pdb.set_trace()
 
             # Track this enum to detect followon duplicates
-            nameMap[name] = [ elem, numVal, strVal ]
+            nameMap[name] = [elem, numVal, strVal]
             if numVal is not None:
-                valueMap[numVal] = [ elem, numVal, strVal ]
+                valueMap[numVal] = [elem, numVal, strVal]
 
             # Add this enum to the list
             stripped.append(elem)
@@ -382,7 +402,7 @@ class OutputGenerator:
         groupElem = groupinfo.elem
 
         if self.genOpts.conventions.constFlagBits and groupElem.get('type') == 'bitmask':
-            return self.buildEnumCDecl_Bitmask( groupinfo, groupName)
+            return self.buildEnumCDecl_Bitmask(groupinfo, groupName)
         else:
             return self.buildEnumCDecl_Enum(expand, groupinfo, groupName)
 
@@ -403,7 +423,7 @@ class OutputGenerator:
             # Should catch exceptions here for more complex constructs. Not yet.
             (_, strVal) = self.enumToValue(elem, True)
             name = elem.get('name')
-            body += "static const " + flagTypeName + " " + name + " = " + strVal + ";\n"
+            body += "static const {} {} = {};\n".format(flagTypeName, name, strVal)
 
         # Postfix
 
@@ -415,17 +435,17 @@ class OutputGenerator:
 
         # Break the group name into prefix and suffix portions for range
         # enum generation
-        expandName = re.sub(r'([0-9a-z_])([A-Z0-9])',r'\1_\2',groupName).upper()
+        expandName = re.sub(r'([0-9a-z_])([A-Z0-9])', r'\1_\2', groupName).upper()
         expandPrefix = expandName
         expandSuffix = ''
-        expandSuffixMatch = re.search(r'[A-Z][A-Z]+$',groupName)
+        expandSuffixMatch = re.search(r'[A-Z][A-Z]+$', groupName)
         if expandSuffixMatch:
             expandSuffix = '_' + expandSuffixMatch.group()
             # Strip off the suffix from the prefix
             expandPrefix = expandName.rsplit(expandSuffix, 1)[0]
 
         # Prefix
-        body = "typedef enum " + groupName + " {\n"
+        body = ["typedef enum %s {" % groupName]
 
         # @@ Should use the type="bitmask" attribute instead
         isEnum = ('FLAG_BITS' not in expandPrefix)
@@ -447,22 +467,22 @@ class OutputGenerator:
         # them following the numeric values, to allow for aliases.
         # NOTE: this doesn't do a topological sort yet, so aliases of
         # aliases can still get in the wrong order.
-        aliasText = ""
+        aliasText = []
 
         for elem in enums:
             # Convert the value to an integer and use that to track min/max.
             # Values of form -(number) are accepted but nothing more complex.
             # Should catch exceptions here for more complex constructs. Not yet.
-            (numVal,strVal) = self.enumToValue(elem, True)
+            (numVal, strVal) = self.enumToValue(elem, True)
             name = elem.get('name')
 
             # Extension enumerants are only included if they are required
             if self.isEnumRequired(elem):
-                decl = "    " + name + " = " + strVal + ",\n"
+                decl = "    {} = {},".format(name, strVal)
                 if numVal is not None:
-                    body += decl
+                    body.append(decl)
                 else:
-                    aliasText += decl
+                    aliasText.append(decl)
 
             # Don't track min/max for non-numbers (numVal is None)
             if isEnum and numVal is not None and elem.get('extends') is None:
@@ -477,20 +497,21 @@ class OutputGenerator:
                     maxValue = numVal
 
         # Now append the non-numeric enumerant values
-        body += aliasText
+        body.extend(aliasText)
 
         # Generate min/max value tokens and a range-padding enum. Need some
         # additional padding to generate correct names...
         if isEnum and expand:
-            body += "    " + expandPrefix + "_BEGIN_RANGE" + expandSuffix + " = " + minName + ",\n"
-            body += "    " + expandPrefix + "_END_RANGE" + expandSuffix + " = " + maxName + ",\n"
-            body += "    " + expandPrefix + "_RANGE_SIZE" + expandSuffix + " = (" + maxName + " - " + minName + " + 1),\n"
+            body.extend(("    {}_BEGIN_RANGE{} = {},".format(expandPrefix, expandSuffix, minName),
+                         "    {}_END_RANGE{} = {},".format(
+                             expandPrefix, expandSuffix, maxName),
+                         "    {}_RANGE_SIZE{} = ({} - {} + 1),".format(expandPrefix, expandSuffix, maxName, minName)))
 
-        # Always generate this to make sure the enumerated type is 32 bits
-        body += "    " + expandPrefix + "_MAX_ENUM" + expandSuffix + " = 0x7FFFFFFF\n"
+        body.append("    {}_MAX_ENUM{} = 0x7FFFFFFF".format(
+            expandPrefix, expandSuffix))
 
         # Postfix
-        body += "} " + groupName + ";"
+        body.append("} %s;" % groupName)
 
         # Determine appropriate section for this declaration
         if groupElem.get('type') == 'bitmask':
@@ -498,7 +519,7 @@ class OutputGenerator:
         else:
             section = 'group'
 
-        return (section, body)
+        return (section, '\n'.join(body))
 
     def makeDir(self, path):
         self.logMsg('diag', 'OutputGenerator::makeDir(' + path + ')')
@@ -511,6 +532,10 @@ class OutputGenerator:
 
     def beginFile(self, genOpts):
         self.genOpts = genOpts
+        self.should_insert_may_alias_macro = \
+            self.genOpts.conventions.should_insert_may_alias_macro(self.genOpts)
+
+        self.conventions = genOpts.conventions
 
         # Open specified output file. Not done in constructor since a
         # Generator can be used without writing to a file.
@@ -600,13 +625,14 @@ class OutputGenerator:
     # aligncol - if non-zero, attempt to align the nested <name> element
     #   at this column
     def makeCParamDecl(self, param, aligncol):
-        paramdecl = '    ' + noneStr(param.text)
+        indent = '    '
+        paramdecl = indent + noneStr(param.text)
         for elem in param:
             text = noneStr(elem.text)
             tail = noneStr(elem.tail)
 
-            if self.genOpts.conventions.is_voidpointer_alias(elem.tag, text, tail):
-                # OpenXR-specific macro insertion
+            if self.should_insert_may_alias_macro and self.genOpts.conventions.is_voidpointer_alias(elem.tag, text, tail):
+                # OpenXR-specific macro insertion - but not in apiinc for the spec
                 tail = self.genOpts.conventions.make_voidpointer_alias(tail)
             if elem.tag == 'name' and aligncol > 0:
                 self.logMsg('diag', 'Aligning parameter', elem.text, 'to column', self.genOpts.alignFuncParam)
@@ -616,17 +642,22 @@ class OutputGenerator:
                 # This works around a problem where very long type names -
                 # longer than the alignment column - would run into the tail
                 # text.
-                paramdecl = paramdecl.ljust(aligncol-1) + ' '
+                paramdecl = paramdecl.ljust(aligncol - 1) + ' '
                 newLen = len(paramdecl)
                 self.logMsg('diag', 'Adjust length of parameter decl from', oldLen, 'to', newLen, ':', paramdecl)
             paramdecl += text + tail
+        if aligncol == 0:
+            # Squeeze out multiple spaces other than the identation
+            paramdecl = indent + ' '.join(paramdecl.split())
         return paramdecl
 
-    # getCParamTypeLength - return the length of the type field is an indented, formatted
-    # declaration for a <param> or <member> block (e.g. function parameter
-    # or structure/union member).
+    # getCParamTypeLength - return the length of the type field in an
+    # indented, formatted declaration for a <param> or <member> block (e.g.
+    # function parameter or structure/union member). This relies on the
+    # presence of the <name> tag; if not present, return zero.
     # param - Element (<param> or <member>) to identify
     def getCParamTypeLength(self, param):
+        newLen = 0
         paramdecl = '    ' + noneStr(param.text)
         for elem in param:
             text = noneStr(elem.text)
@@ -643,17 +674,106 @@ class OutputGenerator:
 
         return newLen
 
+    def getMaxCParamTypeLength(self, info):
+        """Return the length of the longest type field for a member/parameter.
+
+        info - TypeInfo or CommandInfo.
+        """
+        lengths = (self.getCParamTypeLength(member)
+                   for member in info.getMembers())
+        return max(lengths)
+
+    def getHandleParent(self, typename):
+        """Get the parent of a handle object."""
+        info = self.registry.typedict.get(typename)
+        if info is None:
+            return None
+
+        elem = info.elem
+        if elem is not None:
+            return elem.get('parent')
+
+        return None
+
+    def iterateHandleAncestors(self, typename):
+        """Iterate through the ancestors of a handle type."""
+        current = self.getHandleParent(typename)
+        while current is not None:
+            yield current
+            current = self.getHandleParent(current)
+
+    def getHandleAncestors(self, typename):
+        """Get the ancestors of a handle object."""
+        return list(self.iterateHandleAncestors(typename))
+
+    def getTypeCategory(self, typename):
+        """Get the category of a type."""
+        info = self.registry.typedict.get(typename)
+        if info is None:
+            return None
+
+        elem = info.elem
+        if elem is not None:
+            return elem.get('category')
+        return None
+
+    def isStructAlwaysValid(self, structname):
+        """Try to do check if a structure is always considered valid (i.e. there's no rules to its acceptance)."""
+        # A conventions object is required for this call.
+        if not self.conventions:
+            raise RuntimeError("To use isStructAlwaysValid, be sure your options include a Conventions object.")
+
+        if self.conventions.type_always_valid(structname):
+            return True
+
+        category = self.getTypeCategory(structname)
+        if self.conventions.category_requires_validation(category):
+            return False
+
+        info = self.registry.typedict.get(structname)
+        assert(info is not None)
+
+        members = info.getMembers()
+
+        for member in members:
+            member_name = getElemName(member)
+            if member_name in (self.conventions.structtype_member_name,
+                               self.conventions.nextpointer_member_name):
+                return False
+
+            if member.get('noautovalidity'):
+                return False
+
+            member_type = getElemType(member)
+
+            if member_type in ('void', 'char') or self.paramIsArray(member) or self.paramIsPointer(member):
+                return False
+
+            if self.conventions.type_always_valid(member_type):
+                continue
+
+            member_category = self.getTypeCategory(member_type)
+
+            if self.conventions.category_requires_validation(member_category):
+                return False
+
+            if member_category in ('struct', 'union'):
+                if self.isStructAlwaysValid(member_type) is False:
+                    return False
+
+        return True
+
     # isEnumRequired(elem) - return True if this <enum> element is
     # required, False otherwise
     # elem - <enum> element to test
     def isEnumRequired(self, elem):
         required = elem.get('required') is not None
         self.logMsg('diag', 'isEnumRequired:', elem.get('name'),
-            '->', required)
+                    '->', required)
         return required
 
-        #@@@ This code is overridden by equivalent code now run in
-        #@@@ Registry.generateFeature
+        # @@@ This code is overridden by equivalent code now run in
+        # @@@ Registry.generateFeature
 
         required = False
 
@@ -704,6 +824,12 @@ class OutputGenerator:
             else:
                 pdecl += text + tail
                 tdecl += text + tail
+
+        if self.genOpts.alignFuncParam == 0:
+            # Squeeze out multiple spaces - there is no indentation
+            pdecl = ' '.join(pdecl.split())
+            tdecl = ' '.join(tdecl.split())
+
         # Now add the parameter declaration list, which is identical
         # for prototypes and typedefs. Concatenate all the text from
         # a <param> node without the tags. No tree walking required
@@ -729,7 +855,7 @@ class OutputGenerator:
         else:
             paramdecl += 'void'
         paramdecl += ");"
-        return [ pdecl + indentdecl, tdecl + paramdecl ]
+        return [pdecl + indentdecl, tdecl + paramdecl]
 
     def newline(self):
         write('', file=self.outFile)
