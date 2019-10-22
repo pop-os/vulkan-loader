@@ -1,3 +1,10 @@
+vulkan-loader (1.1.121.0-3) UNRELEASED; urgency=medium
+
+  * install-extra-headers.diff: Install vk_layer_dispatch_table.h
+    again, and add other pre-generated headers. (LP: #1849260)
+
+ -- Timo Aaltonen <tjaalton@debian.org>  Tue, 22 Oct 2019 10:32:14 +0300
+
 vulkan-loader (1.1.121.0-2) unstable; urgency=medium
 
   * control: Make mesa-vulkan-drivers the preferred driver package to
