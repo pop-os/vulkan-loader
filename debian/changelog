@@ -1,10 +1,10 @@
-vulkan-loader (1.1.126.0-1) UNRELEASED; urgency=medium
+vulkan-loader (1.1.126.0-1) unstable; urgency=medium
 
   * New upstream release.
   * install-extra-headers.diff: Install vk_layer_dispatch_table.h
     again, and add other pre-generated headers. (LP: #1849260)
 
- -- Timo Aaltonen <tjaalton@debian.org>  Tue, 22 Oct 2019 10:32:14 +0300
+ -- Timo Aaltonen <tjaalton@debian.org>  Wed, 20 Nov 2019 15:17:20 +0200
 
 vulkan-loader (1.1.121.0-2) unstable; urgency=medium
 
