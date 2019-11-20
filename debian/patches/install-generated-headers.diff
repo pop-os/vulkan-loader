@@ -1,0 +1,16 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 81532fdb4..0e3c25403 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -192,6 +192,11 @@ if(UNIX)
+     endif()
+ endif()
+ 
++install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/loader/generated/vk_dispatch_table_helper.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/vulkan")
++install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/loader/generated/vk_layer_dispatch_table.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/vulkan")
++install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/loader/generated/vk_loader_extensions.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/vulkan")
++install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/loader/generated/vk_object_types.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/vulkan")
++
+ # uninstall target
+ if(NOT TARGET uninstall)
+     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
