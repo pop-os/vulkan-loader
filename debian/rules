@@ -1,0 +1,51 @@
+#!/usr/bin/make -f
+
+# see EXAMPLES in dpkg-buildflags(1) and read /usr/share/dpkg/*
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/default.mk
+include /usr/share/dpkg/pkg-info.mk
+
+%:
+	dh $@ --builddirectory=build/
+
+override_dh_clean:
+	dh_clean
+	rm -rf __pycache__ \
+		include \
+		scripts/__pycache__ \
+		vulkan-headers/registry/__pycache__
+	rm -f external/googletest
+
+override_dh_auto_configure:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	ln -s /usr/src/googletest external
+endif
+
+	dh_auto_configure -- \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
+	-DBUILD_WSI_MIR_SUPPORT=OFF \
+	-DVulkanHeaders_INCLUDE_DIR=../vulkan-headers/include \
+	-DVulkanRegistry_DIR=../vulkan-headers/registry
+
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	(cd build; tests/run_all_tests.sh || \
+		echo "NOTE: 23 tests expected to fail without a vulkan driver")
+endif
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/tmp
+
+	mkdir -p debian/tmp/usr/share/vulkan
+	cp -rp vulkan-headers/include debian/tmp/usr
+	cp -rp vulkan-headers/registry debian/tmp/usr/share/vulkan
+	rm -rf debian/tmp/usr/share/vulkan/registry/__pycache__
+
+override_dh_missing:
+	dh_missing --fail-missing
+
+gentarball:
+	tar --transform 's,^,$(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM)/,' \
+		--exclude 'debian' --exclude-vcs \
+		-cJf ../$(DEB_SOURCE)_$(DEB_VERSION_UPSTREAM).orig.tar.xz .
