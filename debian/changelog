@@ -1,6 +1,7 @@
 vulkan-loader (1.2.131.2-1) UNRELEASED; urgency=medium
 
   * New upstream release.
+  * Bump debhelper to 12, use -compat.
 
  -- Timo Aaltonen <tjaalton@debian.org>  Sun, 09 Feb 2020 08:37:03 +0200
 
