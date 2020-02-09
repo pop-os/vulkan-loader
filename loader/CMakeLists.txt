@@ -23,6 +23,9 @@ include(CheckIncludeFile)
 
 check_function_exists(secure_getenv HAVE_SECURE_GETENV)
 check_function_exists(__secure_getenv HAVE___SECURE_GETENV)
+if(NOT (HAVE_SECURE_GETENV OR HAVE__SECURE_GETENV))
+    message(WARNING "Using non-secure environmental lookups. This loader will not properly disable environent variables when run with elevated permissions.")
+endif()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/loader_cmake_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/loader_cmake_config.h)
 
 if(WIN32)
@@ -114,6 +117,10 @@ set(NORMAL_LOADER_SRCS
     murmurhash.c
     murmurhash.h)
 
+if(WIN32)
+    set(NORMAL_LOADER_SRCS ${NORMAL_LOADER_SRCS} adapters.h)
+endif()
+
 set(OPT_LOADER_SRCS dev_ext_trampoline.c phys_dev_ext.c)
 
 # Check for assembler support
@@ -175,7 +182,6 @@ if(WIN32)
     target_compile_options(loader-norm PUBLIC "$<$<CONFIG:DEBUG>:${LOCAL_C_FLAGS_DBG}>")
     target_compile_options(loader-norm PUBLIC ${MSVC_LOADER_COMPILE_OPTIONS})
     target_include_directories(loader-norm PRIVATE "$<TARGET_PROPERTY:Vulkan::Headers,INTERFACE_INCLUDE_DIRECTORIES>")
-    target_include_directories(loader-norm PRIVATE "${WDK_INCLUDE_DIRS}")
 
     add_library(loader-opt OBJECT ${OPT_LOADER_SRCS})
     add_dependencies(loader-opt loader_asm_gen_files)
@@ -183,31 +189,19 @@ if(WIN32)
     target_compile_options(loader-opt PUBLIC ${MSVC_LOADER_COMPILE_OPTIONS})
     target_include_directories(loader-opt PRIVATE "$<TARGET_PROPERTY:Vulkan::Headers,INTERFACE_INCLUDE_DIRECTORIES>")
 
-    if(NOT ENABLE_STATIC_LOADER)
-        target_compile_definitions(loader-norm PUBLIC LOADER_DYNAMIC_LIB)
-        target_compile_definitions(loader-opt PUBLIC LOADER_DYNAMIC_LIB)
-
-        add_library(vulkan
-                    SHARED
-                    $<TARGET_OBJECTS:loader-opt>
-                    $<TARGET_OBJECTS:loader-norm>
-                    $<TARGET_OBJECTS:loader-unknown-chain>
-                    ${CMAKE_CURRENT_SOURCE_DIR}/vulkan-1.def
-                    ${CMAKE_CURRENT_SOURCE_DIR}/loader.rc)
-        set_target_properties(vulkan
-                              PROPERTIES LINK_FLAGS_DEBUG
-                                         "/ignore:4098"
-                                         OUTPUT_NAME
-                                         vulkan-1)
-        target_link_libraries(vulkan Vulkan::Headers)
-    else()
-        add_library(vulkan
-                    STATIC
-                    $<TARGET_OBJECTS:loader-opt>
-                    $<TARGET_OBJECTS:loader-norm>
-                    $<TARGET_OBJECTS:loader-unknown-chain>)
-        set_target_properties(vulkan PROPERTIES OUTPUT_NAME VKstatic.1)
-    endif()
+    add_library(vulkan
+                SHARED
+                $<TARGET_OBJECTS:loader-opt>
+                $<TARGET_OBJECTS:loader-norm>
+                $<TARGET_OBJECTS:loader-unknown-chain>
+                ${CMAKE_CURRENT_SOURCE_DIR}/vulkan-1.def
+                ${CMAKE_CURRENT_SOURCE_DIR}/loader.rc)
+    set_target_properties(vulkan
+                          PROPERTIES LINK_FLAGS_DEBUG
+                                     "/ignore:4098"
+                                     OUTPUT_NAME
+                                     vulkan-1)
+    target_link_libraries(vulkan Vulkan::Headers)
 
     if(ENABLE_WIN10_ONECORE)
         target_link_libraries(vulkan OneCoreUAP.lib LIBCMT.LIB LIBCMTD.LIB LIBVCRUNTIME.LIB LIBUCRT.LIB)
@@ -230,7 +224,6 @@ else()
 
     add_library(vulkan SHARED ${NORMAL_LOADER_SRCS} ${OPT_LOADER_SRCS})
     add_dependencies(vulkan loader_asm_gen_files)
-    target_compile_definitions(vulkan PUBLIC LOADER_DYNAMIC_LIB)
     set_target_properties(vulkan
                           PROPERTIES SOVERSION
                                      "1"
@@ -263,7 +256,6 @@ else()
             ${VulkanHeaders_INCLUDE_DIRS}/vulkan/vulkan.hpp)
         add_library(vulkan-framework SHARED ${NORMAL_LOADER_SRCS} ${OPT_LOADER_SRCS} ${FRAMEWORK_HEADERS})
         add_dependencies(vulkan-framework loader_asm_gen_files)
-        target_compile_definitions(vulkan-framework PUBLIC LOADER_DYNAMIC_LIB)
         target_link_libraries(vulkan-framework -ldl -lpthread -lm "-framework CoreFoundation")
         target_link_libraries(vulkan-framework Vulkan::Headers)
 

@@ -66,6 +66,7 @@ DEVICE_CMDS_NEED_TERM = ['vkGetDeviceProcAddr',
                          'vkGetDeviceGroupSurfacePresentModes2EXT']
 
 ALIASED_CMDS = {
+    # 1.1 aliases, specifically for APIs taking instance/pdev dispatchable objects
     'vkEnumeratePhysicalDeviceGroupsKHR':                   'vkEnumeratePhysicalDeviceGroups',
     'vkGetPhysicalDeviceFeatures2KHR':                      'vkGetPhysicalDeviceFeatures2',
     'vkGetPhysicalDeviceProperties2KHR':                    'vkGetPhysicalDeviceProperties2',
@@ -927,7 +928,8 @@ class LoaderExtensionOutputGenerator(OutputGenerator):
                                'vkGetDisplayModeProperties2KHR',
                                'vkGetDisplayPlaneCapabilities2KHR',
                                'vkGetPhysicalDeviceSurfacePresentModes2EXT',
-                               'vkGetDeviceGroupSurfacePresentModes2EXT']
+                               'vkGetDeviceGroupSurfacePresentModes2EXT',
+                               'vkGetPhysicalDeviceToolPropertiesEXT']
 
         for ext_cmd in self.ext_commands:
             if (ext_cmd.ext_name in WSI_EXT_NAMES or
