@@ -1,3 +1,10 @@
+vulkan-loader (1.2.135.0-2) UNRELEASED; urgency=medium
+
+  * symbols: Add a separate symbols file for x86, strip missing symbols
+    from the rest.
+
+ -- Timo Aaltonen <tjaalton@debian.org>  Thu, 09 Apr 2020 19:13:09 +0300
+
 vulkan-loader (1.2.135.0-1) unstable; urgency=medium
 
   * New upstream release. (LP: #1871754)
