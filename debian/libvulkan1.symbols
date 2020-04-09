@@ -177,7 +177,9 @@ libvulkan.so.1 libvulkan1 #MINVER#
  vkGetPhysicalDeviceQueueFamilyProperties@Base 1.2.131.2
  vkGetPhysicalDeviceSparseImageFormatProperties2@Base 1.2.131.2
  vkGetPhysicalDeviceSparseImageFormatProperties@Base 1.2.131.2
+ vkGetPhysicalDeviceSurfaceCapabilities2KHR@Base 1.2.135.0
  vkGetPhysicalDeviceSurfaceCapabilitiesKHR@Base 1.2.131.2
+ vkGetPhysicalDeviceSurfaceFormats2KHR@Base 1.2.135.0
  vkGetPhysicalDeviceSurfaceFormatsKHR@Base 1.2.131.2
  vkGetPhysicalDeviceSurfacePresentModesKHR@Base 1.2.131.2
  vkGetPhysicalDeviceSurfaceSupportKHR@Base 1.2.131.2
