@@ -175,7 +175,7 @@ class VulkanConventions(ConventionsBase):
            instead. N.b. this may need to change on a per-refpage basis if
            there are multiple documents involved.
         """
-        return 'https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html'
+        return 'https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html'
 
     @property
     def xml_api_name(self):
@@ -259,3 +259,12 @@ class VulkanConventions(ConventionsBase):
         """Return path relative to the generated reference pages, to the
            generated API include files."""
         return "{generated}"
+
+    def valid_flag_bit(self, bitpos):
+        """Return True if bitpos is an allowed numeric bit position for
+           an API flag bit.
+
+           Vulkan uses 32 bit Vk*Flags types, and assumes C compilers may
+           cause Vk*FlagBits values with bit 31 set to result in a 64 bit
+           enumerated type, so disallows such flags."""
+        return bitpos >= 0 and bitpos < 31
