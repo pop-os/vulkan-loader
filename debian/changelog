@@ -1,10 +1,10 @@
-vulkan-loader (1.2.135.0-1) UNRELEASED; urgency=medium
+vulkan-loader (1.2.135.0-1) unstable; urgency=medium
 
-  * New upstream release.
+  * New upstream release. (LP: #1871754)
   * control: Bump policy to 4.5.0.
   * symbols: Updated.
 
- -- Timo Aaltonen <tjaalton@debian.org>  Thu, 09 Apr 2020 07:29:40 +0300
+ -- Timo Aaltonen <tjaalton@debian.org>  Thu, 09 Apr 2020 07:39:59 +0300
 
 vulkan-loader (1.2.131.2-1) unstable; urgency=medium
 
