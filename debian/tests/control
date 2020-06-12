@@ -1,0 +1,6 @@
+Tests: libvulkan-dev
+Restrictions: allow-stderr, superficial
+Depends:
+ build-essential,
+ libvulkan-dev,
+ pkg-config,
