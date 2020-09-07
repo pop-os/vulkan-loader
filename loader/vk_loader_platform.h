@@ -120,13 +120,22 @@ static inline char *loader_platform_executable_path(char *buffer, size_t size) {
 }
 #endif  // defined (__APPLE__)
 
+// Compatability with compilers that don't support __has_feature
+#ifndef __has_feature
+#define __has_feature(x) 0
+#endif
+
+#if __has_feature(address_sanitizer) || defined(__SANITIZE_ADDRESS__)
+#define LOADER_ADDRESS_SANITIZER
+#endif
+
 // Dynamic Loading of libraries:
 typedef void *loader_platform_dl_handle;
 static inline loader_platform_dl_handle loader_platform_open_library(const char *libPath) {
-    // When loading the library, we use RTLD_LAZY so that not all symbols have to be
-    // resolved at this time (which improves performance). Note that if not all symbols
-    // can be resolved, this could cause crashes later. Use the LD_BIND_NOW environment
-    // variable to force all symbols to be resolved here.
+// When loading the library, we use RTLD_LAZY so that not all symbols have to be
+// resolved at this time (which improves performance). Note that if not all symbols
+// can be resolved, this could cause crashes later. Use the LD_BIND_NOW environment
+// variable to force all symbols to be resolved here.
     return dlopen(libPath, RTLD_LAZY | RTLD_LOCAL);
 }
 static inline const char *loader_platform_open_library_error(const char *libPath) { return dlerror(); }

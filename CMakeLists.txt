@@ -64,7 +64,7 @@ else()
 
     # set up the Vulkan::Headers target for consistency
     add_library(vulkan-headers INTERFACE)
-    target_include_directories(vulkan-headers INTERFACE "${VulkanHeaders_INCLUDE_DIRS}")
+    target_include_directories(vulkan-headers SYSTEM INTERFACE "${VulkanHeaders_INCLUDE_DIRS}")
     add_library(Vulkan::Headers ALIAS vulkan-headers)
 endif()
 
@@ -121,6 +121,7 @@ if(UNIX AND NOT APPLE) # i.e.: Linux
     option(BUILD_WSI_XCB_SUPPORT "Build XCB WSI support" ON)
     option(BUILD_WSI_XLIB_SUPPORT "Build Xlib WSI support" ON)
     option(BUILD_WSI_WAYLAND_SUPPORT "Build Wayland WSI support" ON)
+    option(BUILD_WSI_DIRECTFB_SUPPORT "Build DirectFB WSI support" OFF)
 
     if(BUILD_WSI_XCB_SUPPORT)
         find_package(XCB REQUIRED)
@@ -132,7 +133,12 @@ if(UNIX AND NOT APPLE) # i.e.: Linux
 
     if(BUILD_WSI_WAYLAND_SUPPORT)
         find_package(Wayland REQUIRED)
-        include_directories(${WAYLAND_CLIENT_INCLUDE_DIR})
+        include_directories(SYSTEM ${WAYLAND_CLIENT_INCLUDE_DIR})
+    endif()
+
+    if(BUILD_WSI_DIRECTFB_SUPPORT)
+        find_package(DirectFB REQUIRED)
+        include_directories(SYSTEM ${DIRECTFB_INCLUDE_DIR})
     endif()
 endif()
 

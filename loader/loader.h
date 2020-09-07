@@ -326,6 +326,9 @@ struct loader_instance {
 #ifdef VK_USE_PLATFORM_XLIB_KHR
     bool wsi_xlib_surface_enabled;
 #endif
+#ifdef VK_USE_PLATFORM_DIRECTFB_EXT
+    bool wsi_directfb_surface_enabled;
+#endif
 #ifdef VK_USE_PLATFORM_ANDROID_KHR
     bool wsi_android_surface_enabled;
 #endif
@@ -384,6 +387,9 @@ struct loader_scanned_icd {
     PFN_GetPhysicalDeviceProcAddr GetPhysicalDeviceProcAddr;
     PFN_vkCreateInstance CreateInstance;
     PFN_vkEnumerateInstanceExtensionProperties EnumerateInstanceExtensionProperties;
+#if defined(VK_USE_PLATFORM_WIN32_KHR)
+    PFN_vk_icdEnumerateAdapterPhysicalDevices EnumerateAdapterPhysicalDevices;
+#endif
 };
 
 static inline struct loader_instance *loader_instance(VkInstance instance) { return (struct loader_instance *)instance; }

@@ -53,6 +53,10 @@ elseif(UNIX AND NOT APPLE) # i.e.: Linux
     if(BUILD_WSI_WAYLAND_SUPPORT)
         set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS VK_USE_PLATFORM_WAYLAND_KHR)
     endif()
+
+    if(BUILD_WSI_DIRECTFB_SUPPORT)
+        set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS VK_USE_PLATFORM_DIRECTFB_EXT)
+    endif()
 else()
     message(FATAL_ERROR "Unsupported Platform!")
 endif()
@@ -179,7 +183,7 @@ else(UNIX AND NOT APPLE) # i.e.: Linux
 endif()
 
 if(WIN32)
-    add_library(loader-norm OBJECT ${NORMAL_LOADER_SRCS} dirent_on_windows.c dxgi_loader.c)
+    add_library(loader-norm OBJECT ${NORMAL_LOADER_SRCS} dirent_on_windows.c)
     target_compile_options(loader-norm PUBLIC "$<$<CONFIG:DEBUG>:${LOCAL_C_FLAGS_DBG}>")
     target_compile_options(loader-norm PUBLIC ${MSVC_LOADER_COMPILE_OPTIONS})
     target_include_directories(loader-norm PRIVATE "$<TARGET_PROPERTY:Vulkan::Headers,INTERFACE_INCLUDE_DIRECTORIES>")
