@@ -17,6 +17,7 @@ from extensionmetadocgenerator import (ExtensionMetaDocGeneratorOptions,
                                        ExtensionMetaDocOutputGenerator)
 from interfacedocgenerator import InterfaceDocGenerator
 from generator import write
+from spirvcapgenerator import SpirvCapabilityOutputGenerator
 from hostsyncgenerator import HostSynchronizationOutputGenerator
 from pygenerator import PyOutputGenerator
 from reflib import logDiag, logWarn, setLogFile
@@ -73,6 +74,9 @@ def makeGenOpts(args):
     # Extensions to emit (list of extensions)
     emitExtensions = args.emitExtensions
 
+    # SPIR-V capabilities / features to emit (list of extensions & capabilities)
+    emitSpirv = args.emitSpirv
+
     # Features to include (list of features)
     features = args.feature
 
@@ -87,12 +91,13 @@ def makeGenOpts(args):
 
     # Descriptive names for various regexp patterns used to select
     # versions and extensions
-    allFeatures = allExtensions = r'.*'
+    allSpirv = allFeatures = allExtensions = r'.*'
 
     # Turn lists of names/patterns into matching regular expressions
     addExtensionsPat     = makeREstring(extensions, None)
     removeExtensionsPat  = makeREstring(removeExtensions, None)
     emitExtensionsPat    = makeREstring(emitExtensions, allExtensions)
+    emitSpirvPat         = makeREstring(emitSpirv, allSpirv)
     featuresPat          = makeREstring(features, allFeatures)
 
     # Copyright text prefixing all headers (list of strings).
@@ -249,6 +254,25 @@ def makeGenOpts(args):
             reparentEnums     = False)
         ]
 
+    genOpts['spirvcapinc'] = [
+          SpirvCapabilityOutputGenerator,
+          DocGeneratorOptions(
+            conventions       = conventions,
+            filename          = 'timeMarker',
+            directory         = directory,
+            genpath           = None,
+            apiname           = 'vulkan',
+            profile           = None,
+            versions          = featuresPat,
+            emitversions      = featuresPat,
+            defaultExtensions = None,
+            addExtensions     = addExtensionsPat,
+            removeExtensions  = removeExtensionsPat,
+            emitExtensions    = emitExtensionsPat,
+            emitSpirv         = emitSpirvPat,
+            reparentEnums     = False)
+        ]
+
     # Platform extensions, in their own header files
     # Each element of the platforms[] array defines information for
     # generating a single platform:
@@ -269,8 +293,8 @@ def makeGenOpts(args):
     # Extensions required and suppressed for beta "platform". This can
     # probably eventually be derived from the requires= attributes of
     # the extension blocks.
-    betaRequireExtensions = [ 'VK_KHR_ray_tracing', 'VK_KHR_deferred_host_operations', 'VK_KHR_pipeline_library', 'VK_KHR_portability_subset' ]
-    betaSuppressExtensions = [ 'VK_NV_ray_tracing' ]
+    betaRequireExtensions = [ 'VK_KHR_portability_subset' ]
+    betaSuppressExtensions = []
 
     platforms = [
         [ 'vulkan_android.h',     [ 'VK_KHR_android_surface',
@@ -482,6 +506,8 @@ def genTarget(args):
     # Create generator options with parameters specified on command line
     makeGenOpts(args)
 
+    # pdb.set_trace()
+
     # Select a generator matching the requested target
     if args.target in genOpts:
         createGenerator = genOpts[args.target][0]
@@ -523,6 +549,9 @@ if __name__ == '__main__':
     parser.add_argument('-emitExtensions', action='append',
                         default=[],
                         help='Specify an extension or extensions to emit in targets')
+    parser.add_argument('-emitSpirv', action='append',
+                        default=[],
+                        help='Specify a SPIR-V extension or capability to emit in targets')
     parser.add_argument('-feature', action='append',
                         default=[],
                         help='Specify a core API feature name or names to add to targets')
