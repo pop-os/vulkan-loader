@@ -1,0 +1,4 @@
+usr/include
+usr/lib/*/libvulkan.so
+usr/lib/*/pkgconfig/vulkan.pc
+usr/share/vulkan/registry
