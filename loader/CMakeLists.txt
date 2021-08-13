@@ -57,6 +57,10 @@ elseif(UNIX AND NOT APPLE) # i.e.: Linux
     if(BUILD_WSI_DIRECTFB_SUPPORT)
         set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS VK_USE_PLATFORM_DIRECTFB_EXT)
     endif()
+
+    if(BUILD_WSI_SCREEN_QNX_SUPPORT)
+        set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS VK_USE_PLATFORM_SCREEN_QNX)
+    endif()
 else()
     message(FATAL_ERROR "Unsupported Platform!")
 endif()
@@ -66,6 +70,7 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
 if(WIN32)
+    if(MSVC)
     # Use static MSVCRT libraries
     foreach(configuration
             in
@@ -85,6 +90,7 @@ if(WIN32)
                            "${${configuration}}")
         endif()
     endforeach()
+    endif()
 
     if(ENABLE_WIN10_ONECORE)
         # Note: When linking your app or driver to OneCore.lib, be sure to remove any links to non-umbrella libs (such as
@@ -95,13 +101,16 @@ if(WIN32)
 
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_CRT_SECURE_NO_WARNINGS")
     # ~~~
-    # Build dev_ext_trampoline.c with -O2 to allow tail-call optimization.
-    # Build other C files with normal options.
+    # Build dev_ext_trampoline.c and unknown_ext_chain.c with /O2 to allow tail-call optimization.
     # Setup two CMake targets (loader-norm and loader-opt) for the different compilation flags.
     # ~~~
-    separate_arguments(LOCAL_C_FLAGS_DBG WINDOWS_COMMAND ${CMAKE_C_FLAGS_DEBUG})
-    set(CMAKE_C_FLAGS_DEBUG " ")
-    separate_arguments(LOCAL_C_FLAGS_REL WINDOWS_COMMAND ${CMAKE_C_FLAGS_RELEASE})
+    set(MODIFIED_C_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+
+    string(REPLACE "/Od" "/O2" MODIFIED_C_FLAGS_DEBUG ${MODIFIED_C_FLAGS_DEBUG})
+    string(REPLACE "/Ob0" "/Ob2" MODIFIED_C_FLAGS_DEBUG ${MODIFIED_C_FLAGS_DEBUG})
+    string(REGEX REPLACE "/RTC." "" MODIFIED_C_FLAGS_DEBUG ${MODIFIED_C_FLAGS_DEBUG})  #remove run-time error checks
+
+    separate_arguments(MODIFIED_C_FLAGS_DEBUG WINDOWS_COMMAND ${MODIFIED_C_FLAGS_DEBUG})
 endif()
 
 set(NORMAL_LOADER_SRCS
@@ -169,7 +178,7 @@ if(WIN32)
         message(WARNING "Could not find working MASM assebler\n${ASM_FAILURE_MSG}")
         add_custom_target(loader_asm_gen_files)
         add_library(loader-unknown-chain OBJECT unknown_ext_chain.c)
-        target_compile_options(loader-unknown-chain PUBLIC "$<$<CONFIG:DEBUG>:${LOCAL_C_FLAGS_REL}>")
+        set_target_properties(loader-unknown-chain PROPERTIES CMAKE_C_FLAGS_DEBUG "${MODIFIED_C_FLAGS_DEBUG}")
         target_compile_options(loader-unknown-chain PUBLIC ${MSVC_LOADER_COMPILE_OPTIONS})
     endif()
 elseif(APPLE)
@@ -203,13 +212,13 @@ endif()
 
 if(WIN32)
     add_library(loader-norm OBJECT ${NORMAL_LOADER_SRCS} dirent_on_windows.c)
-    target_compile_options(loader-norm PUBLIC "$<$<CONFIG:DEBUG>:${LOCAL_C_FLAGS_DBG}>")
+    # target_compile_options(loader-norm PUBLIC "$<$<CONFIG:DEBUG>:${LOCAL_C_FLAGS_DBG}>")
     target_compile_options(loader-norm PUBLIC ${MSVC_LOADER_COMPILE_OPTIONS})
     target_include_directories(loader-norm PRIVATE "$<TARGET_PROPERTY:Vulkan::Headers,INTERFACE_INCLUDE_DIRECTORIES>")
 
     add_library(loader-opt OBJECT ${OPT_LOADER_SRCS})
     add_dependencies(loader-opt loader_asm_gen_files)
-    target_compile_options(loader-opt PUBLIC "$<$<CONFIG:DEBUG>:${LOCAL_C_FLAGS_REL}>")
+    set_target_properties(loader-opt PROPERTIES CMAKE_C_FLAGS_DEBUG "${MODIFIED_C_FLAGS_DEBUG}")
     target_compile_options(loader-opt PUBLIC ${MSVC_LOADER_COMPILE_OPTIONS})
     target_include_directories(loader-opt PRIVATE "$<TARGET_PROPERTY:Vulkan::Headers,INTERFACE_INCLUDE_DIRECTORIES>")
 
@@ -220,16 +229,24 @@ if(WIN32)
                 $<TARGET_OBJECTS:loader-unknown-chain>
                 ${CMAKE_CURRENT_SOURCE_DIR}/vulkan-1.def
                 ${CMAKE_CURRENT_SOURCE_DIR}/loader.rc)
+    if(MSVC)
     set_target_properties(vulkan
-                          PROPERTIES LINK_FLAGS_DEBUG
-                                     "/ignore:4098"
+                          PROPERTIES
+                          #LINK_FLAGS_DEBUG "/ignore:4098"
                                      OUTPUT_NAME
                                      vulkan-1
                                      PREFIX
                                      "")
+    else()
+    set_target_properties(vulkan
+                          PROPERTIES
+                          LIBRARY_OUTPUT_NAME vulkan
+                          RUNTIME_OUTPUT_NAME vulkan-1
+                          ARCHIVE_OUTPUT_NAME vulkan)
+    endif()
     target_link_libraries(vulkan Vulkan::Headers)
 
-    if(ENABLE_WIN10_ONECORE)
+    if(MSVC AND ENABLE_WIN10_ONECORE)
         target_link_libraries(vulkan OneCoreUAP.lib LIBCMT.LIB LIBCMTD.LIB LIBVCRUNTIME.LIB LIBUCRT.LIB)
         set_target_properties(vulkan PROPERTIES LINK_FLAGS "/NODEFAULTLIB")
     else()
@@ -259,7 +276,10 @@ else()
                                      "1"
                                      VERSION
                                      "${VulkanHeaders_VERSION_MAJOR}.${VulkanHeaders_VERSION_MINOR}.${VulkanHeaders_VERSION_PATCH}")
-    target_link_libraries(vulkan ${CMAKE_DL_LIBS} pthread m)
+    target_link_libraries(vulkan ${CMAKE_DL_LIBS} m)
+    if (NOT ANDROID)
+        target_link_libraries(vulkan pthread)
+    endif()
     target_link_libraries(vulkan Vulkan::Headers)
     if(APPLE)
         find_library(COREFOUNDATION_LIBRARY NAMES CoreFoundation)
@@ -281,6 +301,7 @@ else()
             ${VulkanHeaders_INCLUDE_DIRS}/vulkan/vulkan_xcb.h
             ${VulkanHeaders_INCLUDE_DIRS}/vulkan/vulkan_xlib.h
             ${VulkanHeaders_INCLUDE_DIRS}/vulkan/vulkan_xlib_xrandr.h
+            ${VulkanHeaders_INCLUDE_DIRS}/vulkan/vulkan_screen.h
             ${VulkanHeaders_INCLUDE_DIRS}/vulkan/vulkan.h
             ${VulkanHeaders_INCLUDE_DIRS}/vulkan/vulkan.hpp)
         if(BUILD_STATIC_LOADER)
@@ -327,7 +348,7 @@ if(PKG_CONFIG_FOUND)
         set(PRIVATE_LIBS "${PRIVATE_LIBS} -l${LIB}")
     endforeach()
     if(WIN32)
-        set(LIB_SUFFIX "-1")
+        set(VULKAN_LIB_SUFFIX "-1")
     endif ()
     configure_file("vulkan.pc.in" "vulkan.pc" @ONLY)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/vulkan.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")

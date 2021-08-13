@@ -122,7 +122,7 @@ LOADER_EXPORT VKAPI_ATTR VkResult VKAPI_CALL vkEnumerateInstanceExtensionPropert
 
     // We'll need to save the dl handles so we can close them later
     loader_platform_dl_handle *libs = malloc(sizeof(loader_platform_dl_handle) * layers.count);
-    if (libs == NULL) {
+    if (libs == NULL && layers.count > 0) {
         return VK_ERROR_OUT_OF_HOST_MEMORY;
     }
     size_t lib_count = 0;
@@ -216,7 +216,7 @@ LOADER_EXPORT VKAPI_ATTR VkResult VKAPI_CALL vkEnumerateInstanceLayerProperties(
 
     // We'll need to save the dl handles so we can close them later
     loader_platform_dl_handle *libs = malloc(sizeof(loader_platform_dl_handle) * layers.count);
-    if (libs == NULL) {
+    if (libs == NULL && layers.count > 0) {
         return VK_ERROR_OUT_OF_HOST_MEMORY;
     }
     size_t lib_count = 0;
@@ -310,7 +310,7 @@ LOADER_EXPORT VKAPI_ATTR VkResult VKAPI_CALL vkEnumerateInstanceVersion(uint32_t
 
     // We'll need to save the dl handles so we can close them later
     loader_platform_dl_handle *libs = malloc(sizeof(loader_platform_dl_handle) * layers.count);
-    if (libs == NULL) {
+    if (libs == NULL && layers.count > 0) {
         return VK_ERROR_OUT_OF_HOST_MEMORY;
     }
     size_t lib_count = 0;
@@ -482,9 +482,18 @@ LOADER_EXPORT VKAPI_ATTR VkResult VKAPI_CALL vkCreateInstance(const VkInstanceCr
     // Scan/discover all ICD libraries
     memset(&ptr_instance->icd_tramp_list, 0, sizeof(ptr_instance->icd_tramp_list));
     res = loader_icd_scan(ptr_instance, &ptr_instance->icd_tramp_list);
-    if (res != VK_SUCCESS) {
+    if (res == VK_SUCCESS && ptr_instance->icd_tramp_list.count == 0) {
+        // No drivers found
+        res = VK_ERROR_INCOMPATIBLE_DRIVER;
         goto out;
     }
+    if (res != VK_SUCCESS) {
+        if (res != VK_ERROR_OUT_OF_HOST_MEMORY && ptr_instance->icd_tramp_list.count == 0) {
+            res = VK_ERROR_INCOMPATIBLE_DRIVER;
+        }
+        goto out;
+    }
+
 
     // Get extensions from all ICD's, merge so no duplicates, then validate
     res = loader_get_icd_loader_instance_extensions(ptr_instance, &ptr_instance->icd_tramp_list, &ptr_instance->ext_list);
@@ -864,7 +873,7 @@ LOADER_EXPORT VKAPI_ATTR void VKAPI_CALL vkGetDeviceQueue(VkDevice device, uint3
     disp = loader_get_dispatch(device);
 
     disp->GetDeviceQueue(device, queueNodeIndex, queueIndex, pQueue);
-    if (pQueue != NULL) {
+    if (pQueue != NULL && *pQueue != NULL) {
         loader_set_dispatch(*pQueue, disp);
     }
 }
