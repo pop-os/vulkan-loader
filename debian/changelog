@@ -1,3 +1,9 @@
+vulkan-loader (1.2.182.0-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Timo Aaltonen <tjaalton@debian.org>  Wed, 01 Sep 2021 15:12:01 +0300
+
 vulkan-loader (1.2.182.0-1) experimental; urgency=medium
 
   * New upstream release.
