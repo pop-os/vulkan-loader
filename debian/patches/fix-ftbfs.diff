@@ -1,0 +1,13 @@
+diff --git a/tests/loader_regression_tests.cpp b/tests/loader_regression_tests.cpp
+index 2d8f2e177..eb63a1114 100644
+--- a/tests/loader_regression_tests.cpp
++++ b/tests/loader_regression_tests.cpp
+@@ -499,7 +499,7 @@ TEST(TryLoadWrongBinaries, WrongICD) {
+ #if defined(__linux__)
+ #if defined(__x86_64__)
+     ASSERT_TRUE(log.find("wrong ELF class: ELFCLASS32"));
+-#elif
++#else
+     ASSERT_TRUE(log.find("wrong ELF class: ELFCLASS64"));
+ #endif
+ #endif
