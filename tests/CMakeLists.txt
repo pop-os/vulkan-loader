@@ -112,12 +112,16 @@ target_link_libraries(vk_loader_validation_tests "${LOADER_LIB}" gtest gtest_mai
 
 add_subdirectory(layers)
 
+# By default, tests and loader are built without sanitizers
+# Use these options to force a specific sanitizer on all test executables
 option(TEST_USE_ADDRESS_SANITIZER "Linux only: Advanced memory checking" OFF)
+option(TEST_USE_THREAD_SANITIZER "Linux only: Advanced thread checking" OFF)
 
 include(GoogleTest)
 add_subdirectory(framework)
 
-add_executable(test_regression loader_testing_main.cpp loader_regression_tests.cpp loader_version_tests.cpp)
+add_executable(test_regression loader_testing_main.cpp loader_regression_tests.cpp loader_layer_tests.cpp
+    loader_version_tests.cpp loader_alloc_callback_tests.cpp)
 target_link_libraries(test_regression PRIVATE testing_dependencies)
 
 add_executable(test_wsi loader_testing_main.cpp loader_wsi_tests.cpp)
@@ -140,6 +144,9 @@ if(UNIX AND NOT APPLE) # i.e. Linux
     endif()
 endif()
 
+add_executable(test_threading loader_testing_main.cpp loader_threading_tests.cpp)
+target_link_libraries(test_threading PRIVATE testing_dependencies)
+
 if(WIN32)
     # Copy loader and googletest (gtest) libs to test dir so the test executable can find them.
     add_custom_command(TARGET test_regression POST_BUILD
@@ -151,5 +158,5 @@ if(WIN32)
     endif()
 endif()
 
-#must happen after the dll's get copied over
+# must happen after the dll's get copied over
 gtest_discover_tests(test_regression)

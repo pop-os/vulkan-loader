@@ -50,7 +50,7 @@ jobs:
               run: python scripts/update_deps.py --dir external
 
             - name: Get Google Test
-              run: git clone --branch release-1.8.1 https://github.com/google/googletest.git external/googletest
+              run: git clone --branch release-1.10.0 https://github.com/google/googletest.git external/googletest
 
             - name: Generate build files
               run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=${{matrix.config}} -DBUILD_TESTS=On -Cexternal/helper.cmake
@@ -67,6 +67,12 @@ jobs:
 
             - name: Verify generated source files
               run: python scripts/generate_source.py --verify external/Vulkan-Headers/registry
+
+            - name: Verify code formatting with clang-format
+              run: ./scripts/check_code_format.sh
+
+            - name: Verify commit message formatting
+              run: ./scripts/check_commit_message_format.sh
 
     windows:
         runs-on: ${{matrix.os}}
@@ -91,7 +97,7 @@ jobs:
               run: python scripts/update_deps.py --dir external
 
             - name: Get Google Test
-              run: git clone --branch release-1.8.1 https://github.com/google/googletest.git external/googletest
+              run: git clone --branch release-1.10.0 https://github.com/google/googletest.git external/googletest
 
             - name: Get Detours
               run: git clone --branch v4.0.1 https://github.com/microsoft/Detours.git external/detours
@@ -131,13 +137,17 @@ jobs:
               run: python scripts/update_deps.py --dir external
 
             - name: Get Google Test
-              run: git clone --branch release-1.8.1 https://github.com/google/googletest.git external/googletest
+              run: git clone --branch release-1.10.0 https://github.com/google/googletest.git external/googletest
 
             - name: Generate build files
               run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=${{matrix.config}} -Cexternal/helper.cmake
 
             - name: Build the loader
               run: make -C build
+
+            - name: Run regression tests
+              working-directory: ./build
+              run: ctest --output-on-failure
 
     gn:
         runs-on: ubuntu-18.04

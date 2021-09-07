@@ -88,7 +88,7 @@ bool set_env_var(std::string const& name, std::string const& value) { return set
 bool remove_env_var(std::string const& name) { return unsetenv(name.c_str()); }
 std::string get_env_var(std::string const& name) {
     char* ret = getenv(name.c_str());
-    if (ret == nullptr){
+    if (ret == nullptr) {
         std::cerr << "Failed to get environment variable:" << name << "\n";
         return std::string();
     }
@@ -99,7 +99,7 @@ std::string get_env_var(std::string const& name) {
 std::string ManifestICD::get_manifest_str() const {
     std::string out;
     out += "{\n";
-    out += "    \"file_format_version\": \"1.0.0\",\n";
+    out += "    " + file_format_version.get_version_str() + "\n";
     out += "    \"ICD\": {\n";
     out += "        \"library_path\": \"" + lib_path + "\",\n";
     out += "        \"api_version\": \"" + version_to_string(api_version) + "\"\n";
@@ -128,12 +128,14 @@ std::string ManifestLayer::LayerDescription::get_manifest_str() const {
     out += "\t{\n";
     out += "\t\t\"name\":\"" + name + "\",\n";
     out += "\t\t\"type\":\"" + get_type_str(type) + "\",\n";
-    out += "\t\t\"library_path\": \"" + lib_path + "\",\n";
+    if (lib_path.size() > 0) {
+        out += "\t\t\"library_path\": \"" + lib_path + "\",\n";
+    }
     out += "\t\t\"api_version\": \"" + version_to_string(api_version) + "\",\n";
     out += "\t\t\"implementation_version\":\"" + std::to_string(implementation_version) + "\",\n";
     out += "\t\t\"description\": \"" + description + "\"";
     if (functions.size() > 0) {
-        out += ",\n\t\t{";
+        out += ",\n\t\t\"functions\": {";
         for (size_t i = 0; i < functions.size(); i++) {
             if (i > 0) out += ",";
             out += "\n\t\t\t" + functions.at(i).get_manifest_str();
@@ -141,27 +143,27 @@ std::string ManifestLayer::LayerDescription::get_manifest_str() const {
         out += "\n\t\t}";
     }
     if (instance_extensions.size() > 0) {
-        out += ",\n\t\t{";
+        out += ",\n\t\t\"instance_extensions\": [";
         for (size_t i = 0; i < instance_extensions.size(); i++) {
             if (i > 0) out += ",";
             out += "\n\t\t\t" + instance_extensions.at(i).get_manifest_str();
         }
-        out += "\n\t\t}";
+        out += "\n\t\t]";
     }
     if (device_extensions.size() > 0) {
-        out += ",\n\t\t{";
+        out += ",\n\t\t\"device_extensions\": [";
         for (size_t i = 0; i < device_extensions.size(); i++) {
             if (i > 0) out += ",";
             out += "\n\t\t\t" + device_extensions.at(i).get_manifest_str();
         }
-        out += "\n\t\t}";
+        out += "\n\t\t]";
     }
     if (enable_environment.size() > 0) {
-        out += ",\n\t\t{ \"" + enable_environment + "\": \"1\"";
+        out += ",\n\t\t\"enable_environment\": { \"" + enable_environment + "\": \"1\"";
         out += "\n\t\t}";
     }
     if (disable_environment.size() > 0) {
-        out += ",\n\t\t{ \"" + disable_environment + "\": \"1\"";
+        out += ",\n\t\t\"disable_environment\": { \"" + disable_environment + "\": \"1\"";
         out += "\n\t\t}";
     }
     if (component_layers.size() > 0) {
@@ -196,7 +198,7 @@ VkLayerProperties ManifestLayer::LayerDescription::get_layer_properties() const 
 std::string ManifestLayer::get_manifest_str() const {
     std::string out;
     out += "{\n";
-    out += "\t\"file_format_version\": \"1.0.0\",\n";
+    out += "\t" + file_format_version.get_version_str() + "\n";
     if (layers.size() == 1) {
         out += "\t\"layer\": ";
         out += layers.at(0).get_manifest_str() + "\n";
@@ -222,7 +224,7 @@ std::string make_native(std::string const& in_path) {
         else
             out += c;
     }
-#elif defined(__linux__) || defined(APPLE)
+#elif defined(__linux__) || defined(__APPLE__)
     for (size_t i = 0; i < in_path.size(); i++) {
         if (i + 1 < in_path.size() && in_path[i] == '\\' && in_path[i + 1] == '\\') {
             out += '/';
@@ -356,6 +358,10 @@ int create_folder(path const& path) {
 
 int delete_folder(path const& folder) {
 #if defined(WIN32)
+    if (INVALID_FILE_ATTRIBUTES == GetFileAttributes(folder.c_str()) && GetLastError() == ERROR_FILE_NOT_FOUND) {
+        // nothing to delete
+        return 0;
+    }
     bool ret = RemoveDirectoryA(folder.c_str());
     if (ret == 0) {
         print_error_message(ERROR_REMOVEDIRECTORY_FAILED, "RemoveDirectoryA");
@@ -372,7 +378,7 @@ int delete_folder(path const& folder) {
         int ret2 = -1;
 
         /* Skip the names "." and ".." as we don't want to recurse on them. */
-        if (!strcmp(file->d_name, ".") || !strcmp(file->d_name, "..")) continue;
+        if (string_eq(file->d_name, ".") || string_eq(file->d_name, "..")) continue;
 
         path file_path = folder / file->d_name;
         struct stat statbuf;
@@ -483,57 +489,60 @@ path FolderManager::copy_file(path const& file, std::string const& new_name) {
 }
 }  // namespace fs
 
+bool string_eq(const char* a, const char* b) noexcept { return strcmp(a, b) == 0; }
+bool string_eq(const char* a, const char* b, size_t len) noexcept { return strncmp(a, b, len) == 0; }
+
 VulkanFunctions::VulkanFunctions() : loader(FRAMEWORK_VULKAN_LIBRARY_PATH) {
     // clang-format off
-    fp_vkGetInstanceProcAddr = loader.get_symbol<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr");
-    fp_vkEnumerateInstanceExtensionProperties = loader.get_symbol<PFN_vkEnumerateInstanceExtensionProperties>("vkEnumerateInstanceExtensionProperties");
-    fp_vkEnumerateInstanceLayerProperties = loader.get_symbol<PFN_vkEnumerateInstanceLayerProperties>("vkEnumerateInstanceLayerProperties");
-    fp_vkEnumerateInstanceVersion = loader.get_symbol<PFN_vkEnumerateInstanceVersion>("vkEnumerateInstanceVersion");
-    fp_vkCreateInstance = loader.get_symbol<PFN_vkCreateInstance>("vkCreateInstance");
-    fp_vkDestroyInstance = loader.get_symbol<PFN_vkDestroyInstance>("vkDestroyInstance");
-    fp_vkEnumeratePhysicalDevices = loader.get_symbol<PFN_vkEnumeratePhysicalDevices>("vkEnumeratePhysicalDevices");
-    fp_vkGetPhysicalDeviceFeatures = loader.get_symbol<PFN_vkGetPhysicalDeviceFeatures>("vkGetPhysicalDeviceFeatures");
-    fp_vkGetPhysicalDeviceFeatures2 = loader.get_symbol<PFN_vkGetPhysicalDeviceFeatures2>("vkGetPhysicalDeviceFeatures2");
-    fp_vkGetPhysicalDeviceFormatProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceFormatProperties>("vkGetPhysicalDeviceFormatProperties");
-    fp_vkGetPhysicalDeviceImageFormatProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceImageFormatProperties>("vkGetPhysicalDeviceImageFormatProperties");
-    fp_vkGetPhysicalDeviceProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceProperties>("vkGetPhysicalDeviceProperties");
-    fp_vkGetPhysicalDeviceProperties2 = loader.get_symbol<PFN_vkGetPhysicalDeviceProperties2>("vkGetPhysicalDeviceProperties2");
-    fp_vkGetPhysicalDeviceQueueFamilyProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceQueueFamilyProperties>("vkGetPhysicalDeviceQueueFamilyProperties");
-    fp_vkGetPhysicalDeviceQueueFamilyProperties2 = loader.get_symbol<PFN_vkGetPhysicalDeviceQueueFamilyProperties2>("vkGetPhysicalDeviceQueueFamilyProperties2");
-    fp_vkGetPhysicalDeviceMemoryProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceMemoryProperties>("vkGetPhysicalDeviceMemoryProperties");
-    fp_vkGetPhysicalDeviceFormatProperties2 = loader.get_symbol<PFN_vkGetPhysicalDeviceFormatProperties2>("vkGetPhysicalDeviceFormatProperties2");
-    fp_vkGetPhysicalDeviceMemoryProperties2 = loader.get_symbol<PFN_vkGetPhysicalDeviceMemoryProperties2>("vkGetPhysicalDeviceMemoryProperties2");
-    fp_vkGetPhysicalDeviceSurfaceSupportKHR = loader.get_symbol<PFN_vkGetPhysicalDeviceSurfaceSupportKHR>("vkGetPhysicalDeviceSurfaceSupportKHR");
-    fp_vkGetPhysicalDeviceSurfaceFormatsKHR = loader.get_symbol<PFN_vkGetPhysicalDeviceSurfaceFormatsKHR>("vkGetPhysicalDeviceSurfaceFormatsKHR");
-    fp_vkGetPhysicalDeviceSurfacePresentModesKHR = loader.get_symbol<PFN_vkGetPhysicalDeviceSurfacePresentModesKHR>("vkGetPhysicalDeviceSurfacePresentModesKHR");
-    fp_vkGetPhysicalDeviceSurfaceCapabilitiesKHR = loader.get_symbol<PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR>("vkGetPhysicalDeviceSurfaceCapabilitiesKHR");
-    fp_vkEnumerateDeviceExtensionProperties = loader.get_symbol<PFN_vkEnumerateDeviceExtensionProperties>("vkEnumerateDeviceExtensionProperties");
-    fp_vkEnumerateDeviceLayerProperties = loader.get_symbol<PFN_vkEnumerateDeviceLayerProperties>("vkEnumerateDeviceLayerProperties");
+    vkGetInstanceProcAddr = loader.get_symbol<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr");
+    vkEnumerateInstanceExtensionProperties = loader.get_symbol<PFN_vkEnumerateInstanceExtensionProperties>("vkEnumerateInstanceExtensionProperties");
+    vkEnumerateInstanceLayerProperties = loader.get_symbol<PFN_vkEnumerateInstanceLayerProperties>("vkEnumerateInstanceLayerProperties");
+    vkEnumerateInstanceVersion = loader.get_symbol<PFN_vkEnumerateInstanceVersion>("vkEnumerateInstanceVersion");
+    vkCreateInstance = loader.get_symbol<PFN_vkCreateInstance>("vkCreateInstance");
+    vkDestroyInstance = loader.get_symbol<PFN_vkDestroyInstance>("vkDestroyInstance");
+    vkEnumeratePhysicalDevices = loader.get_symbol<PFN_vkEnumeratePhysicalDevices>("vkEnumeratePhysicalDevices");
+    vkGetPhysicalDeviceFeatures = loader.get_symbol<PFN_vkGetPhysicalDeviceFeatures>("vkGetPhysicalDeviceFeatures");
+    vkGetPhysicalDeviceFeatures2 = loader.get_symbol<PFN_vkGetPhysicalDeviceFeatures2>("vkGetPhysicalDeviceFeatures2");
+    vkGetPhysicalDeviceFormatProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceFormatProperties>("vkGetPhysicalDeviceFormatProperties");
+    vkGetPhysicalDeviceImageFormatProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceImageFormatProperties>("vkGetPhysicalDeviceImageFormatProperties");
+    vkGetPhysicalDeviceProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceProperties>("vkGetPhysicalDeviceProperties");
+    vkGetPhysicalDeviceProperties2 = loader.get_symbol<PFN_vkGetPhysicalDeviceProperties2>("vkGetPhysicalDeviceProperties2");
+    vkGetPhysicalDeviceQueueFamilyProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceQueueFamilyProperties>("vkGetPhysicalDeviceQueueFamilyProperties");
+    vkGetPhysicalDeviceQueueFamilyProperties2 = loader.get_symbol<PFN_vkGetPhysicalDeviceQueueFamilyProperties2>("vkGetPhysicalDeviceQueueFamilyProperties2");
+    vkGetPhysicalDeviceMemoryProperties = loader.get_symbol<PFN_vkGetPhysicalDeviceMemoryProperties>("vkGetPhysicalDeviceMemoryProperties");
+    vkGetPhysicalDeviceFormatProperties2 = loader.get_symbol<PFN_vkGetPhysicalDeviceFormatProperties2>("vkGetPhysicalDeviceFormatProperties2");
+    vkGetPhysicalDeviceMemoryProperties2 = loader.get_symbol<PFN_vkGetPhysicalDeviceMemoryProperties2>("vkGetPhysicalDeviceMemoryProperties2");
+    vkGetPhysicalDeviceSurfaceSupportKHR = loader.get_symbol<PFN_vkGetPhysicalDeviceSurfaceSupportKHR>("vkGetPhysicalDeviceSurfaceSupportKHR");
+    vkGetPhysicalDeviceSurfaceFormatsKHR = loader.get_symbol<PFN_vkGetPhysicalDeviceSurfaceFormatsKHR>("vkGetPhysicalDeviceSurfaceFormatsKHR");
+    vkGetPhysicalDeviceSurfacePresentModesKHR = loader.get_symbol<PFN_vkGetPhysicalDeviceSurfacePresentModesKHR>("vkGetPhysicalDeviceSurfacePresentModesKHR");
+    vkGetPhysicalDeviceSurfaceCapabilitiesKHR = loader.get_symbol<PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR>("vkGetPhysicalDeviceSurfaceCapabilitiesKHR");
+    vkEnumerateDeviceExtensionProperties = loader.get_symbol<PFN_vkEnumerateDeviceExtensionProperties>("vkEnumerateDeviceExtensionProperties");
+    vkEnumerateDeviceLayerProperties = loader.get_symbol<PFN_vkEnumerateDeviceLayerProperties>("vkEnumerateDeviceLayerProperties");
 
-    fp_vkDestroySurfaceKHR = loader.get_symbol<PFN_vkDestroySurfaceKHR>("vkDestroySurfaceKHR");
-    fp_vkGetDeviceProcAddr = loader.get_symbol<PFN_vkGetDeviceProcAddr>("vkGetDeviceProcAddr");
-    fp_vkCreateDevice = loader.get_symbol<PFN_vkCreateDevice>("vkCreateDevice");
+    vkDestroySurfaceKHR = loader.get_symbol<PFN_vkDestroySurfaceKHR>("vkDestroySurfaceKHR");
+    vkGetDeviceProcAddr = loader.get_symbol<PFN_vkGetDeviceProcAddr>("vkGetDeviceProcAddr");
+    vkCreateDevice = loader.get_symbol<PFN_vkCreateDevice>("vkCreateDevice");
 
 #ifdef VK_USE_PLATFORM_ANDROID_KHR
-    fp_vkCreateAndroidSurfaceKHR = loader.get_symbol<PFN_vkCreateAndroidSurfaceKHR>("vkCreateAndroidSurfaceKHR");
+    vkCreateAndroidSurfaceKHR = loader.get_symbol<PFN_vkCreateAndroidSurfaceKHR>("vkCreateAndroidSurfaceKHR");
 #endif
 #ifdef VK_USE_PLATFORM_METAL_EXT
-    fp_vkCreateMetalSurfaceEXT = loader.get_symbol<PFN_vkCreateMetalSurfaceEXT>("vkCreateMetalSurfaceEXT")
+    vkCreateMetalSurfaceEXT = loader.get_symbol<PFN_vkCreateMetalSurfaceEXT>("vkCreateMetalSurfaceEXT")
 #endif
 #ifdef VK_USE_PLATFORM_WAYLAND_KHR
-    fp_vkCreateWaylandSurfaceKHR = loader.get_symbol<PFN_vkCreateWaylandSurfaceKHR>("vkCreateWaylandSurfaceKHR");
+    vkCreateWaylandSurfaceKHR = loader.get_symbol<PFN_vkCreateWaylandSurfaceKHR>("vkCreateWaylandSurfaceKHR");
 #endif
 #ifdef VK_USE_PLATFORM_XCB_KHR
-    fp_vkCreateXcbSurfaceKHR = loader.get_symbol<PFN_vkCreateXcbSurfaceKHR>("vkCreateXcbSurfaceKHR");
+    vkCreateXcbSurfaceKHR = loader.get_symbol<PFN_vkCreateXcbSurfaceKHR>("vkCreateXcbSurfaceKHR");
 #endif
 #ifdef VK_USE_PLATFORM_XLIB_KHR
-    fp_vkCreateXlibSurfaceKHR = loader.get_symbol<PFN_vkCreateXlibSurfaceKHR>("vkCreateXlibSurfaceKHR");
+    vkCreateXlibSurfaceKHR = loader.get_symbol<PFN_vkCreateXlibSurfaceKHR>("vkCreateXlibSurfaceKHR");
 #endif
 #ifdef VK_USE_PLATFORM_WIN32_KHR
-    fp_vkCreateWin32SurfaceKHR = loader.get_symbol<PFN_vkCreateWin32SurfaceKHR>("vkCreateWin32SurfaceKHR");
+    vkCreateWin32SurfaceKHR = loader.get_symbol<PFN_vkCreateWin32SurfaceKHR>("vkCreateWin32SurfaceKHR");
 #endif
-    fp_vkDestroyDevice = loader.get_symbol<PFN_vkDestroyDevice>("vkDestroyDevice");
-    fp_vkGetDeviceQueue = loader.get_symbol<PFN_vkGetDeviceQueue>("vkGetDeviceQueue");
+    vkDestroyDevice = loader.get_symbol<PFN_vkDestroyDevice>("vkDestroyDevice");
+    vkGetDeviceQueue = loader.get_symbol<PFN_vkGetDeviceQueue>("vkGetDeviceQueue");
     // clang-format on
 }
 
@@ -622,16 +631,34 @@ DeviceCreateInfo& DeviceCreateInfo::add_device_queue(DeviceQueueCreateInfo queue
 }
 
 VkResult CreateInst(InstWrapper& inst, InstanceCreateInfo& inst_info) {
-    return inst.functions->fp_vkCreateInstance(inst_info.get(), nullptr, &inst.inst);
+    return inst.functions->vkCreateInstance(inst_info.get(), inst.callbacks, &inst.inst);
 }
 
 VkResult CreatePhysDevs(InstWrapper& inst, uint32_t phys_dev_count, std::vector<VkPhysicalDevice>& physical_devices) {
     physical_devices.resize(phys_dev_count);
     uint32_t physical_count = phys_dev_count;
-    return inst.functions->fp_vkEnumeratePhysicalDevices(inst.inst, &physical_count, physical_devices.data());
+    return inst.functions->vkEnumeratePhysicalDevices(inst.inst, &physical_count, physical_devices.data());
 }
 
 VkResult CreatePhysDev(InstWrapper& inst, VkPhysicalDevice& physical_device) {
     uint32_t physical_count = 1;
-    return inst.functions->fp_vkEnumeratePhysicalDevices(inst.inst, &physical_count, &physical_device);
+    return inst.functions->vkEnumeratePhysicalDevices(inst.inst, &physical_count, &physical_device);
+}
+
+VkResult CreateDevice(VkPhysicalDevice phys_dev, DeviceWrapper& dev, DeviceCreateInfo& dev_info) {
+    return dev.functions->vkCreateDevice(phys_dev, dev_info.get(), dev.callbacks, &dev.dev);
+}
+
+VkResult CreateDebugUtilsMessenger(DebugUtilsWrapper& debug_utils) {
+    return debug_utils.vkCreateDebugUtilsMessengerEXT(debug_utils.inst, debug_utils.get(), debug_utils.callbacks,
+                                                      &debug_utils.messenger);
+}
+
+void FillDebugUtilsCreateDetails(InstanceCreateInfo& create_info, DebugUtilsLogger& logger) {
+    create_info.add_extension("VK_EXT_debug_utils");
+    create_info.inst_info.pNext = logger.get();
+}
+void FillDebugUtilsCreateDetails(InstanceCreateInfo& create_info, DebugUtilsWrapper& wrapper) {
+    create_info.add_extension("VK_EXT_debug_utils");
+    create_info.inst_info.pNext = wrapper.get();
 }

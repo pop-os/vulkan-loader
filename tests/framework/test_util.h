@@ -41,7 +41,7 @@
  * Instance & Device create info helpers
  * InstWrapper & DeviceWrapper - for easier test writing
  * operator == overloads for many vulkan structs - more concise tests
-*/
+ */
 #pragma once
 
 // Following items are needed for C++ to work with PRIxLEAST64
@@ -76,10 +76,16 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dlfcn.h>
+
+// Prevent macro collisions from <sys/types.h>
+#undef major
+#undef minor
+
 #endif
 
 #include <vulkan/vulkan.h>
 #include <vulkan/vk_icd.h>
+#include <vulkan/vk_layer.h>
 
 #include "framework_config.h"
 
@@ -105,7 +111,7 @@ bool remove_env_var(std::string const& name);
 std::string get_env_var(std::string const& name);
 #endif
 
-//Windows specific error handling logic
+// Windows specific error handling logic
 #if defined(WIN32)
 const long ERROR_SETENV_FAILED = 10543;           // chosen at random, attempts to not conflict
 const long ERROR_REMOVEDIRECTORY_FAILED = 10544;  // chosen at random, attempts to not conflict
@@ -125,7 +131,21 @@ inline std::string version_to_string(uint32_t version) {
            std::to_string(VK_VERSION_PATCH(version));
 }
 
+struct ManifestVersion {
+    uint32_t major = 1;
+    uint32_t minor = 0;
+    uint32_t patch = 0;
+    explicit ManifestVersion() noexcept {};
+    explicit ManifestVersion(uint32_t major, uint32_t minor, uint32_t patch) noexcept : major(major), minor(minor), patch(patch){};
+
+    std::string get_version_str() const noexcept {
+        return std::string("\"file_format_version\": \"") + std::to_string(major) + "." + std::to_string(minor) + "." +
+               std::to_string(patch) + "\",";
+    }
+};
+
 struct ManifestICD {
+    ManifestVersion file_format_version = ManifestVersion();
     uint32_t api_version = VK_MAKE_VERSION(1, 0, 0);
     std::string lib_path;
 
@@ -149,6 +169,9 @@ struct ManifestLayer {
             std::string get_manifest_str() const { return std::string("{ \"") + vk_func + "\":\"" + override_name + "\" }"; }
         };
         struct Extension {
+            Extension() noexcept {}
+            Extension(std::string name, uint32_t spec_version = 0, std::vector<std::string> entrypoints = {}) noexcept
+                : name(name), spec_version(spec_version), entrypoints(entrypoints) {}
             std::string name;
             uint32_t spec_version = 0;
             std::vector<std::string> entrypoints;
@@ -171,9 +194,7 @@ struct ManifestLayer {
         std::string get_manifest_str() const;
         VkLayerProperties get_layer_properties() const;
     };
-    uint32_t file_format_major = 1;
-    uint32_t file_format_minor = 1;
-    uint32_t file_format_patch = 2;
+    ManifestVersion file_format_version;
     std::vector<LayerDescription> layers;
 
     std::string get_manifest_str() const;
@@ -253,11 +274,14 @@ struct path {
     // get C++ style string
     std::string const& str() const { return contents; }
     std::string& str() { return contents; }
-    size_t size() const { return contents.size();};
+    size_t size() const { return contents.size(); };
 
    private:
     std::string contents;
 };
+
+int create_folder(path const& path);
+int delete_folder(path const& folder);
 
 class FolderManager {
    public:
@@ -347,7 +371,9 @@ struct LibraryWrapper {
     }
     LibraryWrapper(LibraryWrapper const& wrapper) = delete;
     LibraryWrapper& operator=(LibraryWrapper const& wrapper) = delete;
-    LibraryWrapper(LibraryWrapper&& wrapper) noexcept : lib_handle(wrapper.lib_handle), lib_path(wrapper.lib_path) { wrapper.lib_handle = nullptr; }
+    LibraryWrapper(LibraryWrapper&& wrapper) noexcept : lib_handle(wrapper.lib_handle), lib_path(wrapper.lib_path) {
+        wrapper.lib_handle = nullptr;
+    }
     LibraryWrapper& operator=(LibraryWrapper&& wrapper) noexcept {
         if (this != &wrapper) {
             if (lib_handle != nullptr) {
@@ -489,64 +515,67 @@ inline std::ostream& operator<<(std::ostream& os, const VkResult& result) {
     return os << static_cast<int32_t>(result);
 }
 
+bool string_eq(const char* a, const char* b) noexcept;
+bool string_eq(const char* a, const char* b, size_t len) noexcept;
+
 struct VulkanFunctions {
     LibraryWrapper loader;
 
     // Pre-Instance
-    PFN_vkGetInstanceProcAddr fp_vkGetInstanceProcAddr = nullptr;
-    PFN_vkEnumerateInstanceExtensionProperties fp_vkEnumerateInstanceExtensionProperties = nullptr;
-    PFN_vkEnumerateInstanceLayerProperties fp_vkEnumerateInstanceLayerProperties = nullptr;
-    PFN_vkEnumerateInstanceVersion fp_vkEnumerateInstanceVersion = nullptr;
-    PFN_vkCreateInstance fp_vkCreateInstance = nullptr;
+    PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr = nullptr;
+    PFN_vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties = nullptr;
+    PFN_vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties = nullptr;
+    PFN_vkEnumerateInstanceVersion vkEnumerateInstanceVersion = nullptr;
+    PFN_vkCreateInstance vkCreateInstance = nullptr;
 
     // Instance
-    PFN_vkDestroyInstance fp_vkDestroyInstance = nullptr;
-    PFN_vkEnumeratePhysicalDevices fp_vkEnumeratePhysicalDevices = nullptr;
-    PFN_vkGetPhysicalDeviceFeatures fp_vkGetPhysicalDeviceFeatures = nullptr;
-    PFN_vkGetPhysicalDeviceFeatures2 fp_vkGetPhysicalDeviceFeatures2 = nullptr;
-    PFN_vkGetPhysicalDeviceFormatProperties fp_vkGetPhysicalDeviceFormatProperties = nullptr;
-    PFN_vkGetPhysicalDeviceImageFormatProperties fp_vkGetPhysicalDeviceImageFormatProperties = nullptr;
-    PFN_vkGetPhysicalDeviceProperties fp_vkGetPhysicalDeviceProperties = nullptr;
-    PFN_vkGetPhysicalDeviceProperties2 fp_vkGetPhysicalDeviceProperties2 = nullptr;
-    PFN_vkGetPhysicalDeviceQueueFamilyProperties fp_vkGetPhysicalDeviceQueueFamilyProperties = nullptr;
-    PFN_vkGetPhysicalDeviceQueueFamilyProperties2 fp_vkGetPhysicalDeviceQueueFamilyProperties2 = nullptr;
-    PFN_vkGetPhysicalDeviceMemoryProperties fp_vkGetPhysicalDeviceMemoryProperties = nullptr;
-    PFN_vkGetPhysicalDeviceFormatProperties2 fp_vkGetPhysicalDeviceFormatProperties2 = nullptr;
-    PFN_vkGetPhysicalDeviceMemoryProperties2 fp_vkGetPhysicalDeviceMemoryProperties2 = nullptr;
-    PFN_vkGetPhysicalDeviceSurfaceSupportKHR fp_vkGetPhysicalDeviceSurfaceSupportKHR = nullptr;
-    PFN_vkGetPhysicalDeviceSurfaceFormatsKHR fp_vkGetPhysicalDeviceSurfaceFormatsKHR = nullptr;
-    PFN_vkGetPhysicalDeviceSurfacePresentModesKHR fp_vkGetPhysicalDeviceSurfacePresentModesKHR = nullptr;
-    PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR fp_vkGetPhysicalDeviceSurfaceCapabilitiesKHR = nullptr;
-    PFN_vkEnumerateDeviceExtensionProperties fp_vkEnumerateDeviceExtensionProperties = nullptr;
-    PFN_vkEnumerateDeviceLayerProperties fp_vkEnumerateDeviceLayerProperties = nullptr;
+    PFN_vkDestroyInstance vkDestroyInstance = nullptr;
+    PFN_vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices = nullptr;
+    PFN_vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures = nullptr;
+    PFN_vkGetPhysicalDeviceFeatures2 vkGetPhysicalDeviceFeatures2 = nullptr;
+    PFN_vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties = nullptr;
+    PFN_vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties = nullptr;
+    PFN_vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties = nullptr;
+    PFN_vkGetPhysicalDeviceProperties2 vkGetPhysicalDeviceProperties2 = nullptr;
+    PFN_vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties = nullptr;
+    PFN_vkGetPhysicalDeviceQueueFamilyProperties2 vkGetPhysicalDeviceQueueFamilyProperties2 = nullptr;
+    PFN_vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties = nullptr;
+    PFN_vkGetPhysicalDeviceFormatProperties2 vkGetPhysicalDeviceFormatProperties2 = nullptr;
+    PFN_vkGetPhysicalDeviceMemoryProperties2 vkGetPhysicalDeviceMemoryProperties2 = nullptr;
+    PFN_vkGetPhysicalDeviceSurfaceSupportKHR vkGetPhysicalDeviceSurfaceSupportKHR = nullptr;
+    PFN_vkGetPhysicalDeviceSurfaceFormatsKHR vkGetPhysicalDeviceSurfaceFormatsKHR = nullptr;
+    PFN_vkGetPhysicalDeviceSurfacePresentModesKHR vkGetPhysicalDeviceSurfacePresentModesKHR = nullptr;
+    PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR vkGetPhysicalDeviceSurfaceCapabilitiesKHR = nullptr;
+    PFN_vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties = nullptr;
+    PFN_vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties = nullptr;
 
-    PFN_vkGetDeviceProcAddr fp_vkGetDeviceProcAddr = nullptr;
-    PFN_vkCreateDevice fp_vkCreateDevice = nullptr;
+    PFN_vkGetDeviceProcAddr vkGetDeviceProcAddr = nullptr;
+    PFN_vkCreateDevice vkCreateDevice = nullptr;
 
 // WSI
 #ifdef VK_USE_PLATFORM_ANDROID_KHR
-    PFN_vkCreateAndroidSurfaceKHR fp_vkCreateAndroidSurfaceKHR;
+    PFN_vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR;
 #endif
 #ifdef VK_USE_PLATFORM_METAL_EXT
-    PFN_vkCreateMetalSurfaceEXT fp_vkCreateMetalSurfaceEXT;
+    PFN_vkCreateMetalSurfaceEXT vkCreateMetalSurfaceEXT;
 #endif
 #ifdef VK_USE_PLATFORM_WAYLAND_KHR
-    PFN_vkCreateWaylandSurfaceKHR fp_vkCreateWaylandSurfaceKHR;
+    PFN_vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR;
 #endif
 #ifdef VK_USE_PLATFORM_XCB_KHR
-    PFN_vkCreateXcbSurfaceKHR fp_vkCreateXcbSurfaceKHR;
+    PFN_vkCreateXcbSurfaceKHR vkCreateXcbSurfaceKHR;
 #endif
 #ifdef VK_USE_PLATFORM_XLIB_KHR
-    PFN_vkCreateXlibSurfaceKHR fp_vkCreateXlibSurfaceKHR;
+    PFN_vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR;
 #endif
 #ifdef VK_USE_PLATFORM_WIN32_KHR
-    PFN_vkCreateWin32SurfaceKHR fp_vkCreateWin32SurfaceKHR;
+    PFN_vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR;
 #endif
-    PFN_vkDestroySurfaceKHR fp_vkDestroySurfaceKHR = nullptr;
+    PFN_vkDestroySurfaceKHR vkDestroySurfaceKHR = nullptr;
 
     // device functions
-    PFN_vkDestroyDevice fp_vkDestroyDevice = nullptr;
-    PFN_vkGetDeviceQueue fp_vkGetDeviceQueue = nullptr;
+    PFN_vkDestroyDevice vkDestroyDevice = nullptr;
+    PFN_vkGetDeviceQueue vkGetDeviceQueue = nullptr;
 
     VulkanFunctions();
 };
@@ -596,10 +625,12 @@ struct DeviceCreateInfo {
 };
 
 struct InstWrapper {
-    InstWrapper(VulkanFunctions& functions) noexcept : functions(&functions) {}
-    InstWrapper(VulkanFunctions& functions, VkInstance inst) noexcept : functions(&functions), inst(inst) {}
+    InstWrapper(VulkanFunctions& functions, VkAllocationCallbacks* callbacks = nullptr) noexcept
+        : functions(&functions), callbacks(callbacks) {}
+    InstWrapper(VulkanFunctions& functions, VkInstance inst, VkAllocationCallbacks* callbacks = nullptr) noexcept
+        : functions(&functions), inst(inst), callbacks(callbacks) {}
     ~InstWrapper() {
-        if (inst != VK_NULL_HANDLE) functions->fp_vkDestroyInstance(inst, nullptr);
+        if (inst != VK_NULL_HANDLE) functions->vkDestroyInstance(inst, callbacks);
     }
 
     // Immoveable object
@@ -614,6 +645,7 @@ struct InstWrapper {
 
     VulkanFunctions* functions = nullptr;
     VkInstance inst = VK_NULL_HANDLE;
+    VkAllocationCallbacks* callbacks = nullptr;
 };
 
 VkResult CreateInst(InstWrapper& inst, InstanceCreateInfo& inst_info);
@@ -622,8 +654,11 @@ VkResult CreatePhysDev(InstWrapper& inst, VkPhysicalDevice& physical_device);
 
 struct DeviceWrapper {
     DeviceWrapper(){};
-    DeviceWrapper(VulkanFunctions& functions, VkDevice dev) : functions(&functions), dev(dev){};
-    ~DeviceWrapper() { functions->fp_vkDestroyDevice(dev, nullptr); }
+    DeviceWrapper(InstWrapper& inst_wrapper, VkAllocationCallbacks* callbacks = nullptr)
+        : functions(inst_wrapper.functions), callbacks(callbacks){};
+    DeviceWrapper(VulkanFunctions& functions, VkAllocationCallbacks* callbacks = nullptr)
+        : functions(&functions), callbacks(callbacks){};
+    ~DeviceWrapper() { functions->vkDestroyDevice(dev, callbacks); }
 
     // Immoveable object
     DeviceWrapper(DeviceWrapper const&) = delete;
@@ -637,7 +672,85 @@ struct DeviceWrapper {
 
     VulkanFunctions* functions = nullptr;
     VkDevice dev = VK_NULL_HANDLE;
+    VkAllocationCallbacks* callbacks = nullptr;
 };
+VkResult CreateDevice(VkPhysicalDevice phys_dev, DeviceWrapper& dev, DeviceCreateInfo& dev_info);
+
+struct DebugUtilsLogger {
+    static VkBool32 VKAPI_PTR DebugUtilsMessengerLoggerCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+                                                                VkDebugUtilsMessageTypeFlagsEXT messageTypes,
+                                                                const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+                                                                void* pUserData) {
+        DebugUtilsLogger* debug = reinterpret_cast<DebugUtilsLogger*>(pUserData);
+        debug->returned_output += pCallbackData->pMessage;
+        debug->returned_output += '\n';
+        return VK_FALSE;
+    }
+    DebugUtilsLogger(VkDebugUtilsMessageSeverityFlagsEXT severity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+                                                                    VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT) {
+        returned_output.reserve(4096);  // output can be very noisy, reserving should help prevent many small allocations
+        create_info.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+        create_info.pNext = nullptr;
+        create_info.messageSeverity = severity;
+        create_info.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+                                  VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+        create_info.pfnUserCallback = DebugUtilsMessengerLoggerCallback;
+        create_info.pUserData = this;
+    }
+
+    // Immoveable object
+    DebugUtilsLogger(DebugUtilsLogger const&) = delete;
+    DebugUtilsLogger& operator=(DebugUtilsLogger const&) = delete;
+    DebugUtilsLogger(DebugUtilsLogger&&) = delete;
+    DebugUtilsLogger& operator=(DebugUtilsLogger&&) = delete;
+
+    bool find(std::string const& search_text) { return returned_output.find(search_text) != std::string::npos; }
+
+    VkDebugUtilsMessengerCreateInfoEXT* get() noexcept { return &create_info; }
+    VkDebugUtilsMessengerCreateInfoEXT create_info{};
+    std::string returned_output;
+};
+
+struct DebugUtilsWrapper {
+    DebugUtilsWrapper() noexcept {}
+    DebugUtilsWrapper(InstWrapper& inst_wrapper,
+                      VkDebugUtilsMessageSeverityFlagsEXT severity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+                                                                     VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT,
+                      VkAllocationCallbacks* callbacks = nullptr)
+        : logger(severity), inst(inst_wrapper.inst), callbacks(callbacks) {
+        vkCreateDebugUtilsMessengerEXT = reinterpret_cast<PFN_vkCreateDebugUtilsMessengerEXT>(
+            inst_wrapper.functions->vkGetInstanceProcAddr(inst_wrapper.inst, "vkCreateDebugUtilsMessengerEXT"));
+        vkDestroyDebugUtilsMessengerEXT = reinterpret_cast<PFN_vkDestroyDebugUtilsMessengerEXT>(
+            inst_wrapper.functions->vkGetInstanceProcAddr(inst_wrapper.inst, "vkDestroyDebugUtilsMessengerEXT"));
+    };
+    ~DebugUtilsWrapper() noexcept {
+        if (messenger) {
+            vkDestroyDebugUtilsMessengerEXT(inst, messenger, callbacks);
+        }
+    }
+    // Immoveable object
+    DebugUtilsWrapper(DebugUtilsWrapper const&) = delete;
+    DebugUtilsWrapper& operator=(DebugUtilsWrapper const&) = delete;
+    DebugUtilsWrapper(DebugUtilsWrapper&&) = delete;
+    DebugUtilsWrapper& operator=(DebugUtilsWrapper&&) = delete;
+
+    bool find(std::string const& search_text) { return logger.find(search_text); }
+    VkDebugUtilsMessengerCreateInfoEXT* get() noexcept { return logger.get(); }
+
+    DebugUtilsLogger logger;
+    VkInstance inst;
+    VkAllocationCallbacks* callbacks = nullptr;
+    PFN_vkCreateDebugUtilsMessengerEXT vkCreateDebugUtilsMessengerEXT = nullptr;
+    PFN_vkDestroyDebugUtilsMessengerEXT vkDestroyDebugUtilsMessengerEXT = nullptr;
+    VkDebugUtilsMessengerEXT messenger = VK_NULL_HANDLE;
+};
+
+VkResult CreateDebugUtilsMessenger(DebugUtilsWrapper& debug_utils);
+
+// Helper that adds the debug utils extension name and sets the pNext chain up
+// NOTE: Ignores existing pNext chains
+void FillDebugUtilsCreateDetails(InstanceCreateInfo& create_info, DebugUtilsLogger& logger);
+void FillDebugUtilsCreateDetails(InstanceCreateInfo& create_info, DebugUtilsWrapper& wrapper);
 
 inline bool operator==(const VkExtent3D& a, const VkExtent3D& b) {
     return a.width == b.width && a.height == b.height && a.depth == b.depth;
@@ -651,12 +764,12 @@ inline bool operator==(const VkQueueFamilyProperties& a, const VkQueueFamilyProp
 inline bool operator!=(const VkQueueFamilyProperties& a, const VkQueueFamilyProperties& b) { return !(a == b); }
 
 inline bool operator==(const VkLayerProperties& a, const VkLayerProperties& b) {
-    return strncmp(a.layerName, b.layerName, 256) == 0 && strncmp(a.description, b.description, 256) == 0 &&
+    return string_eq(a.layerName, b.layerName, 256) && string_eq(a.description, b.description, 256) &&
            a.implementationVersion == b.implementationVersion && a.specVersion == b.specVersion;
 }
 inline bool operator!=(const VkLayerProperties& a, const VkLayerProperties& b) { return !(a == b); }
 
 inline bool operator==(const VkExtensionProperties& a, const VkExtensionProperties& b) {
-    return strncmp(a.extensionName, b.extensionName, 256) == 0 && a.specVersion == b.specVersion;
+    return string_eq(a.extensionName, b.extensionName, 256) && a.specVersion == b.specVersion;
 }
 inline bool operator!=(const VkExtensionProperties& a, const VkExtensionProperties& b) { return !(a == b); }
