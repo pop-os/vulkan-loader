@@ -1,8 +1,8 @@
-vulkan-loader (1.2.189.0-1) UNRELEASED; urgency=medium
+vulkan-loader (1.2.189.0-1) unstable; urgency=medium
 
   * New upstream release.
 
- -- Timo Aaltonen <tjaalton@debian.org>  Tue, 07 Sep 2021 13:36:46 +0300
+ -- Timo Aaltonen <tjaalton@debian.org>  Tue, 07 Sep 2021 13:40:34 +0300
 
 vulkan-loader (1.2.182.0-2) unstable; urgency=medium
 
