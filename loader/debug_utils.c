@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2015-2017 The Khronos Group Inc.
- * Copyright (c) 2015-2017 Valve Corporation
- * Copyright (c) 2015-2017 LunarG, Inc.
+ * Copyright (c) 2015-2021 The Khronos Group Inc.
+ * Copyright (c) 2015-2021 Valve Corporation
+ * Copyright (c) 2015-2021 LunarG, Inc.
  * Copyright (C) 2015-2016 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,24 +19,26 @@
  * Author: Courtney Goeltzenleuchter <courtney@LunarG.com>
  * Author: Jon Ashburn <jon@LunarG.com>
  * Author: Mark Young <marky@lunarg.com>
+ * Author: Charles Giessen <charles@lunarg.com>
  *
  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <inttypes.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #ifndef WIN32
 #include <signal.h>
 #else
 #endif
-#include "vk_loader_platform.h"
-#include "debug_utils.h"
+
 #include "vulkan/vk_layer.h"
 #include "vk_object_types.h"
+
+#include "allocation.h"
+#include "debug_utils.h"
+#include "loader.h"
+#include "vk_loader_platform.h"
 
 // VK_EXT_debug_report related items
 
@@ -869,9 +871,6 @@ void debug_utils_AddInstanceExtensions(const struct loader_instance *inst, struc
 }
 
 void debug_utils_CreateInstance(struct loader_instance *ptr_instance, const VkInstanceCreateInfo *pCreateInfo) {
-    ptr_instance->enabled_known_extensions.ext_debug_report = 0;
-    ptr_instance->enabled_known_extensions.ext_debug_utils = 0;
-
     for (uint32_t i = 0; i < pCreateInfo->enabledExtensionCount; i++) {
         if (strcmp(pCreateInfo->ppEnabledExtensionNames[i], VK_EXT_DEBUG_REPORT_EXTENSION_NAME) == 0) {
             ptr_instance->enabled_known_extensions.ext_debug_report = 1;

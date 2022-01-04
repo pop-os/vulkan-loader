@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2015-2017 The Khronos Group Inc.
- * Copyright (c) 2015-2017 Valve Corporation
- * Copyright (c) 2015-2017 LunarG, Inc.
+ * Copyright (c) 2015-2021 The Khronos Group Inc.
+ * Copyright (c) 2015-2021 Valve Corporation
+ * Copyright (c) 2015-2021 LunarG, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,24 @@
  *
  * Author: Mark Young <marky@lunarg.com>
  * Author: Lenny Komow <lenny@lunarg.com>
+ * Author: Charles Giessen <charles@lunarg.com>
  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
+#include "extension_manual.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "vk_loader_platform.h"
-#include "loader.h"
-#include "vk_loader_extensions.h"
+
 #include <vulkan/vk_icd.h>
-#include "wsi.h"
+
+#include "allocation.h"
 #include "debug_utils.h"
+#include "loader.h"
+#include "log.h"
+#include "vk_loader_extensions.h"
+#include "vk_loader_platform.h"
+#include "wsi.h"
 
 // ---- Manually added trampoline/terminator functions
 
@@ -157,6 +161,7 @@ VKAPI_ATTR VkResult VKAPI_CALL terminator_ReleaseDisplayEXT(VkPhysicalDevice phy
                    "ICD \"%s\" associated with VkPhysicalDevice does not support vkReleaseDisplayEXT - Consequently, the call is "
                    "invalid because it should not be possible to acquire a display on this device",
                    icd_term->scanned_icd->lib_name);
+        abort();
     }
     return icd_term->dispatch.ReleaseDisplayEXT(phys_dev_term->phys_dev, display);
 }
@@ -238,6 +243,7 @@ VKAPI_ATTR VkResult VKAPI_CALL terminator_GetPhysicalDeviceSurfacePresentModes2E
     if (NULL == icd_term->dispatch.GetPhysicalDeviceSurfacePresentModes2EXT) {
         loader_log(icd_term->this_instance, VULKAN_LOADER_ERROR_BIT, 0,
                    "ICD associated with VkPhysicalDevice does not support GetPhysicalDeviceSurfacePresentModes2EXT");
+        abort();
     }
     VkIcdSurface *icd_surface = (VkIcdSurface *)(pSurfaceInfo->surface);
     uint8_t icd_index = phys_dev_term->icd_index;
@@ -296,5 +302,52 @@ VKAPI_ATTR VkResult VKAPI_CALL GetPhysicalDeviceToolPropertiesEXT(VkPhysicalDevi
 
 VKAPI_ATTR VkResult VKAPI_CALL terminator_GetPhysicalDeviceToolPropertiesEXT(VkPhysicalDevice physicalDevice, uint32_t *pToolCount,
                                                                              VkPhysicalDeviceToolPropertiesEXT *pToolProperties) {
-    return VK_SUCCESS;
+    struct loader_physical_device_term *phys_dev_term = (struct loader_physical_device_term *)physicalDevice;
+    struct loader_icd_term *icd_term = phys_dev_term->this_icd_term;
+
+    bool tooling_info_supported = false;
+    uint32_t ext_count = 0;
+    VkExtensionProperties *ext_props = NULL;
+    VkResult res = VK_SUCCESS;
+    VkResult enumerate_res = VK_SUCCESS;
+
+    enumerate_res = icd_term->dispatch.EnumerateDeviceExtensionProperties(phys_dev_term->phys_dev, NULL, &ext_count, NULL);
+    if (enumerate_res != VK_SUCCESS) {
+        goto out;
+    }
+
+    ext_props = loader_instance_heap_alloc(icd_term->this_instance, sizeof(VkExtensionProperties) * ext_count,
+                                           VK_SYSTEM_ALLOCATION_SCOPE_COMMAND);
+    if (!ext_props) {
+        res = VK_ERROR_OUT_OF_HOST_MEMORY;
+        goto out;
+    }
+
+    enumerate_res = icd_term->dispatch.EnumerateDeviceExtensionProperties(phys_dev_term->phys_dev, NULL, &ext_count, ext_props);
+    if (enumerate_res != VK_SUCCESS) {
+        goto out;
+    }
+
+    for (uint32_t i = 0; i < ext_count; i++) {
+        if (strncmp(ext_props[i].extensionName, VK_EXT_TOOLING_INFO_EXTENSION_NAME, VK_MAX_EXTENSION_NAME_SIZE) == 0) {
+            tooling_info_supported = true;
+            break;
+        }
+    }
+
+    if (tooling_info_supported && icd_term->dispatch.GetPhysicalDeviceToolPropertiesEXT) {
+        res = icd_term->dispatch.GetPhysicalDeviceToolPropertiesEXT(phys_dev_term->phys_dev, pToolCount, pToolProperties);
+    }
+
+out:
+    // In the case the driver didn't support the extension, make sure that the first layer doesn't find the count uninitialized
+    if (!tooling_info_supported || !icd_term->dispatch.GetPhysicalDeviceToolPropertiesEXT) {
+        *pToolCount = 0;
+    }
+
+    if (ext_props) {
+        loader_instance_heap_free(icd_term->this_instance, ext_props);
+    }
+
+    return res;
 }

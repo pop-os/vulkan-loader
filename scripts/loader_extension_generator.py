@@ -211,9 +211,6 @@ class LoaderExtensionOutputGenerator(OutputGenerator):
             preamble += '#pragma once\n'
 
         elif self.genOpts.filename == 'vk_loader_extensions.c':
-            preamble += '#ifndef _GNU_SOURCE\n'
-            preamble += '#define _GNU_SOURCE\n'
-            preamble += '#endif\n'
             preamble += '#include <stdio.h>\n'
             preamble += '#include <stdlib.h>\n'
             preamble += '#include <string.h>\n'
@@ -282,7 +279,7 @@ class LoaderExtensionOutputGenerator(OutputGenerator):
         self.type = interface.get('type')
         self.num_commands = 0
         name = interface.get('name')
-        self.currentExtension = name 
+        self.currentExtension = name
 
     #
     # Process commands, adding to appropriate dispatch tables
@@ -483,9 +480,6 @@ class LoaderExtensionOutputGenerator(OutputGenerator):
         protos += '// Instance command lookup function\n'
         protos += 'VKAPI_ATTR void* VKAPI_CALL loader_lookup_instance_dispatch_table(const VkLayerInstanceDispatchTable *table, const char *name,\n'
         protos += '                                                                  bool *found_name);\n'
-        protos += '\n'
-        protos += 'VKAPI_ATTR bool VKAPI_CALL loader_icd_init_entries(struct loader_icd_term *icd_term, VkInstance inst,\n'
-        protos += '                                                   const PFN_vkGetInstanceProcAddr fp_gipa);\n'
         protos += '\n'
         return protos
 
@@ -1517,7 +1511,7 @@ class LoaderExtensionOutputGenerator(OutputGenerator):
                 commands = self.ext_commands
 
             for cur_cmd in commands:
-                
+
                 if cur_cmd.handle_type == 'VkInstance' or cur_cmd.handle_type == 'VkPhysicalDevice':
                     if cur_cmd.ext_name != cur_extension_name:
                         if 'VK_VERSION_' in cur_cmd.ext_name:

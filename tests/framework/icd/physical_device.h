@@ -29,6 +29,7 @@
 
 #include "test_util.h"
 
+// Move only type because it holds a DispatchableHandle<VkPhysicalDevice>
 struct PhysicalDevice {
     PhysicalDevice() {}
     PhysicalDevice(std::string name) : deviceName(name) {}
@@ -70,8 +71,18 @@ struct PhysicalDevice {
     // VkDevice handles created from this physical device
     std::vector<VkDevice> device_handles;
 
-    // List of function names which are 'known' to the physical device but which are no-op's when called.
+    // List of function names which are 'known' to the physical device but have test defined implementations
     // The purpose of this list is so that vkGetDeviceProcAddr returns 'a real function pointer' in tests
     // without actually implementing any of the logic inside of it.
-    std::vector<const char*> known_device_functions_no_implementation;
+    std::vector<VulkanFunction> known_device_functions;
+};
+
+struct PhysicalDeviceGroup {
+    PhysicalDeviceGroup& use_physical_device(PhysicalDevice const& physical_device) {
+        physical_device_handles.push_back(&physical_device);
+        return *this;
+    }
+
+    std::vector<PhysicalDevice const*> physical_device_handles;
+    VkBool32 subset_allocation = false;
 };
