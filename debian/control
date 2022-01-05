@@ -39,6 +39,7 @@ Section: libdevel
 Architecture: linux-any
 Depends:
  libvulkan1 (= ${binary:Version}),
+ python3:any | python3-minimal:any,
  ${misc:Depends},
 Breaks: vulkan-sdk-headers, vulkan-headers
 Replaces: vulkan-sdk-headers, vulkan-headers
