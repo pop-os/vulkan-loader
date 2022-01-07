@@ -1,9 +1,9 @@
-vulkan-loader (1.2.198.1-2) UNRELEASED; urgency=medium
+vulkan-loader (1.2.198.1-2) unstable; urgency=medium
 
   * patches: Add patches to fix symbols for i386. (Closes: #1003219)
   * symbols: Add a symlink .aarch64 -> .amd64.
 
- -- Timo Aaltonen <tjaalton@debian.org>  Fri, 07 Jan 2022 10:45:03 +0200
+ -- Timo Aaltonen <tjaalton@debian.org>  Fri, 07 Jan 2022 10:46:21 +0200
 
 vulkan-loader (1.2.198.1-1) unstable; urgency=medium
 
