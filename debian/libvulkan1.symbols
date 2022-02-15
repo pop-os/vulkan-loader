@@ -13,17 +13,24 @@ libvulkan.so.1 libvulkan1 #MINVER#
  vkCmdBeginQuery@Base 1.2.131.2
  vkCmdBeginRenderPass2@Base 1.2.131.2
  vkCmdBeginRenderPass@Base 1.2.131.2
+ vkCmdBeginRendering@Base 1.3.204.0
  vkCmdBindDescriptorSets@Base 1.2.131.2
  vkCmdBindIndexBuffer@Base 1.2.131.2
  vkCmdBindPipeline@Base 1.2.131.2
+ vkCmdBindVertexBuffers2@Base 1.3.204.0
  vkCmdBindVertexBuffers@Base 1.2.131.2
+ vkCmdBlitImage2@Base 1.3.204.0
  vkCmdBlitImage@Base 1.2.131.2
  vkCmdClearAttachments@Base 1.2.131.2
  vkCmdClearColorImage@Base 1.2.131.2
  vkCmdClearDepthStencilImage@Base 1.2.131.2
+ vkCmdCopyBuffer2@Base 1.3.204.0
  vkCmdCopyBuffer@Base 1.2.131.2
+ vkCmdCopyBufferToImage2@Base 1.3.204.0
  vkCmdCopyBufferToImage@Base 1.2.131.2
+ vkCmdCopyImage2@Base 1.3.204.0
  vkCmdCopyImage@Base 1.2.131.2
+ vkCmdCopyImageToBuffer2@Base 1.3.204.0
  vkCmdCopyImageToBuffer@Base 1.2.131.2
  vkCmdCopyQueryPoolResults@Base 1.2.131.2
  vkCmdDispatch@Base 1.2.131.2
@@ -38,28 +45,49 @@ libvulkan.so.1 libvulkan1 #MINVER#
  vkCmdEndQuery@Base 1.2.131.2
  vkCmdEndRenderPass2@Base 1.2.131.2
  vkCmdEndRenderPass@Base 1.2.131.2
+ vkCmdEndRendering@Base 1.3.204.0
  vkCmdExecuteCommands@Base 1.2.131.2
  vkCmdFillBuffer@Base 1.2.131.2
  vkCmdNextSubpass2@Base 1.2.131.2
  vkCmdNextSubpass@Base 1.2.131.2
+ vkCmdPipelineBarrier2@Base 1.3.204.0
  vkCmdPipelineBarrier@Base 1.2.131.2
  vkCmdPushConstants@Base 1.2.131.2
+ vkCmdResetEvent2@Base 1.3.204.0
  vkCmdResetEvent@Base 1.2.131.2
  vkCmdResetQueryPool@Base 1.2.131.2
+ vkCmdResolveImage2@Base 1.3.204.0
  vkCmdResolveImage@Base 1.2.131.2
  vkCmdSetBlendConstants@Base 1.2.131.2
+ vkCmdSetCullMode@Base 1.3.204.0
  vkCmdSetDepthBias@Base 1.2.131.2
+ vkCmdSetDepthBiasEnable@Base 1.3.204.0
  vkCmdSetDepthBounds@Base 1.2.131.2
+ vkCmdSetDepthBoundsTestEnable@Base 1.3.204.0
+ vkCmdSetDepthCompareOp@Base 1.3.204.0
+ vkCmdSetDepthTestEnable@Base 1.3.204.0
+ vkCmdSetDepthWriteEnable@Base 1.3.204.0
  vkCmdSetDeviceMask@Base 1.2.131.2
+ vkCmdSetEvent2@Base 1.3.204.0
  vkCmdSetEvent@Base 1.2.131.2
+ vkCmdSetFrontFace@Base 1.3.204.0
  vkCmdSetLineWidth@Base 1.2.131.2
+ vkCmdSetPrimitiveRestartEnable@Base 1.3.204.0
+ vkCmdSetPrimitiveTopology@Base 1.3.204.0
+ vkCmdSetRasterizerDiscardEnable@Base 1.3.204.0
  vkCmdSetScissor@Base 1.2.131.2
+ vkCmdSetScissorWithCount@Base 1.3.204.0
  vkCmdSetStencilCompareMask@Base 1.2.131.2
+ vkCmdSetStencilOp@Base 1.3.204.0
  vkCmdSetStencilReference@Base 1.2.131.2
+ vkCmdSetStencilTestEnable@Base 1.3.204.0
  vkCmdSetStencilWriteMask@Base 1.2.131.2
  vkCmdSetViewport@Base 1.2.131.2
+ vkCmdSetViewportWithCount@Base 1.3.204.0
  vkCmdUpdateBuffer@Base 1.2.131.2
+ vkCmdWaitEvents2@Base 1.3.204.0
  vkCmdWaitEvents@Base 1.2.131.2
+ vkCmdWriteTimestamp2@Base 1.3.204.0
  vkCmdWriteTimestamp@Base 1.2.131.2
  vkCreateBuffer@Base 1.2.131.2
  vkCreateBufferView@Base 1.2.131.2
@@ -75,11 +103,13 @@ libvulkan.so.1 libvulkan1 #MINVER#
  vkCreateFence@Base 1.2.131.2
  vkCreateFramebuffer@Base 1.2.131.2
  vkCreateGraphicsPipelines@Base 1.2.131.2
+ vkCreateHeadlessSurfaceEXT@Base 1.3.204.0
  vkCreateImage@Base 1.2.131.2
  vkCreateImageView@Base 1.2.131.2
  vkCreateInstance@Base 1.2.131.2
  vkCreatePipelineCache@Base 1.2.131.2
  vkCreatePipelineLayout@Base 1.2.131.2
+ vkCreatePrivateDataSlot@Base 1.3.204.0
  vkCreateQueryPool@Base 1.2.131.2
  vkCreateRenderPass2@Base 1.2.131.2
  vkCreateRenderPass@Base 1.2.131.2
@@ -108,6 +138,7 @@ libvulkan.so.1 libvulkan1 #MINVER#
  vkDestroyPipeline@Base 1.2.131.2
  vkDestroyPipelineCache@Base 1.2.131.2
  vkDestroyPipelineLayout@Base 1.2.131.2
+ vkDestroyPrivateDataSlot@Base 1.3.204.0
  vkDestroyQueryPool@Base 1.2.131.2
  vkDestroyRenderPass@Base 1.2.131.2
  vkDestroySampler@Base 1.2.131.2
@@ -134,9 +165,12 @@ libvulkan.so.1 libvulkan1 #MINVER#
  vkGetBufferMemoryRequirements@Base 1.2.131.2
  vkGetBufferOpaqueCaptureAddress@Base 1.2.131.2
  vkGetDescriptorSetLayoutSupport@Base 1.2.131.2
+ vkGetDeviceBufferMemoryRequirements@Base 1.3.204.0
  vkGetDeviceGroupPeerMemoryFeatures@Base 1.2.131.2
  vkGetDeviceGroupPresentCapabilitiesKHR@Base 1.2.131.2
  vkGetDeviceGroupSurfacePresentModesKHR@Base 1.2.131.2
+ vkGetDeviceImageMemoryRequirements@Base 1.3.204.0
+ vkGetDeviceImageSparseMemoryRequirements@Base 1.3.204.0
  vkGetDeviceMemoryCommitment@Base 1.2.131.2
  vkGetDeviceMemoryOpaqueCaptureAddress@Base 1.2.131.2
  vkGetDeviceProcAddr@Base 1.2.131.2
@@ -183,10 +217,12 @@ libvulkan.so.1 libvulkan1 #MINVER#
  vkGetPhysicalDeviceSurfaceFormatsKHR@Base 1.2.131.2
  vkGetPhysicalDeviceSurfacePresentModesKHR@Base 1.2.131.2
  vkGetPhysicalDeviceSurfaceSupportKHR@Base 1.2.131.2
+ vkGetPhysicalDeviceToolProperties@Base 1.3.204.0
  vkGetPhysicalDeviceWaylandPresentationSupportKHR@Base 1.2.131.2
  vkGetPhysicalDeviceXcbPresentationSupportKHR@Base 1.2.131.2
  vkGetPhysicalDeviceXlibPresentationSupportKHR@Base 1.2.131.2
  vkGetPipelineCacheData@Base 1.2.131.2
+ vkGetPrivateData@Base 1.3.204.0
  vkGetQueryPoolResults@Base 1.2.131.2
  vkGetRenderAreaGranularity@Base 1.2.131.2
  vkGetSemaphoreCounterValue@Base 1.2.131.2
@@ -196,6 +232,7 @@ libvulkan.so.1 libvulkan1 #MINVER#
  vkMergePipelineCaches@Base 1.2.131.2
  vkQueueBindSparse@Base 1.2.131.2
  vkQueuePresentKHR@Base 1.2.131.2
+ vkQueueSubmit2@Base 1.3.204.0
  vkQueueSubmit@Base 1.2.131.2
  vkQueueWaitIdle@Base 1.2.131.2
  vkResetCommandBuffer@Base 1.2.131.2
@@ -205,6 +242,7 @@ libvulkan.so.1 libvulkan1 #MINVER#
  vkResetFences@Base 1.2.131.2
  vkResetQueryPool@Base 1.2.131.2
  vkSetEvent@Base 1.2.131.2
+ vkSetPrivateData@Base 1.3.204.0
  vkSignalSemaphore@Base 1.2.131.2
  vkTrimCommandPool@Base 1.2.131.2
  vkUnmapMemory@Base 1.2.131.2

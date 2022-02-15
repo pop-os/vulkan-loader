@@ -2,6 +2,7 @@ vulkan-loader (1.3.204.0-1) UNRELEASED; urgency=medium
 
   * control: Drop python3-minimal dependency from libvulkan-dev.
   * New upstream release.
+  * symbols: Updated.
 
  -- Timo Aaltonen <tjaalton@debian.org>  Wed, 02 Feb 2022 15:26:24 +0200
 
