@@ -1995,7 +1995,7 @@ static VkResult loader_read_layer_json(const struct loader_instance *inst, struc
     if (!strcmp(name, VK_OVERRIDE_LAYER_NAME)) {
         cJSON *expiration;
 
-        if (version.major < 1 && version.minor < 1 && version.patch < 2) {
+        if (version.major == 0 || (version.minor == 1 && version.patch < 2) || version.minor == 0) {
             loader_log(
                 inst, VULKAN_LOADER_WARN_BIT, 0,
                 "Override layer expiration date not added until version 1.1.2.  Please update JSON file version appropriately.");
@@ -2103,7 +2103,7 @@ static VkResult loader_read_layer_json(const struct loader_instance *inst, struc
             }
         }
     } else if (NULL != component_layers) {
-        if (version.major == 1 && (version.minor < 1 || version.patch < 1)) {
+        if (version.major == 0 || (version.minor == 1 && version.patch < 1) || (version.minor == 0)) {
             loader_log(inst, VULKAN_LOADER_WARN_BIT, 0,
                        "Indicating meta-layer-specific component_layers, but using older JSON file version.");
         }
@@ -2189,7 +2189,7 @@ static VkResult loader_read_layer_json(const struct loader_instance *inst, struc
 
     override_paths = cJSON_GetObjectItem(layer_node, "override_paths");
     if (NULL != override_paths) {
-        if (version.major == 1 && (version.minor < 1 || version.patch < 1)) {
+        if (version.major == 0 || (version.minor == 1 && version.patch < 1) || version.minor == 0) {
             loader_log(inst, VULKAN_LOADER_WARN_BIT, 0,
                        "Indicating meta-layer-specific override paths, but using older JSON file version.");
         }
@@ -2520,8 +2520,8 @@ out:
 }
 
 static inline bool is_valid_layer_json_version(const layer_json_version *layer_json) {
-    // Supported versions are: 1.0.0, 1.0.1, 1.1.0 - 1.1.2, and 1.2.0.
-    if ((layer_json->major == 1 && layer_json->minor == 2 && layer_json->patch < 1) ||
+    // Supported versions are: 1.0.0, 1.0.1, 1.1.0 - 1.1.2, and 1.2.0 - 1.2.1.
+    if ((layer_json->major == 1 && layer_json->minor == 2 && layer_json->patch < 2) ||
         (layer_json->major == 1 && layer_json->minor == 1 && layer_json->patch < 3) ||
         (layer_json->major == 1 && layer_json->minor == 0 && layer_json->patch < 2)) {
         return true;
@@ -4390,12 +4390,16 @@ struct loader_instance *loader_get_instance(const VkInstance instance) {
     // there is no guarantee the instance is still a loader_instance* after any
     // layers which wrap the instance object.
     const VkLayerInstanceDispatchTable *disp;
-    struct loader_instance *ptr_instance = NULL;
-    disp = loader_get_instance_layer_dispatch(instance);
-    for (struct loader_instance *inst = loader.instances; inst; inst = inst->next) {
-        if (&inst->disp->layer_inst_disp == disp) {
-            ptr_instance = inst;
-            break;
+    struct loader_instance *ptr_instance = (struct loader_instance *)instance;
+    if (VK_NULL_HANDLE == instance || LOADER_MAGIC_NUMBER != ptr_instance->magic) {
+        return NULL;
+    } else {
+        disp = loader_get_instance_layer_dispatch(instance);
+        for (struct loader_instance *inst = loader.instances; inst; inst = inst->next) {
+            if (&inst->disp->layer_inst_disp == disp) {
+                ptr_instance = inst;
+                break;
+            }
         }
     }
     return ptr_instance;
@@ -4575,7 +4579,7 @@ VKAPI_ATTR VkResult VKAPI_CALL loader_layer_create_device(VkInstance instance, V
     struct loader_device *dev = NULL;
     struct loader_instance *inst = NULL;
 
-    if (instance != NULL) {
+    if (instance != VK_NULL_HANDLE) {
         inst = loader_get_instance(instance);
         internal_device = physicalDevice;
     } else {
@@ -5825,21 +5829,14 @@ out:
     return res;
 }
 
-VkResult setup_loader_tramp_phys_devs(VkInstance instance) {
+VkResult setup_loader_tramp_phys_devs(struct loader_instance *inst) {
     VkResult res = VK_SUCCESS;
     VkPhysicalDevice *local_phys_devs = NULL;
-    struct loader_instance *inst;
     uint32_t total_count = 0;
     struct loader_physical_device_tramp **new_phys_devs = NULL;
 
-    inst = loader_get_instance(instance);
-    if (NULL == inst) {
-        res = VK_ERROR_INITIALIZATION_FAILED;
-        goto out;
-    }
-
     // Query how many GPUs there
-    res = inst->disp->layer_inst_disp.EnumeratePhysicalDevices(instance, &total_count, NULL);
+    res = inst->disp->layer_inst_disp.EnumeratePhysicalDevices(inst->instance, &total_count, NULL);
     if (res != VK_SUCCESS) {
         loader_log(
             inst, VULKAN_LOADER_ERROR_BIT, 0,
@@ -5875,7 +5872,7 @@ VkResult setup_loader_tramp_phys_devs(VkInstance instance) {
     }
     memset(local_phys_devs, 0, sizeof(VkPhysicalDevice) * total_count);
 
-    res = inst->disp->layer_inst_disp.EnumeratePhysicalDevices(instance, &total_count, local_phys_devs);
+    res = inst->disp->layer_inst_disp.EnumeratePhysicalDevices(inst->instance, &total_count, local_phys_devs);
     if (VK_SUCCESS != res) {
         loader_log(
             inst, VULKAN_LOADER_ERROR_BIT, 0,
@@ -5910,6 +5907,7 @@ VkResult setup_loader_tramp_phys_devs(VkInstance instance) {
             loader_set_dispatch((void *)new_phys_devs[new_idx], inst->disp);
             new_phys_devs[new_idx]->this_instance = inst;
             new_phys_devs[new_idx]->phys_dev = local_phys_devs[new_idx];
+            new_phys_devs[new_idx]->magic = PHYS_TRAMP_MAGIC_NUMBER;
         }
     }
 
