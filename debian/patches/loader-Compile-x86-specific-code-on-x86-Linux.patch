@@ -1,0 +1,29 @@
+From: Simon McVittie <smcv@collabora.com>
+Date: Thu, 6 Jan 2022 14:03:40 +0000
+Subject: loader: Compile x86-specific code on x86 Linux
+
+Unfortunately, the taxonomy used for CMAKE_SYSTEM_PROCESSOR is
+OS-specific: on Windows, IA32 is identified as x86, but on Linux,
+it can be identified as i386, i486, i586 or i686.
+
+Signed-off-by: Simon McVittie <smcv@collabora.com>
+Bug: https://github.com/KhronosGroup/Vulkan-Loader/issues/783
+Bug-Debian: https://bugs.debian.org/1003219
+Forwarded: https://github.com/KhronosGroup/Vulkan-Loader/pull/784
+---
+ loader/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/loader/CMakeLists.txt b/loader/CMakeLists.txt
+index e85fef6..d7a876e 100644
+--- a/loader/CMakeLists.txt
++++ b/loader/CMakeLists.txt
+@@ -229,7 +229,7 @@ else(UNIX AND NOT APPLE) # i.e.: Linux
+             if(ASSEMBLER_WORKS)
+                 set(OPT_LOADER_SRCS ${OPT_LOADER_SRCS} unknown_ext_chain_gas_aarch64.S)
+             endif()
+-        elseif(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64" OR ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86")
++        elseif(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64" OR ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86" OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES "^i.86$")
+             check_include_file("cet.h" HAVE_CET_H)
+             if(HAVE_CET_H)
+                 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS HAVE_CET_H)
