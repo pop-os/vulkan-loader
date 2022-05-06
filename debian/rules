@@ -28,6 +28,10 @@ endif
 	-DVulkanHeaders_INCLUDE_DIR=../vulkan-headers/include \
 	-DVulkanRegistry_DIR=../vulkan-headers/registry
 
+override_dh_auto_build:
+	dh_auto_build -- VulkanLoader_generated_source
+	dh_auto_build
+
 override_dh_auto_test:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	(cd build; tests/run_all_tests.sh || \
