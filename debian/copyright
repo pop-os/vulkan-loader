@@ -3,11 +3,11 @@ Upstream-Name: Vulkan-Loader
 Source: https://github.com/KhronosGroup/Vulkan-Loader
 
 Files: *
-Copyright: 2015-2016 Valve Corporation
+Copyright: 2015-2022 Valve Corporation
 	   2015-2016 Google, Inc
-	   2015-2016 The Khronos Group Inc
+	   2015-2022 The Khronos Group Inc
 	   2005-2014 G-Truc Creation
-	   2015-2016 LunarG, Inc
+	   2015-2022 LunarG, Inc
 License: Apache-2.0
 
 Files: loader/cJSON.*
@@ -20,13 +20,6 @@ License: MIT
 Files: loader/dirent_on_windows.*
 Copyright: 1997, 2003 Kevlin Henney
 	   2015-2016 The Khronos Group Inc
-	   2015-2016 Valve Corporation
-	   2015-2016 LunarG, Inc
-License: MIT
-
-Files: loader/murmurhash.*
-Copyright: 2014 joseph werle <joseph.werle@gmail.com>
-           2015-2016 The Khronos Group Inc
 	   2015-2016 Valve Corporation
 	   2015-2016 LunarG, Inc
 License: MIT
