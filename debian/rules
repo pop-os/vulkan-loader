@@ -45,6 +45,7 @@ override_dh_auto_install:
 	cp -rp vulkan-headers/include debian/tmp/usr
 	cp -rp vulkan-headers/registry debian/tmp/usr/share/vulkan
 	rm -rf debian/tmp/usr/share/vulkan/registry/__pycache__
+	rm -rf debian/tmp/usr/share/vulkan/registry/spec_tools/__pycache__
 
 override_dh_missing:
 	dh_missing --fail-missing
