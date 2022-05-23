@@ -2,7 +2,7 @@
 
 REPO=https://github.com/KhronosGroup/Vulkan-Headers.git
 
-if [ -n $1 ]; then
+if [ -n "$1" ]; then
   VERSION=$1
 else
   VERSION=`dpkg-parsechangelog -S Version|sed 's/-.*//'`
