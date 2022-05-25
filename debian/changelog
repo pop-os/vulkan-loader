@@ -1,10 +1,19 @@
-vulkan-loader (1.3.211.0-1) UNRELEASED; urgency=medium
+vulkan-loader (1.3.211.0-1) unstable; urgency=medium
 
+  [ Timo Aaltonen ]
   * New upstream release.
   * sync_headers.sh: Fix checking the version.
   * patches: Dropped, upstream.
 
- -- Timo Aaltonen <tjaalton@debian.org>  Tue, 26 Apr 2022 11:04:56 +0300
+  [ Simon McVittie ]
+  * tests: Exclude precompiled binary objects from .orig tarball
+  * d/copyright: Update
+  * Regenerate loader/generated/ during build.
+    Thanks to Helmut Grohne (Closes: #981362)
+  * d/rules: Delete another __pycache__ directory
+  * d/libvulkan1.symbols: Expect i386 to be treated as an x86 architecture
+
+ -- Timo Aaltonen <tjaalton@debian.org>  Wed, 25 May 2022 11:34:17 +0300
 
 vulkan-loader (1.3.204.1-2) unstable; urgency=medium
 
