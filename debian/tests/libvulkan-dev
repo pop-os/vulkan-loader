@@ -1,0 +1,33 @@
+#!/bin/sh
+# Copyright 2020 Collabora Ltd.
+# SPDX-License-Identifier: MIT
+
+set -eux
+
+CROSS_COMPILE="${DEB_HOST_GNU_TYPE:+"${DEB_HOST_GNU_TYPE}-"}"
+
+cat > simple.c <<EOF
+#include <vulkan/vulkan.h>
+
+#include <stdio.h>
+
+int main (void)
+{
+    void (*func) (void);
+
+    func = vkGetInstanceProcAddr(NULL, "vkCreateInstance");
+
+    if (func == NULL) {
+        printf ("Failed to find vkCreateInstance\n");
+        return 1;
+    }
+
+    printf ("vkCreateInstance -> %p\n", (void *) func);
+    return 0;
+}
+EOF
+
+# Deliberately word-splitting pkg-config's output:
+# shellcheck disable=SC2046
+"${CROSS_COMPILE}gcc" -osimple simple.c $("${CROSS_COMPILE}pkg-config" --cflags --libs vulkan)
+./simple
