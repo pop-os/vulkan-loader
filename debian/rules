@@ -21,12 +21,15 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	ln -s /usr/src/googletest external
 endif
 
+	dh_auto_configure --sourcedirectory=vulkan-headers --builddirectory=build-vulkan-headers/
+	dh_auto_build --sourcedirectory=vulkan-headers --builddirectory=build-vulkan-headers/
+	dh_auto_install --sourcedirectory=vulkan-headers --builddirectory=build-vulkan-headers/ --destdir=debian/tmp-vulkan-headers
+
 	dh_auto_configure -- \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
 	-DBUILD_WSI_MIR_SUPPORT=OFF \
-	-DVulkanHeaders_INCLUDE_DIR=../vulkan-headers/include \
-	-DVulkanRegistry_DIR=../vulkan-headers/registry
+	-DVulkanHeaders_DIR=debian/tmp-vulkan-headers/usr/share/cmake/VulkanHeaders/
 
 override_dh_auto_build:
 	dh_auto_build -- VulkanLoader_generated_source
@@ -41,9 +44,7 @@ endif
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/tmp
 
-	mkdir -p debian/tmp/usr/share/vulkan
-	cp -rp vulkan-headers/include debian/tmp/usr
-	cp -rp vulkan-headers/registry debian/tmp/usr/share/vulkan
+	cp -rp debian/tmp-vulkan-headers/usr debian/tmp/
 	rm -rf debian/tmp/usr/share/vulkan/registry/__pycache__
 	rm -rf debian/tmp/usr/share/vulkan/registry/spec_tools/__pycache__
 
