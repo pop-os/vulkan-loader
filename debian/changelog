@@ -1,3 +1,10 @@
+vulkan-loader (1.3.236.0-2) UNRELEASED; urgency=medium
+
+  * Make -dev multiarch-friendly again by installing cmake files to
+   libdir. (Closes: #1029194)
+
+ -- Timo Aaltonen <tjaalton@debian.org>  Thu, 19 Jan 2023 16:46:35 +0200
+
 vulkan-loader (1.3.236.0-1) unstable; urgency=medium
 
   [ Timo Aaltonen ]
