@@ -2,7 +2,7 @@
 
 Please note when contributing what files this repository actually is responsible for.
 
-The majority for the Vulkan headers come from [Vulkan-Docs](https://github.com/KhronosGroup/Vulkan-Docs)
+The majority for the Vulkan headers come from [Vulkan-Docs](https://github.com/KhronosGroup/Vulkan-Docs) or [Vulkan-Hpp](https://github.com/KhronosGroup/Vulkan-Hpp)
 
 ### This repository (https://github.com/KhronosGroup/Vulkan-Headers)
 
@@ -18,7 +18,6 @@ The majority for the Vulkan headers come from [Vulkan-Docs](https://github.com/K
 * Non-API headers
   * include/vulkan/vk_icd.h
   * include/vulkan/vk_layer.h
-  * include/vulkan/vk_sdk_platform.h (deprecated)
 
 ### Specification repository (https://github.com/KhronosGroup/Vulkan-Docs)
 

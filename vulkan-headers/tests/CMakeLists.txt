@@ -18,6 +18,8 @@
 # NOTE: For us testing just means that these header files compile
 # with reasonable warnings.
 
+message(STATUS "${PROJECT_NAME} = ${PROJECT_VERSION}")
+
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
@@ -39,7 +41,6 @@ target_link_libraries(vk_icd PRIVATE Vulkan::Headers)
 add_library(vk_layer MODULE vk_layer.c)
 target_link_libraries(vk_layer PRIVATE Vulkan::Headers)
 
-# vk_sdk_platform.h
-add_executable(vk_sdk_platform vk_sdk_platform.c)
-target_link_libraries(vk_sdk_platform PRIVATE Vulkan::Headers)
-target_compile_definitions(vk_sdk_platform PRIVATE VK_SDK_PLATFORM_SUPRRESS_DEPRECATION_WARNING)
+if (NOT TARGET Vulkan-Headers)
+    message(FATAL_ERROR "Backcompat for Vulkan-Headers target broken!")
+endif()
