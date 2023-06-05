@@ -13,6 +13,9 @@ this:
 # git checkout -b d-u
 # git merge -s ours sdk-<old version>
 # git merge debian-unstable
+# git mergetool
+#  sort out conflicts, the generated files should stay deleted from
+#  the packaging branch
 # git branch -M debian-unstable
 # dch -v <new version>; git commit -a "version bump"
 # debian/sync_headers.sh
