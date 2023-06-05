@@ -17,6 +17,6 @@ this:
 #  sort out conflicts, the generated files should stay deleted from
 #  the packaging branch
 # git branch -M debian-unstable
-# dch -v <new version>; git commit -a "version bump"
+# dch -v <new version>; git commit -a -m "version bump"
 # debian/sync_headers.sh
 # debian/rules gentarball
