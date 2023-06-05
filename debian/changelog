@@ -2,6 +2,7 @@ vulkan-loader (1.3.250.0-1) UNRELEASED; urgency=medium
 
   * New upstream release.
   * patches: Refreshed.
+  * README.source: Updated to match reality.
 
  -- Timo Aaltonen <tjaalton@debian.org>  Wed, 24 May 2023 15:04:14 +0300
 

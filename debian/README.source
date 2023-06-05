@@ -9,9 +9,11 @@ The procedure to update to a new upstream release goes usually like
 this:
 
 # git checkout upstream-unstable
-# git merge <new upstream tag>
-# git checkout debian-unstable
-# git merge upstream-unstable
-# dch -v <new version>
+# git reset --hard sdk-<new version>
+# git checkout -b d-u
+# git merge -s ours sdk-<old version>
+# git merge debian-unstable
+# git branch -M debian-unstable
+# dch -v <new version>; git commit -a "version bump"
 # debian/sync_headers.sh
 # debian/rules gentarball
