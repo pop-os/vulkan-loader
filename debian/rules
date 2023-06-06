@@ -29,6 +29,7 @@ endif
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
 	-DBUILD_WSI_MIR_SUPPORT=OFF \
+	-DLOADER_CODEGEN=ON \
 	-DVulkanHeaders_DIR=debian/tmp-vulkan-headers/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/VulkanHeaders/
 
 override_dh_auto_build:
