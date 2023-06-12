@@ -1,4 +1,4 @@
-vulkan-loader (1.3.250.0-1) UNRELEASED; urgency=medium
+vulkan-loader (1.3.250.0-1) unstable; urgency=medium
 
   * New upstream release.
   * patches: Refreshed.
@@ -6,7 +6,7 @@ vulkan-loader (1.3.250.0-1) UNRELEASED; urgency=medium
   * sync-headers: Support non-sdk tags.
   * rules: Prepare for next upstream version, enable LOADER_CODEGEN.
 
- -- Timo Aaltonen <tjaalton@debian.org>  Wed, 24 May 2023 15:04:14 +0300
+ -- Timo Aaltonen <tjaalton@debian.org>  Mon, 12 Jun 2023 11:39:49 +0300
 
 vulkan-loader (1.3.239.0-1) unstable; urgency=medium
 
