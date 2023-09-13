@@ -1,0 +1,11 @@
+--- a/vulkan-headers/CMakeLists.txt
++++ b/vulkan-headers/CMakeLists.txt
+@@ -68,7 +68,7 @@ if (PROJECT_IS_TOP_LEVEL)
+     # Preserve source permissions https://github.com/KhronosGroup/Vulkan-Headers/issues/336
+     install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/registry" DESTINATION ${VLK_REGISTRY_DIR} USE_SOURCE_PERMISSIONS)
+ 
+-    set(cmake_files_install_dir ${CMAKE_INSTALL_DATADIR}/cmake/VulkanHeaders/)
++    set(cmake_files_install_dir ${CMAKE_INSTALL_LIBDIR}/cmake/VulkanHeaders/)
+ 
+     set_target_properties(Vulkan-Headers PROPERTIES EXPORT_NAME "Headers")
+ 

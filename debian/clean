@@ -1,0 +1,2 @@
+loader/generated/*.c
+loader/generated/*.h
