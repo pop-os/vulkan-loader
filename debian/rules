@@ -14,7 +14,9 @@ override_dh_clean:
 		include \
 		scripts/__pycache__ \
 		vulkan-headers/registry/__pycache__
-	rm -f external/googletest
+	rm -f external
+	rm -rf debian/tmp-vulkan-headers
+	rm -rf build-vulkan-headers
 
 override_dh_auto_configure:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
