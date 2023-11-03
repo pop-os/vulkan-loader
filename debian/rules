@@ -30,10 +30,10 @@ endif
 	-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
 	-DBUILD_WSI_MIR_SUPPORT=OFF \
 	-DLOADER_CODEGEN=ON \
-	-DVulkanHeaders_DIR=debian/tmp-vulkan-headers/usr/share/cmake/VulkanHeaders/
+	-DVULKAN_HEADERS_INSTALL_DIR=$(CURDIR)/debian/tmp-vulkan-headers/usr
 
 override_dh_auto_build:
-	dh_auto_build -- VulkanLoader_generated_source
+	dh_auto_build -- loader_codegen
 	dh_auto_build
 
 override_dh_auto_test:
