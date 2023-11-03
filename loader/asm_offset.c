@@ -22,6 +22,12 @@
 
 // This code generates an assembly file which provides offsets to get struct members from assembly code.
 
+// __USE_MINGW_ANSI_STDIO is needed to use the %zu format specifier with mingw-w64.
+// Otherwise the compiler will complain about an unknown format specifier.
+#if defined(__MINGW32__) && !defined(__USE_MINGW_ANSI_STDIO)
+#define __USE_MINGW_ANSI_STDIO 1
+#endif
+
 #include <stdio.h>
 #include "loader_common.h"
 #include "log.h"
@@ -114,7 +120,7 @@ int main(int argc, char **argv) {
         // clang-format on
     };
 
-    FILE *file = fopen("gen_defines.asm", "w");
+    FILE *file = loader_fopen("gen_defines.asm", "w");
     fprintf(file, "\n");
     if (!strcmp(assembler, "MASM")) {
         for (size_t i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {

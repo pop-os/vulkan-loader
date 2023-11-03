@@ -108,10 +108,17 @@ struct TestLayer {
     BUILDER_VECTOR(TestLayer, std::string, alternative_function_names, alternative_function_name)
 
     BUILDER_VECTOR(TestLayer, Extension, instance_extensions, instance_extension)
+    std::vector<Extension> enabled_instance_extensions;
+
     BUILDER_VECTOR(TestLayer, Extension, device_extensions, device_extension)
 
     BUILDER_VALUE(TestLayer, std::string, enable_environment, {});
     BUILDER_VALUE(TestLayer, std::string, disable_environment, {});
+
+    // Modifies the extension list returned by vkEnumerateInstanceExtensionProperties to include what is in this vector
+    BUILDER_VECTOR(TestLayer, Extension, injected_instance_extensions, injected_instance_extension)
+    // Modifies the extension list returned by  vkEnumerateDeviceExtensionProperties to include what is in this vector
+    BUILDER_VECTOR(TestLayer, Extension, injected_device_extensions, injected_device_extension)
 
     BUILDER_VECTOR(TestLayer, LayerDefinition, meta_component_layers, meta_component_layer);
 
@@ -183,6 +190,11 @@ struct TestLayer {
 
     BUILDER_VALUE(TestLayer, bool, check_if_EnumDevExtProps_is_same_as_queried_function, false)
 
+    // Clober the data pointed to by pInstance to overwrite the magic value
+    BUILDER_VALUE(TestLayer, bool, clobber_pInstance, false)
+    // Clober the data pointed to by pDevice to overwrite the magic value
+    BUILDER_VALUE(TestLayer, bool, clobber_pDevice, false)
+
     PFN_vkGetInstanceProcAddr next_vkGetInstanceProcAddr = VK_NULL_HANDLE;
     PFN_GetPhysicalDeviceProcAddr next_GetPhysicalDeviceProcAddr = VK_NULL_HANDLE;
     PFN_vkGetDeviceProcAddr next_vkGetDeviceProcAddr = VK_NULL_HANDLE;
@@ -193,6 +205,7 @@ struct TestLayer {
     struct Device {
         VkDevice device_handle = VK_NULL_HANDLE;
         VkLayerDispatchTable dispatch_table{};
+        std::vector<Extension> enabled_extensions;
     };
     std::vector<Device> created_devices;
 

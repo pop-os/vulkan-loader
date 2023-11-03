@@ -16,7 +16,7 @@
 # ~~~
 cmake_minimum_required(VERSION 3.17.2)
 
-project(VULKAN_LOADER VERSION 1.3.261)
+project(VULKAN_LOADER VERSION 1.3.268)
 
 add_subdirectory(scripts)
 
@@ -45,9 +45,7 @@ if(BUILD_STATIC_LOADER)
         "or tested as part of the loader. Use it at your own risk.")
 endif()
 
-if (NOT TARGET Vulkan::Headers)
-    find_package(VulkanHeaders REQUIRED CONFIG QUIET)
-endif()
+find_package(VulkanHeaders CONFIG QUIET)
 
 include(GNUInstallDirs)
 
@@ -99,7 +97,7 @@ add_library(platform_wsi INTERFACE)
 if(WIN32)
     target_compile_definitions(platform_wsi INTERFACE VK_USE_PLATFORM_WIN32_KHR)
 elseif(ANDROID)
-    target_compile_definitions(platform_wsi INTERFACE VK_USE_PLATFORM_ANDROID_KHR)
+    message(FATAL_ERROR "Android build not supported!")
 elseif(APPLE)
     target_compile_definitions(platform_wsi INTERFACE VK_USE_PLATFORM_MACOS_MVK VK_USE_PLATFORM_METAL_EXT)
 elseif(UNIX AND NOT APPLE) # i.e.: Linux
@@ -151,6 +149,12 @@ set(LOADER_STANDARD_CXX_PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES CXX
 
 set(TESTS_STANDARD_CXX_PROPERTIES ${LOADER_STANDARD_CXX_PROPERTIES} MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 
+# Build for iOS and tvOS
+option(APPLE_EMBEDDED "Apple non desktop devices" OFF)
+if (APPLE_EMBEDDED)
+    add_definitions(-D__APPLE_EMBEDDED__)
+endif()
+
 # Force the use of the multithreaded, static version of the C runtime.
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
@@ -164,7 +168,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" OR (CMAKE_CXX_COMPILER_ID STREQUAL "Cl
         target_compile_options(loader_common_options INTERFACE /WX)
     endif()
     target_compile_options(loader_common_options INTERFACE /W4)
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     # using GCC or Clang with the regular front end
     if (ENABLE_WERROR)
         target_compile_options(loader_common_options INTERFACE -Werror)
@@ -172,7 +176,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "C
     target_compile_options(loader_common_options INTERFACE -Wall -Wextra)
 endif()
 
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     target_compile_options(loader_common_options INTERFACE -Wno-missing-field-initializers)
 
     # need to prepend /clang: to compiler arguments when using clang-cl

@@ -189,6 +189,14 @@ struct loader_device {
 
     VkAllocationCallbacks alloc_callbacks;
 
+    // List of activated device extensions that layers support (but not necessarily the driver which have functions that require
+    // trampolines to work correctly. EX - vkDebugMarkerSetObjectNameEXT can name wrapped handles like instance, physical device,
+    // or surface
+    struct {
+        bool ext_debug_marker_enabled;
+        bool ext_debug_utils_enabled;
+    } layer_extensions;
+
     // List of activated device extensions that have terminators implemented in the loader
     struct {
         bool khr_swapchain_enabled;
@@ -197,7 +205,7 @@ struct loader_device {
         bool ext_debug_marker_enabled;
         bool ext_debug_utils_enabled;
         bool ext_full_screen_exclusive_enabled;
-    } extensions;
+    } driver_extensions;
 
     struct loader_device *next;
 
@@ -496,4 +504,10 @@ struct loader_envvar_disable_layers_filter {
     bool disable_all;
     bool disable_all_implicit;
     bool disable_all_explicit;
+};
+
+struct loader_envvar_all_filters {
+    struct loader_envvar_filter enable_filter;
+    struct loader_envvar_disable_layers_filter disable_filter;
+    struct loader_envvar_filter allow_filter;
 };

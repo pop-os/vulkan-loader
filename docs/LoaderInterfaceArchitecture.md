@@ -632,14 +632,15 @@ discovery.
     <td><small>
         Force the loader to use the specific driver JSON files.
         The value contains a list of delimited full path listings to
-        driver JSON Manifest files.<br/>
+        driver JSON Manifest files and/or
+        paths to folders containing driver JSON files.<br/>
         <br/>
         This has replaced the older deprecated environment variable
         <i>VK_ICD_FILENAMES</i>, however the older environment variable will
-        continue to work for some time.
+        continue to work.
     </small></td>
     <td><small>
-        If a global path to the JSON file is not used, issues may be encountered.
+        If a relative path not used, issues may be encountered.
         <br/> <br/>
         <a href="#elevated-privilege-caveats">
             Ignored when running Vulkan application with elevated privileges.
@@ -885,6 +886,34 @@ discovery.
         &nbsp;&nbsp;VK_LOADER_LAYERS_DISABLE=*MESA*,~implicit~<br/><br/>
         The above would disable any Mesa layer and all other implicit layers
         that would normally be enabled on the system.
+    </small></td>
+  </tr>
+  <tr>
+  <td><small>
+    <i>VK_LOADER_LAYERS_ALLOW</i>
+    </small></td>
+    <td><small>
+        A comma-delimited list of globs to search for in known layers and
+        used to prevent layers whose layer name matches one or more of
+        the provided globs from being disabled by <i>VK_LOADER_LAYERS_DISABLE</i>.<br/>
+        Known layers are those which are found by the loader taking into account
+        default search paths and other environment variables
+        (like <i>VK_LAYER_PATH</i>).
+    </small></td>
+    <td><small>
+        This functionality is only available with Loaders built with version
+        1.3.262 of the Vulkan headers and later.<br/>
+        This will not cause layers to be enabled if the normal mechanism to
+        enable them
+    </small></td>
+    <td><small>
+        export<br/>
+        &nbsp;&nbsp;VK_LOADER_LAYERS_ALLOW=*validation*,*recon*<br/>
+        <br/>
+        set<br/>
+        &nbsp;&nbsp;VK_LOADER_LAYERS_ALLOW=*validation*,*recon*<br/><br/>
+        The above would allow any layer whose name is validation or recon to be
+        enabled regardless of the value of <i>VK_LOADER_LAYERS_DISABLE</i>.
     </small></td>
   </tr>
   <tr>
