@@ -5,7 +5,7 @@ REPO=https://github.com/KhronosGroup/Vulkan-Headers.git
 if [ -n "$1" ]; then
   VERSION=$1
 else
-  VERSION=sdk-`dpkg-parsechangelog -S Version|sed 's/-.*//'`
+  VERSION=vulkan-sdk-`dpkg-parsechangelog -S Version|sed 's/-.*//'`
 fi
 
 # clean old checkout
