@@ -1,0 +1,6 @@
+usr/include
+usr/lib/*/libvulkan.so
+usr/lib/*/pkgconfig/vulkan.pc
+usr/lib/*/cmake/VulkanLoader
+usr/share/vulkan/registry
+usr/share/cmake/VulkanHeaders
