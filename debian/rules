@@ -17,6 +17,7 @@ override_dh_clean:
 	rm -f external
 	rm -rf debian/tmp-vulkan-headers
 	rm -rf build-vulkan-headers
+	rm -rf loader/generated
 
 override_dh_auto_configure:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
@@ -35,6 +36,7 @@ endif
 	-DVULKAN_HEADERS_INSTALL_DIR=$(CURDIR)/debian/tmp-vulkan-headers/usr
 
 override_dh_auto_build:
+	mkdir -p loader/generated
 	dh_auto_build -- loader_codegen
 	dh_auto_build
 

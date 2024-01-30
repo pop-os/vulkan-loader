@@ -1,6 +1,7 @@
 vulkan-loader (1.3.275.0-1) UNRELEASED; urgency=medium
 
   * New upstream release.
+  * rules: Create loader/generated if it doesn't exist.
 
  -- Timo Aaltonen <tjaalton@debian.org>  Thu, 25 Jan 2024 16:52:25 +0200
 
