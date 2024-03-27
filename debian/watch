@@ -1,0 +1,4 @@
+version=3
+
+opts="repack,filenamemangle=s/(?:.*?)?v?(\d[\d.]*)\.tar\.gz/vulkan-loader-$1.tar.gz/" \
+ https://github.com/KhronosGroup/Vulkan-Loader/tags (?:.*?/)vulkan-sdk[_-](\d[\d.]*)\.tar\.gz

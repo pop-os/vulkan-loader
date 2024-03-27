@@ -1,0 +1,22 @@
+
+Bundling of vulkan-headers
+
+The source includes debian/sync_headers.sh script, which is used
+to bundle a matching version vulkan-headers. This makes sure that
+the built library has a correct SONAME.
+
+The procedure to update to a new upstream release goes usually like
+this:
+
+# git checkout upstream-unstable
+# git reset --hard sdk-<new version>
+# git checkout -b d-u
+# git merge -s ours sdk-<old version>
+# git merge debian-unstable
+# git mergetool
+#  sort out conflicts, the generated files should stay deleted from
+#  the packaging branch
+# git branch -M debian-unstable
+# dch -v <new version>; git commit -a -m "version bump"
+# debian/sync_headers.sh
+# debian/rules gentarball
