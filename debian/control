@@ -9,7 +9,7 @@ Build-Depends: debhelper-compat (= 12),
  libx11-dev,
  libxcb1-dev,
  libxrandr-dev,
- pkgconf,
+ pkgconf | pkg-config,
  python3,
 Standards-Version: 4.5.0
 Section: libs
