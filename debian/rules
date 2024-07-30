@@ -56,6 +56,9 @@ override_dh_auto_install:
 override_dh_missing:
 	dh_missing --fail-missing
 
+override_dh_builddeb:
+	dh_builddeb -- -Zzstd -z3
+
 gentarball:
 	tar --transform 's,^,$(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM)/,' \
 		--exclude 'debian' --exclude-vcs \
